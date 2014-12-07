@@ -22,11 +22,14 @@ static void find_stack_grow_direction(void)
             stack_grow_direction = -1;  ///< stack grow to lower address
         else
             stack_grow_direction = 1;   ///< stack grow to upper address
+        printf("p1 = %p\n", p);
+        printf("p2 = %p\n", &c);
     }
 }
 
 int main(void)
 {
+    find_stack_grow_direction();
     if (stack_grow_direction == 1)
         printf("stack grow from lower address to upper address\n");
     else
