@@ -9,10 +9,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define TEST_COUNT      10000000
-#define TEST_COUNT_HALF 10000000u >> 1
-
-int prime_list[TEST_COUNT_HALF] = {0};
+#define TEST_COUNT      100000000
+#define TEST_COUNT_HALF (unsigned)TEST_COUNT >> 1
+unsigned char prime_list[TEST_COUNT_HALF] = {0};
 ///< 0 means prime number, begin from 2, 3, 5, 7..., only include odd number
 
 int main(void)
