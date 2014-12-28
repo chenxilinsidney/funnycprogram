@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 typedef long long TYPE;
-TYPE N = 1000000000;
+TYPE N = 10000000000;
 
 TYPE main(void)
 {
@@ -20,11 +20,13 @@ TYPE main(void)
     TYPE high_bit_value = 0;
     TYPE current_bit_value = 0;
     TYPE low_bit_value = 0;
-    while(bits < N) {
+    while(bits <= N) {
         high_bit_value = N / (10 * bits);
         // current_bit_value = (N % (10 * bits)) / bits;
-        // low_bit_value = (N % (10 * bits)) % bits;
+        // 下面赋值参考编程之美例程优化
         current_bit_value = (N / bits) % 10;
+        // low_bit_value = (N % (10 * bits)) % bits;
+        // 下面赋值参考编程之美例程优化
         low_bit_value = N - (N / bits) * bits;
         if (0 == current_bit_value)
             sum += bits * high_bit_value;
@@ -34,6 +36,6 @@ TYPE main(void)
             sum += bits * (high_bit_value + 1);
         bits *= 10;
     }
-    printf("sum of number 1 in %d is %d.\n", N, sum);
+    printf("sum of number 1 in %lld is %lld.\n", N, sum);
     return EXIT_SUCCESS;
 }

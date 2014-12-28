@@ -22,11 +22,11 @@ TYPE count_number_1(TYPE n)
     return sum;
 }
 
-TYPE main(void)
+int main(void)
 {
     TYPE i;
     TYPE sum = 0;
-    for(i = 1; i < N; i++) {
+    for(i = 1; i <= N; i++) {
         sum += count_number_1(i);
     }
     printf("sum of number 1 in %d is %d.\n", N, sum);
