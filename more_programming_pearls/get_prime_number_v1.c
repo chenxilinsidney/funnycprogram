@@ -21,7 +21,7 @@ int is_prime_number(int count)
 int main(void)
 {
     int i;
-    int count = 100000000;
+    int count = 1000000;
     for(i = 2; i <= count; i++) {
         if(is_prime_number(i))
             printf("%d\n", i);

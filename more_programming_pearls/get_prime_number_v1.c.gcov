@@ -1,0 +1,47 @@
+        -:    0:Source:get_prime_number_v1.c
+        -:    0:Graph:get_prime_number_v1.gcno
+        -:    0:Data:get_prime_number_v1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**
+        -:    2: * @file get_prime_number_v1.c
+        -:    3: * @brief get the prime number and anlyse with gprop
+        -:    4: * @author chenxilinsidney
+        -:    5: * @version 1.0
+        -:    6: * @date 2014-12-26
+        -:    7: */
+        -:    8:#include <stdio.h>
+        -:    9:#include <stdlib.h>
+        -:   10:
+function is_prime_number called 999999 returned 100% blocks executed 100%
+   999999:   11:int is_prime_number(int count)
+        -:   12:{
+        -:   13:    int i;
+ 67818902:   14:    for(i = 2; i * i <= count; i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+ 67740404:   15:        if(0 == count % i)
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+   921501:   16:            return 0;
+        -:   17:    }
+    78498:   18:    return 1;
+        -:   19:}
+        -:   20:
+function main called 1 returned 100% blocks executed 100%
+        1:   21:int main(void)
+        -:   22:{
+        -:   23:    int i;
+        1:   24:    int count = 1000000;
+  1000000:   25:    for(i = 2; i <= count; i++) {
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+   999999:   26:        if(is_prime_number(i))
+call    0 returned 100%
+branch  1 taken 8% (fallthrough)
+branch  2 taken 92%
+    78498:   27:            printf("%d\n", i);
+call    0 returned 100%
+        -:   28:    }
+        1:   29:    return EXIT_SUCCESS;
+        -:   30:}
