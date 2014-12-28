@@ -12,7 +12,7 @@
 typedef long long TYPE;
 TYPE N = 10000000000;
 
-TYPE main(void)
+int main(void)
 {
     TYPE i;
     TYPE sum = 0;
