@@ -1,0 +1,42 @@
+        -:    0:Source:count_number_1_in_byte_v3.c
+        -:    0:Graph:count_number_1_in_byte_v3.gcno
+        -:    0:Data:count_number_1_in_byte_v3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**
+        -:    2: * @file count_number_1_in_byte_v1.c
+        -:    3: * @brief count the number 1 in binary form of a byte(8 bits).
+        -:    4: * @author chenxilinsidney
+        -:    5: * @version 1.0
+        -:    6: * @date 2014-12-28
+        -:    7: */
+        -:    8:
+        -:    9:#include <stdlib.h>
+        -:   10:#include <stdio.h>
+        -:   11:
+        -:   12:typedef unsigned char TYPE;
+        -:   13:TYPE N = 234;
+        -:   14:
+function count_number_1_in_byte called 1 returned 100% blocks executed 100%
+        1:   15:TYPE count_number_1_in_byte(TYPE n)
+        -:   16:{
+        1:   17:    TYPE sum = 0;
+        7:   18:    while(n) {
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        5:   19:        n &= (n - 1);
+        5:   20:        sum++;
+        -:   21:    }
+        1:   22:    return sum;
+        -:   23:}
+        -:   24:
+function main called 1 returned 100% blocks executed 100%
+        1:   25:int main(void)
+        -:   26:{
+        1:   27:    TYPE sum = 0;
+        1:   28:    sum = count_number_1_in_byte(N);
+call    0 returned 100%
+        1:   29:    printf("sum of number 1 in %d is %d.\n", N, sum);
+call    0 returned 100%
+        1:   30:    return EXIT_SUCCESS;
+        -:   31:}

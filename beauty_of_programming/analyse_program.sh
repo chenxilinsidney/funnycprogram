@@ -14,7 +14,10 @@ echo "binaryname =  $binaryname"
 if [ "$extension" = "c" ]; then
     echo "compiling $1"
     # if want to debug add -g
-    gcc -pg -o $binaryname $1 -lm;
+    # -pg for gprof
+    # -fprofile-arcs -ftest-coverage for gcov
+    # -Wall for warnings
+    gcc -Wall -pg -fprofile-arcs -ftest-coverage -o $binaryname $1 -lm;
     echo "compiling $1 done"
 fi
 
@@ -29,3 +32,11 @@ echo "analyse $binaryname in `pwd` with gprof"
 gprofresult="$programname"_gprof_result.txt
 gprof $binaryname gmon.out > "$gprofresult"
 echo "gprof result saved in $gprofresult"
+
+# analyse with gcov and create .gcov files
+echo "analyse $binaryname in `pwd` with gcov"
+gcov -b $filename 
+
+# analyse with time
+echo "analyse $binaryname in `pwd` with time"
+time -p ./`basename $1 .c`.out > "$binaryresult"

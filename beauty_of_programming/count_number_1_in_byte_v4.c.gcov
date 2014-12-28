@@ -1,0 +1,51 @@
+        -:    0:Source:count_number_1_in_byte_v4.c
+        -:    0:Graph:count_number_1_in_byte_v4.gcno
+        -:    0:Data:count_number_1_in_byte_v4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**
+        -:    2: * @file count_number_1_in_byte_v1.c
+        -:    3: * @brief count the number 1 in binary form of a byte(8 bits).
+        -:    4: * @author chenxilinsidney
+        -:    5: * @version 1.0
+        -:    6: * @date 2014-12-28
+        -:    7: */
+        -:    8:
+        -:    9:#include <stdlib.h>
+        -:   10:#include <limits.h>
+        -:   11:#include <stdio.h>
+        -:   12:
+        -:   13:typedef unsigned char TYPE;
+        -:   14:TYPE N = 234;
+        -:   15:TYPE search_list[UCHAR_MAX] = {0};
+        -:   16:
+function count_number_1_in_byte called 255 returned 100% blocks executed 100%
+      255:   17:TYPE count_number_1_in_byte(TYPE n)
+        -:   18:{
+      255:   19:    TYPE sum = 0;
+     1526:   20:    while(n) {
+branch  0 taken 80%
+branch  1 taken 20% (fallthrough)
+     1016:   21:        n &= (n - 1);
+     1016:   22:        sum++;
+        -:   23:    }
+      255:   24:    return sum;
+        -:   25:}
+        -:   26:
+function main called 1 returned 100% blocks executed 100%
+        1:   27:int main(void)
+        -:   28:{
+        -:   29:    /// 预先生成表
+        1:   30:    TYPE i = 0;
+      256:   31:    for (i = 0; i < UCHAR_MAX; i++)
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+      255:   32:        search_list[i] = count_number_1_in_byte(i);
+call    0 returned 100%
+        -:   33:    /// 查表法求值
+        1:   34:    TYPE sum = 0;
+        1:   35:    sum = search_list[N];
+        1:   36:    printf("sum of number 1 in %d is %d.\n", N, sum);
+call    0 returned 100%
+        1:   37:    return EXIT_SUCCESS;
+        -:   38:}
