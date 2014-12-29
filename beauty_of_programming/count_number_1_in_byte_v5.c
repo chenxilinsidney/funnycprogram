@@ -14,9 +14,10 @@ TYPE N = 234;
 
 TYPE count_number_1_in_byte(TYPE n)
 {
-    n = (n & 0x55) + ((n >> 1) & 0x55);
+
+    n -= (n >> 1) & 0x55;
     n = (n & 0x33) + ((n >> 2) & 0x33);
-    n = (n & 0x0f) + ((n >> 4) & 0x0f);
+    n = (n + (n >> 4)) & 0x0f;
     return n;
 }
 

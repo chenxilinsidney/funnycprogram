@@ -20,19 +20,20 @@
 function count_number_1_in_byte called 1 returned 100% blocks executed 100%
         1:   15:TYPE count_number_1_in_byte(TYPE n)
         -:   16:{
-        1:   17:    n = (n & 0x55) + ((n >> 1) & 0x55);
-        1:   18:    n = (n & 0x33) + ((n >> 2) & 0x33);
-        1:   19:    n = (n & 0x0f) + ((n >> 4) & 0x0f);
-        1:   20:    return n;
-        -:   21:}
-        -:   22:
+        -:   17:
+        1:   18:    n -= (n >> 1) & 0x55;
+        1:   19:    n = (n & 0x33) + ((n >> 2) & 0x33);
+        1:   20:    n = (n + (n >> 4)) & 0x0f;
+        1:   21:    return n;
+        -:   22:}
+        -:   23:
 function main called 1 returned 100% blocks executed 100%
-        1:   23:int main(void)
-        -:   24:{
-        1:   25:    TYPE sum = 0;
-        1:   26:    sum = count_number_1_in_byte(N);
+        1:   24:int main(void)
+        -:   25:{
+        1:   26:    TYPE sum = 0;
+        1:   27:    sum = count_number_1_in_byte(N);
 call    0 returned 100%
-        1:   27:    printf("sum of number 1 in %d is %d.\n", N, sum);
+        1:   28:    printf("sum of number 1 in %d is %d.\n", N, sum);
 call    0 returned 100%
-        1:   28:    return EXIT_SUCCESS;
-        -:   29:}
+        1:   29:    return EXIT_SUCCESS;
+        -:   30:}
