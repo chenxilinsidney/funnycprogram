@@ -1,7 +1,8 @@
 /**
  * @file generate_random_data.c
- * @brief generate random data:list 0 to pow(10, N) different numbers by line.
- * your should input the value N and generate counts.
+ * @brief generate random data:generate different numbers by line to
+ * random_data.txt.
+ * your should input the max value and generate counts.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2014-12-29
