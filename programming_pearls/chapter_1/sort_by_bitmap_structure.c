@@ -19,9 +19,12 @@
 
 typedef uint32 TYPE;
 /// max random data value
-#define max_value 10000000
+#define max_value      10000000
 /// bitmap structure initialize to empty
-#define bitmap_length (unsigned)(max_value + 31) >> 5
+#define bitmap_bits          32
+#define bitmap_shift          5
+#define bitmap_mask        0x1F
+#define bitmap_length ((unsigned)((max_value)+(bitmap_bits)-1)>>(bitmap_shift))
 TYPE bitmap_structure[bitmap_length] = {0};
 int main(void) {
     /// insert present elements into the set
@@ -37,8 +40,8 @@ int main(void) {
     /// set bitmap structure
     TYPE i, j;
     TYPE value;
-    while(scanf("%u\n", &value) == 1) {
-        bitmap_structure[value / 32] |= 1 << (value % 32);
+    while(fscanf(fr, "%u\n", &value) == 1) {
+        bitmap_structure[value >> bitmap_shift] |= 1 << (value & bitmap_mask);
     }
     /// close read data file
     if(fclose(fr) != 0) {
@@ -60,9 +63,9 @@ int main(void) {
     }
     /// write sorted data to file
     for(i = 0; i < bitmap_length; i++) {
-        for(j = 0; j < 32; j++) {
+        for(j = 0; j < bitmap_bits; j++) {
             if(bitmap_structure[i] & (1 << value)) {
-                fprintf(fw, "%u\n", (i << 5) + j);
+                fprintf(fw, "%u\n", (i << bitmap_shift) + j);
             }
         }
     }
