@@ -26,10 +26,10 @@ int main(void) {
     /// get max value
     /// to use "%" operater with rand(), max value should less than RAND_MAX
     printf("MAX VALUE of the random number: %u\n", (unsigned)RAND_MAX - 1);
-    printf("Please input the max value(included) of the random number: ");
+    printf("Please input the max value(excluded) of the random number: ");
     if(scanf("%u", &max_value) != 1) {
         DEBUG_PRINT_STATE;
-        DEBUG_PRINT_STRING("can not get the right max value.\n");
+        DEBUG_PRINT_STRING("can not get the right max value(excluded).\n");
         DEBUG_PRINT_VALUE("%u", max_value);
         fflush(stdout);
         assert(0);
@@ -66,7 +66,7 @@ int main(void) {
     for(index = 0; index < random_number; index++) {
         TYPE flag = 1;
         while(flag) {
-            list[index] = rand() % (max_value + 1);
+            list[index] = rand() % max_value;
             flag = 0;
             for(k = 0; k < index; k++) {
                 if(list[k] == list[index]) {
