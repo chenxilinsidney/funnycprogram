@@ -22,6 +22,7 @@ typedef unsigned int TYPE;
 int main(void) {
     TYPE max_value = 0;
     TYPE random_number = 0;
+    TYPE flag_can_repeat = 0;
     TYPE index, k;
     /// get max value
     /// to use "%" operater with rand(), max value should less than RAND_MAX
@@ -59,21 +60,43 @@ int main(void) {
         assert(0);
         exit(EXIT_FAILURE);
     }
+    printf("Please choose if data can be same in them(input 1(YES)/0(NO):");
+    if(scanf("%u", &flag_can_repeat) != 1) {
+        DEBUG_PRINT_STATE;
+        DEBUG_PRINT_STRING("can not get the choice.\n");
+        DEBUG_PRINT_VALUE("%u", flag_can_repeat);
+        fflush(stdout);
+        assert(0);
+        exit(EXIT_FAILURE);
+    } else if(flag_can_repeat != 0 && flag_can_repeat != 1) {
+        DEBUG_PRINT_STATE;
+        DEBUG_PRINT_STRING("can not get right choice(1 or 2).\n");
+        DEBUG_PRINT_VALUE("%u", flag_can_repeat);
+        fflush(stdout);
+        assert(0);
+        exit(EXIT_FAILURE);
+    }
     /// generate random number
     TYPE* list = SMALLOC(random_number, TYPE);
     srand(time(NULL));
     printf("start generating random numbers...........\n");
-    for(index = 0; index < random_number; index++) {
-        TYPE flag = 1;
-        while(flag) {
-            list[index] = rand() % max_value;
-            flag = 0;
-            for(k = 0; k < index; k++) {
-                if(list[k] == list[index]) {
-                    flag = 1;
-                    break;
+    if(flag_can_repeat) {
+        for(index = 0; index < random_number; index++) {
+            TYPE flag = 1;
+            while(flag) {
+                list[index] = rand() % max_value;
+                flag = 0;
+                for(k = 0; k < index; k++) {
+                    if(list[k] == list[index]) {
+                        flag = 1;
+                        break;
+                    }
                 }
             }
+        }
+    } else {
+        for(index = 0; index < random_number; index++) {
+            list[index] = rand() % max_value;
         }
     }
     /// write data to file
