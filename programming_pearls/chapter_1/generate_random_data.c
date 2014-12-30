@@ -75,7 +75,6 @@ int main(void) {
                 }
             }
         }
-        printf("generated numbers %u: %u.\n", index, list[index]);
     }
     /// write data to file
     FILE* fp = fopen("random_data.txt", "w");
