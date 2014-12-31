@@ -30,3 +30,11 @@
 
 # Ctag
 tags
+
+# gcov
+*.gcov
+
+# gprof
+*.gcda
+*.gcno
+gmon.out

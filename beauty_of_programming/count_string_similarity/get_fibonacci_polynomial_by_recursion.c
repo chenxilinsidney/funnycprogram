@@ -2,7 +2,7 @@
  * @file get_fibonacci_polynomial_by_recursion.c
  * @brief get the nth member of the fibonacci sequence by recursion.
  * the fibonacci sequence index begin from 0th:
- * 1, 1, 2, 3, 5, 8, 13, 21, 35....
+ * 1, 1, 2, 3, 5, 8, 13, 21, 34....
  * @author chenxilinsidney
  * @version 1.0
  * @date 2014-12-31
