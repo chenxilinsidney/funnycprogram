@@ -1,0 +1,80 @@
+        -:    0:Source:count_string_similarity_v1.c
+        -:    0:Graph:count_string_similarity_v1.gcno
+        -:    0:Data:count_string_similarity_v1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**
+        -:    2: * @file count_string_similarity_v1.c
+        -:    3: * @brief count the similarity between two strings by recursion.
+        -:    4: * @author chenxilinsidney
+        -:    5: * @version 1.0
+        -:    6: * @date 2014-12-31
+        -:    7: */
+        -:    8:
+        -:    9:#include <stdlib.h>
+        -:   10:#include <stdio.h>
+        -:   11:#include <string.h>
+        -:   12:
+        -:   13:// min macro, warning: can not use with '++' and '--' operator
+        -:   14:#ifndef MIN
+        -:   15:#define MIN(a, b) ((a) < (b) ? (a) : (b))
+        -:   16:#endif
+        -:   17:typedef int TYPE;
+        -:   18:
+function calculate_string_distance called 6 returned 100% blocks executed 47%
+        6:   19:TYPE calculate_string_distance(char* str_a, TYPE a_begin, TYPE a_end,
+        -:   20:        char* str_b, TYPE b_begin, TYPE b_end)
+        -:   21:{
+        6:   22:    if(a_begin > a_end) {
+branch  0 taken 17% (fallthrough)
+branch  1 taken 83%
+        1:   23:        if(b_begin > b_end)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   24:            return 0;
+        -:   25:        else
+    #####:   26:            return b_end - b_begin + 1;
+        -:   27:    }
+        5:   28:    if(b_begin > b_end) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   29:        if(a_begin > a_end)
+branch  0 never executed
+branch  1 never executed
+    #####:   30:            return 0;
+        -:   31:        else
+    #####:   32:            return a_end - a_begin + 1;
+        -:   33:    }
+        5:   34:    if(str_a[a_begin] == str_b[b_begin]) {
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        5:   35:        return calculate_string_distance(str_a, a_begin + 1, a_end,
+call    0 returned 100%
+        -:   36:                str_b, b_begin + 1, b_end);
+        -:   37:    } else {
+    #####:   38:        TYPE d_1 = calculate_string_distance(str_a, a_begin + 1, a_end,
+call    0 never executed
+        -:   39:                str_b, b_begin, b_end);
+    #####:   40:        TYPE d_2 = calculate_string_distance(str_a, a_begin, a_end,
+call    0 never executed
+        -:   41:                str_b, b_begin + 1, b_end);
+    #####:   42:        TYPE d_3 = calculate_string_distance(str_a, a_begin + 1, a_end,
+call    0 never executed
+        -:   43:                str_b, b_begin + 1, b_end);
+    #####:   44:        return MIN(MIN(d_1, d_2), d_3) + 1;
+        -:   45:    }
+        -:   46:}
+        -:   47:
+function main called 1 returned 100% blocks executed 100%
+        1:   48:int main(void)
+        -:   49:{
+        1:   50:    char* string_a = "agdf";
+        1:   51:    char* string_b = "agdf";
+        1:   52:    TYPE distance = calculate_string_distance(string_a, 0, strlen(string_a),
+call    0 returned 100%
+        1:   53:            string_b, 0, strlen(string_b));
+        1:   54:    printf("string %s and string %s\ndistance: %d similarity: %f\n",
+call    0 returned 100%
+        1:   55:            string_a, string_b, distance, 1 / ((double)distance + 1));
+        1:   56:    return EXIT_SUCCESS;
+        -:   57:}
