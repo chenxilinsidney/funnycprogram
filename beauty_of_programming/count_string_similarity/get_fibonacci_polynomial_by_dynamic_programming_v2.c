@@ -18,7 +18,7 @@
 
 typedef int TYPE;
 
-#define NUM  7
+#define NUM  8
 
 TYPE fib(TYPE index)
 {
