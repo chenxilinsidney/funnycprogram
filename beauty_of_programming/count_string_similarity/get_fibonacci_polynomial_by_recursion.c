@@ -10,16 +10,19 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+// #define NDEBUG
+#include <assert.h>
 
 // #define NDBG_PRINT
 #include "debug_print.h"
 
 typedef int TYPE;
 
-#define NUM  5
+#define NUM  4
 
 TYPE fib(TYPE index)
 {
+    assert(index >= 0);
     DEBUG_PRINT_STRING("In recursion now.\n");
     DEBUG_PRINT_VALUE("%d", index);
     if(index == 0 || index == 1) {

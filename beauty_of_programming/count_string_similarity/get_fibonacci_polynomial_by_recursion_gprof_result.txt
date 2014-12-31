@@ -46,10 +46,10 @@ notice and this notice are preserved.
 granularity: each sample hit covers 2 byte(s) no time propagated
 
 index % time    self  children    called     name
-                                  14             fib [1]
+                                   8             fib [1]
                 0.00    0.00       1/1           main [14]
-[1]      0.0    0.00    0.00       1+14      fib [1]
-                                  14             fib [1]
+[1]      0.0    0.00    0.00       1+8       fib [1]
+                                   8             fib [1]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by

@@ -1,0 +1,6 @@
+*.txt
+*.gcda
+*.gcno
+*.gcov
+gmon.out
+tags

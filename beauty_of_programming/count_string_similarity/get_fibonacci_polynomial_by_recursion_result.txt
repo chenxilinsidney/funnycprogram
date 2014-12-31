@@ -1,6 +1,4 @@
-index = 5
-In recursion now.
-value index = 5
+index = 4
 In recursion now.
 value index = 4
 In recursion now.
@@ -46,32 +44,4 @@ Out recursion now.
 value temp = 5
 value index = 4
 Out recursion now.
-In recursion now.
-value index = 3
-In recursion now.
-value index = 2
-In recursion now.
-value index = 1
-get first and second index 0/1.
-value index = 1
-Out recursion now.
-In recursion now.
-value index = 0
-get first and second index 0/1.
-value index = 0
-Out recursion now.
-value temp = 2
-value index = 2
-Out recursion now.
-In recursion now.
-value index = 1
-get first and second index 0/1.
-value index = 1
-Out recursion now.
-value temp = 3
-value index = 3
-Out recursion now.
-value temp = 8
-value index = 5
-Out recursion now.
-fib = 8
+fib = 5

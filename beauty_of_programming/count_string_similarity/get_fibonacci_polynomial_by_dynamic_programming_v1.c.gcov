@@ -1,0 +1,82 @@
+        -:    0:Source:get_fibonacci_polynomial_by_dynamic_programming_v1.c
+        -:    0:Graph:get_fibonacci_polynomial_by_dynamic_programming_v1.gcno
+        -:    0:Data:get_fibonacci_polynomial_by_dynamic_programming_v1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**
+        -:    2: * @file get_fibonacci_polynomial_by_dynamic_programming.c
+        -:    3: * @brief get the nth member of the fibonacci sequence by dynamic programming.
+        -:    4: * using the top-down approach.
+        -:    5: * the fibonacci sequence index begin from 0th:
+        -:    6: * 1, 1, 2, 3, 5, 8, 13, 21, 35....
+        -:    7: * @author chenxilinsidney
+        -:    8: * @version 1.0
+        -:    9: * @date 2014-12-31
+        -:   10: */
+        -:   11:
+        -:   12:#include <stdlib.h>
+        -:   13:#include <stdio.h>
+        -:   14:// #define NDEBUG
+        -:   15:#include <assert.h>
+        -:   16:
+        -:   17:// #define NDBG_PRINT
+        -:   18:#include "debug_print.h"
+        -:   19:
+        -:   20:typedef int TYPE;
+        -:   21:
+        -:   22:#define NUM  40
+        -:   23:TYPE cache[NUM] = {1, 1};
+        -:   24:
+function fib called 79 returned 100% blocks executed 95%
+       79:   25:TYPE fib(TYPE index)
+        -:   26:{
+       79:   27:    assert(index >= 0);
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+call    2 never executed
+       79:   28:    DEBUG_PRINT_STRING("In recursion now.\n");
+call    0 returned 100%
+       79:   29:    DEBUG_PRINT_VALUE("%d", index);
+call    0 returned 100%
+        -:   30:    static TYPE cache_count = 2;
+       79:   31:    if(index < cache_count) {
+branch  0 taken 51% (fallthrough)
+branch  1 taken 49%
+       40:   32:        DEBUG_PRINT_STRING("get value from cache.\n");
+call    0 returned 100%
+       40:   33:        DEBUG_PRINT_VALUE("%d", cache[index]);
+call    0 returned 100%
+       40:   34:        DEBUG_PRINT_VALUE("%d", index);
+call    0 returned 100%
+       40:   35:        DEBUG_PRINT_STRING("Out recursion now.\n");
+call    0 returned 100%
+       40:   36:        return cache[index];
+        -:   37:    } else {
+       39:   38:        cache[index] = fib(index - 1) + fib(index - 2);
+call    0 returned 100%
+call    1 returned 100%
+       39:   39:        DEBUG_PRINT_VALUE("%d", cache_count);
+call    0 returned 100%
+       39:   40:        cache_count++;
+       39:   41:        DEBUG_PRINT_STRING("set value to cache.\n");
+call    0 returned 100%
+       39:   42:        DEBUG_PRINT_VALUE("%d", cache[index]);
+call    0 returned 100%
+       39:   43:        DEBUG_PRINT_VALUE("%d", index);
+call    0 returned 100%
+       39:   44:        DEBUG_PRINT_STRING("Out recursion now.\n");
+call    0 returned 100%
+       39:   45:        return cache[index];
+        -:   46:    }
+        -:   47:}
+        -:   48:
+function main called 1 returned 100% blocks executed 100%
+        1:   49:int main(void)
+        -:   50:{
+        1:   51:    printf("index = %d\n", NUM);
+call    0 returned 100%
+        1:   52:    printf("fib = %d\n", fib(NUM));
+call    0 returned 100%
+call    1 returned 100%
+        1:   53:    return EXIT_SUCCESS;
+        -:   54:}
