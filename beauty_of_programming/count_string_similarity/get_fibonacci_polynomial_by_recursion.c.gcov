@@ -1,0 +1,68 @@
+        -:    0:Source:get_fibonacci_polynomial_by_recursion.c
+        -:    0:Graph:get_fibonacci_polynomial_by_recursion.gcno
+        -:    0:Data:get_fibonacci_polynomial_by_recursion.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**
+        -:    2: * @file get_fibonacci_polynomial_by_recursion.c
+        -:    3: * @brief get the nth member of the fibonacci sequence by recursion.
+        -:    4: * the fibonacci sequence index begin from 0th:
+        -:    5: * 1, 1, 2, 3, 5, 8, 13, 21, 35....
+        -:    6: * @author chenxilinsidney
+        -:    7: * @version 1.0
+        -:    8: * @date 2014-12-31
+        -:    9: */
+        -:   10:
+        -:   11:#include <stdlib.h>
+        -:   12:#include <stdio.h>
+        -:   13:
+        -:   14:// #define NDBG_PRINT
+        -:   15:#include "debug_print.h"
+        -:   16:
+        -:   17:typedef int TYPE;
+        -:   18:
+        -:   19:#define NUM  5
+        -:   20:
+function fib called 15 returned 100% blocks executed 100%
+       15:   21:TYPE fib(TYPE index)
+        -:   22:{
+       15:   23:    DEBUG_PRINT_STRING("In recursion now.\n");
+call    0 returned 100%
+       15:   24:    DEBUG_PRINT_VALUE("%d", index);
+call    0 returned 100%
+       15:   25:    if(index == 0 || index == 1) {
+branch  0 taken 80% (fallthrough)
+branch  1 taken 20%
+branch  2 taken 42% (fallthrough)
+branch  3 taken 58%
+        8:   26:        DEBUG_PRINT_STRING("get first and second index 0/1.\n");
+call    0 returned 100%
+        8:   27:        DEBUG_PRINT_VALUE("%d", index);
+call    0 returned 100%
+        8:   28:        DEBUG_PRINT_STRING("Out recursion now.\n");
+call    0 returned 100%
+        8:   29:        return 1;
+        -:   30:    } else {
+        7:   31:        TYPE temp = fib(index - 1) + fib(index - 2);
+call    0 returned 100%
+call    1 returned 100%
+        7:   32:        DEBUG_PRINT_VALUE("%d", temp);
+call    0 returned 100%
+        7:   33:        DEBUG_PRINT_VALUE("%d", index);
+call    0 returned 100%
+        7:   34:        DEBUG_PRINT_STRING("Out recursion now.\n");
+call    0 returned 100%
+        7:   35:        return temp;
+        -:   36:    }
+        -:   37:}
+        -:   38:
+function main called 1 returned 100% blocks executed 100%
+        1:   39:int main(void)
+        -:   40:{
+        1:   41:    printf("index = %d\n", NUM);
+call    0 returned 100%
+        1:   42:    printf("fib = %d\n", fib(NUM));
+call    0 returned 100%
+call    1 returned 100%
+        1:   43:    return EXIT_SUCCESS;
+        -:   44:}
