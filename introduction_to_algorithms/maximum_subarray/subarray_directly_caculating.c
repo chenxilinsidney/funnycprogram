@@ -1,6 +1,6 @@
 /**
- * @file directly_calculating.c
- * @brief directly cacluating the max money.
+ * @file subarray_directly_calculating.c
+ * @brief directly cacluating the max subarray.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-03
@@ -32,28 +32,46 @@ int main(void) {
     }
     TYPE* array = SCALLOC(count, TYPE);
     // read data to array
+    // get first value
+    TYPE temp;
+    if(scanf("%d\n", &temp) != 1) {
+        DEBUG_PRINT_STATE;
+        DEBUG_PRINT_STRING("can not get data.\n");
+        DEBUG_PRINT_VALUE("%d", temp);
+        fflush(stdout);
+        assert(0);
+        exit(EXIT_FAILURE);
+    }
+    // get differenct value
     TYPE i;
-    for(i = 0; i < count; i++) {
-        if(scanf("%d\n", array + i) != 1) {
+    TYPE current;
+    for(i = 0; i < count - 1; i++) {
+        if(scanf("%d\n", &current) != 1) {
             DEBUG_PRINT_STATE;
             DEBUG_PRINT_STRING("can not get data.\n");
             DEBUG_PRINT_VALUE("%d", i);
-            DEBUG_PRINT_VALUE("%d", array[i]);
+            DEBUG_PRINT_VALUE("%d", current);
             fflush(stdout);
             assert(0);
             exit(EXIT_FAILURE);
         }
+        array[i] = current - temp;
+        temp = current;
+        DEBUG_PRINT_VALUE("%d", i);
+        DEBUG_PRINT_VALUE("%d", array[i]);
     }
+    count--;
     // directly cacluating
     TYPE j;
-    TYPE index_left, index_right, temp;
+    TYPE index_left, index_right;
     TYPE diff_max = INT_MIN;
     for(i = 0; i < count - 1; i++) {
+        temp = array[i];
         for(j = i + 1; j < count; j++) {
-            if((temp = array[j] - array[i]) > diff_max) {
+            if((temp += array[j]) > diff_max) {
                 diff_max = temp;
                 index_left = i;
-                index_right = j;
+                index_right = j + 1;
             }
         }
     }
