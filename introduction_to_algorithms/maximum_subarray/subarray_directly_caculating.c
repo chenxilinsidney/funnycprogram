@@ -71,12 +71,12 @@ int main(void) {
             if((temp += array[j]) > diff_max) {
                 diff_max = temp;
                 index_left = i;
-                index_right = j + 1;
+                index_right = j;
             }
         }
     }
     // output result
     printf("max different value = %d\n", diff_max);
-    printf("index in array: %d to %d\n", index_left, index_right);
+    printf("index in array: %d to %d\n", index_left, index_right + 1);
     return EXIT_SUCCESS;
 }
