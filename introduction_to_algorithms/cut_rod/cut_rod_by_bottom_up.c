@@ -34,7 +34,6 @@ TYPE rod_cut_by_memoized(TYPE* rod_price,
         TYPE rod_length)
 {
     TYPE memoized_cache[ROD_PRICE_LENGTH + 1] = {0};
-    TYPE memoized_cache[ROD_PRICE_LENGTH + 1] = {0};
     TYPE i, j;
     for (i = 1; i <= rod_length; i++) {
         memoized_cache[i] = INT_MIN;
