@@ -30,20 +30,21 @@ TYPE rod_price[ROD_PRICE_LENGTH] = {1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
  *
  * @return max rod price
  */
-TYPE rod_cut_by_recursion(TYPE* rod_price,
+TYPE rod_cut_by_memoized(TYPE* rod_price,
         TYPE rod_length)
 {
-    if (rod_length == 0)
-        return 0;
-    TYPE i;
-    TYPE max = INT_MIN;
-    for (i = 0; i < rod_length; i++) {
-        TYPE temp = rod_cut_by_recursion(rod_price,
-                rod_length - i - 1) + rod_price[i];
-        if (temp > max)
-            max = temp;
+    TYPE memoized_cache[ROD_PRICE_LENGTH + 1] = {0};
+    TYPE memoized_cache[ROD_PRICE_LENGTH + 1] = {0};
+    TYPE i, j;
+    for (i = 1; i <= rod_length; i++) {
+        memoized_cache[i] = INT_MIN;
+        for (j = 0; j <= i - 1; j++) {
+            TYPE temp = memoized_cache[i - j - 1] + rod_price[j];
+            if (memoized_cache[i] < temp)
+                memoized_cache[i] = temp;
+        }
     }
-    return max;
+    return memoized_cache[rod_length];
 }
 
 int main(void) {
@@ -51,7 +52,7 @@ int main(void) {
     TYPE rod_length = 8;
     assert(rod_length >= 1 && rod_length <= ROD_PRICE_LENGTH);
     // get maximum rod price by cutting rod
-    TYPE max_total_price = rod_cut_by_recursion(rod_price,
+    TYPE max_total_price = rod_cut_by_memoized(rod_price,
             rod_length);
     // output result
     printf("max total price = %d\n", max_total_price);
