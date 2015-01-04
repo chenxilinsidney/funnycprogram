@@ -42,7 +42,7 @@ int main(void) {
         assert(0);
         exit(EXIT_FAILURE);
     }
-    // get differenct value
+    // get difference value
     TYPE i;
     TYPE current;
     for(i = 0; i < count - 1; i++) {
@@ -65,9 +65,12 @@ int main(void) {
     TYPE j;
     TYPE index_left, index_right;
     TYPE diff_max = INT_MIN;
+    // 起始累加位置循环
     for(i = 0; i < count - 1; i++) {
         temp = array[i];
+        // 结束累加位置循环
         for(j = i + 1; j < count; j++) {
+            // 存储最大子数组
             if((temp += array[j]) > diff_max) {
                 diff_max = temp;
                 index_left = i;
