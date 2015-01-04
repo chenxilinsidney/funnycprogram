@@ -181,5 +181,6 @@ int main(void) {
     printf("max different value = %d\n", data_final.sum_max);
     printf("index in array: %d to %d\n", data_final.index_begin,
             data_final.index_end + 1);
+    SFREE(&array);
     return EXIT_SUCCESS;
 }
