@@ -1,6 +1,7 @@
 /**
- * @file cut_rod_by_recursion.c
- * @brief get maximum price of cut rod by recursion.
+ * @file cut_rod_by_memoized_v1.c
+ * @brief get maximum price of cut rod by dynamic programming with
+ * top-down with memoization method.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-04
@@ -23,10 +24,9 @@ TYPE rod_price[ROD_PRICE_LENGTH] = {1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
 TYPE memoized_cache[ROD_PRICE_LENGTH + 1] = {0};
 
 /**
- * @brief get max rod price by cutting rod by recursion method.
+ * @brief get max rod price by cutting rod by top-down with memoization method.
  *
  * @param rod_price rod price list for each type of different length
- * @param rod_price_length rod price list length
  * @param rod_length given rod length
  *
  * @return max rod price
