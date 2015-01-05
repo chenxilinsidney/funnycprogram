@@ -1,7 +1,7 @@
 /**
  * @file get_fibonacci_polynomial_by_dynamic_programming.c
  * @brief get the nth member of the fibonacci sequence by dynamic programming.
- * using the bottom-up approach.
+ * with bottom-up method.
  * the fibonacci sequence index begin from 0th:
  * 1, 1, 2, 3, 5, 8, 13, 21, 34....
  * @author chenxilinsidney
@@ -18,21 +18,19 @@
 
 typedef int TYPE;
 
-#define NUM  8
+#define NUM  9
 
 TYPE fib(TYPE index)
 {
     assert(index >= 0);
     TYPE cachs_prevous[2] = {1, 1};
-    TYPE cachs_current;
     TYPE i;
     if(index == 0 || index == 1)
         return 1;
     for(i = 2; i <= index; i++) {
-        cachs_current = cachs_prevous[0] + cachs_prevous[1];
-        cachs_prevous[i & 1] = cachs_current;
+        cachs_prevous[i & 1] = cachs_prevous[0] + cachs_prevous[1];
     }
-    return cachs_current;
+    return cachs_prevous[(--i) & 1];
 }
 
 int main(void)
