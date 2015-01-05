@@ -1,5 +1,5 @@
 /**
- * @file get_fibonacci_polynomial_by_dynamic_programming.c
+ * @file get_fibonacci_polynomial_by_memoized.c
  * @brief get the nth member of the fibonacci sequence by dynamic programming.
  * with top-down with memoization method.
  * the fibonacci sequence index begin from 0th:
