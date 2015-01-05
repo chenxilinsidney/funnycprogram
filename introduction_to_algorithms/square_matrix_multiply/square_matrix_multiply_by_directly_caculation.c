@@ -27,7 +27,16 @@ TYPE matrix_a[M*N] = {1, 0, 3, 5};
 TYPE matrix_b[N*P] = {3, 1, 2, 2};
 TYPE matrix_c[M*P] = {0}; 
 
-
+/**
+ * @brief get matrix C from C = A*B
+ *
+ * @param matrix_A matrix input A
+ * @param matrix_B matrix input B
+ * @param matrix_C matrix output C
+ * @param size_M matrix A size:M * N
+ * @param size_N matrix B size:N * P
+ * @param size_P matrix C size:M * P
+ */
 void square_matrix_multiply(TYPE* matrix_A,
         TYPE* matrix_B,
         TYPE* matrix_C,
@@ -38,6 +47,7 @@ void square_matrix_multiply(TYPE* matrix_A,
     TYPE i, j, k;
     for (i = 0; i < size_M; i++) {
         for (j = 0; j < size_P; j++) {
+                matrix_C[i * size_P + j] = 0;
             for (k = 0; k < size_N; k++) {
                 matrix_C[i * size_P + j] +=
                     matrix_A[i * size_N + k] * matrix_B[k * size_P + j];
