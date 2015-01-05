@@ -19,12 +19,12 @@
 typedef int TYPE;
 
 /// matrix size
-#define M 2
-#define N 2
-#define P 2
+#define M 4
+#define N 4
+#define P 4
 /// matrix A, B, C
-TYPE matrix_a[M*N] = {1, 0, 3, 5};
-TYPE matrix_b[N*P] = {3, 1, 2, 2};
+TYPE matrix_a[M*N] = {1, 0, 3, 3, 3, 5, 3, 4, 2, 4, 1, 5, 7, 5, 2, 0};
+TYPE matrix_b[N*P] = {3, 1, 3, 4, 2, 2, 1, 5, 3, 4, 4, 2, 6, 4, 9, 4};
 TYPE matrix_c[M*P] = {0}; 
 
 /**
