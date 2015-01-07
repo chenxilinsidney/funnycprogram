@@ -1,6 +1,6 @@
 /**
- * @file sort_by_select.c
- * @brief sort sequence by selection sort method.
+ * @file sort_by_bubble.c
+ * @brief sort sequence by bubble sort method.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-07
@@ -20,19 +20,16 @@ typedef int TYPE;
 #define MAX_COUNT      100000
 TYPE array[MAX_COUNT] = {0};
 
-void select_sort(TYPE* array, TYPE count)
+void bubble_sort(TYPE* array, TYPE count)
 {
     TYPE i,j;
     for (i = 0; i < count - 1; i++) {
-        TYPE min_index = i;
-        TYPE temp = array[i];
         for (j = i + 1; j < count; j++) {
-            if (array[j] < temp)
-                min_index = j;
-        }
-        if (min_index != i) {
-            array[i] = array[min_index];
-            array[min_index] = temp;
+            if (array[j] < array[i]) {
+                TYPE temp = array[j];
+                array[j] = array[i];
+                array[i] = temp;
+            }
         }
     }
 }
@@ -61,7 +58,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
     /// sort data
-    select_sort(array, count);
+    bubble_sort(array, count);
     /// set write data file
     FILE* fw = fopen("sorted_data.txt","w");
     if(fw == NULL) {
