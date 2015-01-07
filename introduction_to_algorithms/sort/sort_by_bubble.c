@@ -22,13 +22,16 @@ TYPE array[MAX_COUNT] = {0};
 
 void bubble_sort(TYPE* array, TYPE count)
 {
-    TYPE i,j;
-    for (i = 0; i < count - 1; i++) {
-        for (j = i + 1; j < count; j++) {
-            if (array[j] < array[i]) {
-                TYPE temp = array[j];
-                array[j] = array[i];
-                array[i] = temp;
+    TYPE i;
+    TYPE flag_repeat = 1;
+    while (flag_repeat) {
+        flag_repeat = 0;
+        for (i = 0; i < count - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                TYPE temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
+                flag_repeat = 1;
             }
         }
     }
