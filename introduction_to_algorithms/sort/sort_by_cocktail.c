@@ -20,7 +20,7 @@ typedef int TYPE;
 #define MAX_COUNT      100000
 TYPE array[MAX_COUNT] = {0};
 
-void bubble_sort(TYPE* array, TYPE count)
+void cocktail_sort(TYPE* array, TYPE count)
 {
     TYPE i;
     TYPE flag_repeat = 1;
@@ -84,7 +84,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
     /// sort data
-    bubble_sort(array, count);
+    cocktail_sort(array, count);
     /// set write data file
     FILE* fw = fopen("sorted_data.txt","w");
     if(fw == NULL) {
