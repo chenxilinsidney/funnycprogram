@@ -37,6 +37,7 @@ void bubble_sort(TYPE* array, TYPE count)
                 flag_repeat = i;
             }
         }
+        /// new count for comparison
         current_count = flag_repeat;
     }
 }
