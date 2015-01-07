@@ -1,6 +1,6 @@
 /**
  * @file sort_by_insert.c
- * @brief sort sequence by insertion sort method.
+ * @brief sort sequence by selection sort method.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-07
@@ -17,21 +17,23 @@
 
 typedef int TYPE;
 
-#define MAX_COUNT      10000
+#define MAX_COUNT      100000
 TYPE array[MAX_COUNT] = {0};
 
-void insert_sort(TYPE* array, TYPE count)
+void select_sort(TYPE* array, TYPE count)
 {
-    TYPE i,j, key;
-    for (i = 1; i < count; i++) {
-        key = array[i];
-        j = i - 1;
-        while (j >= 0 && key < array[j]) {
-            array[j + 1] = array[j];
-            j--;
+    TYPE i,j;
+    for (i = 0; i < count - 1; i++) {
+        TYPE min_index = i;
+        TYPE temp = array[i];
+        for (j = i + 1; j < count; j++) {
+            if (array[j] < temp)
+                min_index = j;
         }
-        ++j;
-        array[j] = key;
+        if (min_index != i) {
+            array[i] = array[min_index];
+            array[min_index] = temp;
+        }
     }
 }
 
@@ -59,7 +61,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
     /// sort data
-    insert_sort(array, count);
+    select_sort(array, count);
     /// set write data file
     FILE* fw = fopen("sorted_data.txt","w");
     if(fw == NULL) {
