@@ -38,3 +38,6 @@ tags
 *.gcda
 *.gcno
 gmon.out
+
+# result
+*result.txt
