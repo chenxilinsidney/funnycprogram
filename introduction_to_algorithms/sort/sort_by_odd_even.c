@@ -24,12 +24,11 @@ void odd_even_sort(TYPE* array, TYPE count)
 {
     TYPE i;
     TYPE flag_repeat = 1;
-    TYPE current_count = count - 1;
     /// repeated until no swaps
     while (flag_repeat) {
         flag_repeat = 0;
         /// pass by odd
-        for (i = 1; i < current_count; i += 2) {
+        for (i = 1; i < count - 1; i += 2) {
             /// compares adjacent items and swaps them if in wrong order.
             if (array[i] > array[i + 1]) {
                 TYPE temp = array[i];
@@ -38,7 +37,8 @@ void odd_even_sort(TYPE* array, TYPE count)
                 flag_repeat = i;
             }
         }
-        for (i = 0; i < current_count; i += 2) {
+        /// pass by even
+        for (i = 0; i < count - 1; i += 2) {
             /// compares adjacent items and swaps them if in wrong order.
             if (array[i] > array[i + 1]) {
                 TYPE temp = array[i];
