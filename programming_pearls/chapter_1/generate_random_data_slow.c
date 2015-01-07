@@ -80,7 +80,7 @@ int main(void) {
     TYPE* list = SMALLOC(random_number, TYPE);
     srand(time(NULL));
     printf("start generating random numbers...........\n");
-    if(flag_can_repeat) {
+    if(!flag_can_repeat) {
         for(index = 0; index < random_number; index++) {
             TYPE flag = 1;
             while(flag) {
