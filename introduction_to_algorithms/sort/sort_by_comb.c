@@ -31,9 +31,8 @@ void comb_sort(TYPE* array, TYPE count)
     /// repeated until no swaps
     while (gap != 1 || flag_repeat) {
         /// update gap from shrink
-        gap /= shrink;
-        if (gap < 1)
-            gap = 1;  ///< minimum gap
+        if (gap > 1)  ///< minimum gap = 1
+            gap /= shrink;
         flag_repeat = 0;
         for (i = 0; i < count - gap; i++) {
             /// compares 'comb' items and swaps them if in wrong order.
