@@ -32,7 +32,6 @@ void comb_sort(TYPE* array, TYPE count)
     while (gap != 1 || flag_repeat) {
         /// update gap from shrink
         gap /= shrink;
-        DEBUG_PRINT_VALUE("%d\n", gap);
         if (gap < 1)
             gap = 1;  ///< minimum gap
         flag_repeat = 0;
