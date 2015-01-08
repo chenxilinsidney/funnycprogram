@@ -8,11 +8,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-// #define NDEBUG
+#define NDEBUG
 #include <assert.h>
 
 #include "memory.h"
-// #define NDBG_PRINT
+#define NDBG_PRINT
 #include "debug_print.h"
 
 typedef int TYPE;
@@ -23,9 +23,17 @@ TYPE array[MAX_COUNT] = {0};
 void gnome_sort(TYPE* array, TYPE count)
 {
     TYPE i = 0;
+    TYPE pos_last = 0;
     /// repeated until move to end
     while (i < count - 1) {
         if (array[i] <= array[i + 1]) {
+            /// if have saved position before, set to it.
+            if (pos_last != 0) {
+                DEBUG_PRINT_STRING("last pos get.\n");
+                DEBUG_PRINT_VALUE("%d", pos_last);
+                i = pos_last;
+                pos_last = 0;
+            }
             /// move forward
             i++;
         } else {
@@ -33,7 +41,19 @@ void gnome_sort(TYPE* array, TYPE count)
             TYPE temp = array[i];
             array[i] = array[i + 1];
             array[i + 1] = temp;
-            i--;
+            /// i can not smaller than 0
+            if (i > 0) {
+                /// save position at first time
+                if (pos_last == 0) {
+                    DEBUG_PRINT_STRING("last pos set.\n");
+                    DEBUG_PRINT_VALUE("%d", pos_last);
+                    pos_last = i;
+                }
+                /// move backward
+                i--;
+            } else {
+                i++;
+            }
         }
     }
 }
