@@ -23,11 +23,13 @@ TYPE array[MAX_COUNT] = {0};
 void gnome_sort(TYPE* array, TYPE count)
 {
     TYPE i = 0;
-    /// repeated until max index
+    /// repeated until move to end
     while (i < count - 1) {
         if (array[i] <= array[i + 1]) {
+            /// move forward
             i++;
         } else {
+            /// swap and move backward
             TYPE temp = array[i];
             array[i] = array[i + 1];
             array[i + 1] = temp;
