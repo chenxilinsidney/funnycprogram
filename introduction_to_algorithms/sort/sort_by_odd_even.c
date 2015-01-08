@@ -34,7 +34,7 @@ void odd_even_sort(TYPE* array, TYPE count)
                 TYPE temp = array[i];
                 array[i] = array[i + 1];
                 array[i + 1] = temp;
-                flag_repeat = i;
+                flag_repeat = 1;
             }
         }
         /// pass by even
@@ -44,7 +44,7 @@ void odd_even_sort(TYPE* array, TYPE count)
                 TYPE temp = array[i];
                 array[i] = array[i + 1];
                 array[i + 1] = temp;
-                flag_repeat = i;
+                flag_repeat = 1;
             }
         }
     }
