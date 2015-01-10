@@ -17,20 +17,23 @@
 
 typedef int TYPE;
 
-#define MAX_COUNT      10000
+#define MAX_COUNT      100000
 TYPE array[MAX_COUNT] = {0};
 
 void insert_sort(TYPE* array, TYPE count)
 {
     TYPE i,j, key;
+    /// check the other elements after the head element.
     for (i = 1; i < count; i++) {
+        /// save the element temp
         key = array[i];
-        j = i - 1;
-        while (j >= 0 && key < array[j]) {
-            array[j + 1] = array[j];
+        /// move the elements one by one.
+        j = i;
+        while (j > 0 && key < array[j - 1]) {
+            array[j] = array[j - 1];
             j--;
         }
-        ++j;
+        /// insert the elment
         array[j] = key;
     }
 }
