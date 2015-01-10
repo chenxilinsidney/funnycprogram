@@ -22,7 +22,7 @@ TYPE array[MAX_COUNT] = {0};
 
 void cocktail_sort(TYPE* array, TYPE count)
 {
-    TYPE i;
+    TYPE i, temp;
     TYPE flag_repeat = 1;
     TYPE begin = 0;
     TYPE end = count - 1;
@@ -33,7 +33,7 @@ void cocktail_sort(TYPE* array, TYPE count)
         for (i = begin; i < end; i++) {
             /// compares adjacent items and swaps them if in wrong order.
             if (array[i] > array[i + 1]) {
-                TYPE temp = array[i];
+                temp = array[i];
                 array[i] = array[i + 1];
                 array[i + 1] = temp;
                 flag_repeat = i;
@@ -49,7 +49,7 @@ void cocktail_sort(TYPE* array, TYPE count)
         for (i = end; i > begin; i--) {
             /// compares adjacent items and swaps them if in wrong order.
             if (array[i] < array[i - 1]) {
-                TYPE temp = array[i];
+                temp = array[i];
                 array[i] = array[i - 1];
                 array[i - 1] = temp;
                 flag_repeat = i;

@@ -35,17 +35,17 @@ TYPE array[MAX_COUNT] = {0};
  */
 TYPE partition(TYPE* array, TYPE index_begin, TYPE index_end)
 {
-    /// select last element of the array as pivot
+    /// pick last element of the array as the pivot
     TYPE pivot = array[index_end];
     /// index of the elments that not greater than pivot
     TYPE i = index_begin - 1;
-    TYPE j;
+    TYPE j, temp;
     /// check array's elment one by one
     for (j = index_begin; j < index_end; j++) {
         if (array[j] <= pivot) {
             /// save the elements not greater than pivot to left index of i.
             i++;
-            TYPE temp = array[j];
+            temp = array[j];
             array[j] = array[i];
             array[i] = temp;
         }

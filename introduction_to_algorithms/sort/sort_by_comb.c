@@ -22,7 +22,7 @@ TYPE array[MAX_COUNT] = {0};
 
 void comb_sort(TYPE* array, TYPE count)
 {
-    TYPE i;
+    TYPE i, temp;
     TYPE flag_repeat = 1;
     /// initialize gap size
     TYPE gap = count;
@@ -37,7 +37,7 @@ void comb_sort(TYPE* array, TYPE count)
         for (i = 0; i < count - gap; i++) {
             /// compares 'comb' items and swaps them if in wrong order.
             if (array[i] > array[i + gap]) {
-                TYPE temp = array[i];
+                temp = array[i];
                 array[i] = array[i + gap];
                 array[i + gap] = temp;
                 flag_repeat = 1;

@@ -22,7 +22,7 @@ TYPE array[MAX_COUNT] = {0};
 
 void gnome_sort(TYPE* array, TYPE count)
 {
-    TYPE i = 0;
+    TYPE i = 0, temp;
     TYPE pos_last = 0;
     /// repeated until move to end
     while (i < count - 1) {
@@ -38,7 +38,7 @@ void gnome_sort(TYPE* array, TYPE count)
             i++;
         } else {
             /// swap and move backward
-            TYPE temp = array[i];
+            temp = array[i];
             array[i] = array[i + 1];
             array[i + 1] = temp;
             /// i can not smaller than 0

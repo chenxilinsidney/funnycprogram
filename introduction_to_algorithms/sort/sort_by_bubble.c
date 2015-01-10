@@ -22,7 +22,7 @@ TYPE array[MAX_COUNT] = {0};
 
 void bubble_sort(TYPE* array, TYPE count)
 {
-    TYPE i;
+    TYPE i, temp;
     TYPE flag_repeat = 1;
     TYPE current_count = count - 1;
     /// repeated until no swaps
@@ -31,7 +31,7 @@ void bubble_sort(TYPE* array, TYPE count)
         for (i = 0; i < current_count; i++) {
             /// compares adjacent items and swaps them if in wrong order.
             if (array[i] > array[i + 1]) {
-                TYPE temp = array[i];
+                temp = array[i];
                 array[i] = array[i + 1];
                 array[i + 1] = temp;
                 flag_repeat = i;
