@@ -1,2 +1,0 @@
-string agdf and string agdf
-distance: 0 similarity: 1.000000

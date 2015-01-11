@@ -47,8 +47,8 @@ TYPE calculate_string_distance(char* str_a, TYPE a_begin, TYPE a_end,
 
 int main(void)
 {
-    char* string_a = "agdf";
-    char* string_b = "agdf";
+    char* string_a = "dsfetrtegh";
+    char* string_b = "sdfgerwefe";
     TYPE distance = calculate_string_distance(string_a, 0, strlen(string_a),
             string_b, 0, strlen(string_b));
     printf("string %s and string %s\ndistance: %d similarity: %f\n",
