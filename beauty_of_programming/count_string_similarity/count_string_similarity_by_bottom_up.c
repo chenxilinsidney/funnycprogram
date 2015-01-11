@@ -44,7 +44,7 @@ TYPE calculate_string_distance_by_bottom_up(char* str_a, TYPE a_length,
         for (j = 0; j < b_length; j++) {
             /// save offet pointer
             cache_offset = memoized_cache + (b_length + 1) * i + j;
-            if (str_a[a_length - i - 1] == str_b[b_length - j - 1]) {
+            if (str_a[i] == str_b[j]) {
                 /// use old distance if same word
                 cache_offset[b_length + 1 + 1] =
                     cache_offset[0];
