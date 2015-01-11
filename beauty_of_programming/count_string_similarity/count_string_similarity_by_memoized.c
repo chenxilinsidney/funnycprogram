@@ -54,41 +54,6 @@ TYPE calculate_string_distance(char* str_a, TYPE a_begin, TYPE a_end,
         DEBUG_PRINT_STRING("Out of Recursion\n");
         return value_temp;
     }
-    /// check if index of string a or b exceeds their length.
-    if(a_begin > a_end) {
-        if(b_begin > b_end) {
-            DEBUG_PRINT_STRING("set distance to cache!\n");
-            DEBUG_PRINT_VALUE("%d", a_begin);
-            DEBUG_PRINT_VALUE("%d", b_begin);
-            cache[a_begin * cache_width + b_begin] = 0;
-            DEBUG_PRINT_STRING("Out of Recursion\n");
-            return 0;
-        } else {
-            DEBUG_PRINT_STRING("set distance to cache!\n");
-            DEBUG_PRINT_VALUE("%d", a_begin);
-            DEBUG_PRINT_VALUE("%d", b_begin);
-            cache[a_begin * cache_width + b_begin] = b_end - b_begin + 1;
-            DEBUG_PRINT_STRING("Out of Recursion\n");
-            return b_end - b_begin + 1;
-        }
-    }
-    if(b_begin > b_end) {
-        if(a_begin > a_end) {
-            DEBUG_PRINT_STRING("set distance to cache!\n");
-            DEBUG_PRINT_VALUE("%d", a_begin);
-            DEBUG_PRINT_VALUE("%d", b_begin);
-            cache[a_begin * cache_width + b_begin] = 0;
-            DEBUG_PRINT_STRING("Out of Recursion\n");
-            return 0;
-        } else {
-            DEBUG_PRINT_STRING("set distance to cache!\n");
-            DEBUG_PRINT_VALUE("%d", a_begin);
-            DEBUG_PRINT_VALUE("%d", b_begin);
-            cache[a_begin * cache_width + b_begin] = a_end - a_begin + 1;
-            DEBUG_PRINT_STRING("Out of Recursion\n");
-            return a_end - a_begin + 1;
-        }
-    }
     /// check if the begin value by index of a and b are equal
     if(str_a[a_begin] == str_b[b_begin]) {
         DEBUG_PRINT_STRING("have same word\n");
