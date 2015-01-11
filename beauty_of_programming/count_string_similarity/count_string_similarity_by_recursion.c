@@ -1,5 +1,5 @@
 /**
- * @file count_string_similarity_v1.c
+ * @file count_string_similarity_by_recursion.c
  * @brief count the similarity between two strings by recursion.
  * @author chenxilinsidney
  * @version 1.0

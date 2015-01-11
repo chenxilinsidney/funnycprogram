@@ -17,7 +17,7 @@ if [ "$extension" = "c" ]; then
     # -pg for gprof
     # -fprofile-arcs -ftest-coverage for gcov
     # -Wall for warnings
-    gcc -Wall -pg -fprofile-arcs -ftest-coverage -o $binaryname $1 -lm;
+    gcc -Wall -pg -fprofile-arcs -ftest-coverage -o $binaryname memory.c $1 -lm;
     echo "compiling $1 done"
 fi
 
