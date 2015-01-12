@@ -1,7 +1,7 @@
 /**
- * @file count_zero_of_factorial_by_factorization.c
+ * @file count_zero_of_factorial_by_formula.c
  * @brief count the zero numbers at the end of number which is
- * caculated by factorial of N by math factorization.
+ * caculated by factorial of N by formula.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-11
@@ -21,15 +21,9 @@ TYPE count_zero_of_factorial(TYPE N)
 {
     assert(N >= 1);
     TYPE count = 0;
-    TYPE i, j;
-    /// count all value
-    for (i = 1; i <= N; i++) {
-        j = i;
-        /// count factorization for number 5
-        while (j % 5 == 0) {
-            count++;
-            j /= 5;
-        }
+    /// count by formula
+    while (N /= 5) {
+        count += N;
     }
     return count;
 }

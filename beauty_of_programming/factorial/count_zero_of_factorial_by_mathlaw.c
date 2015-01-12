@@ -1,5 +1,5 @@
 /**
- * @file count_zero_of_factorial.c
+ * @file count_zero_of_factorial_by_mathlaw.c
  * @brief count the zero numbers at the end of number which is
  * caculated by factorial of N by math law.
  * @author chenxilinsidney
