@@ -82,19 +82,20 @@ void quick_sort(TYPE* array, TYPE index_begin, TYPE index_end)
  * @param[in]      array  sorted sequence
  * @param[in]      count  sequence length
  *
- * @return the element that repeats max time
+ * @return the max element that repeats max time
  */
 TYPE search_max_repeated_element(TYPE* array, TYPE count)
 {
-    TYPE i, count_temp, value_temp;
+    TYPE count_temp, value_temp;
     TYPE max_value = array[0];
     TYPE max_count = 0;
-    for (i = 0; i < count; i++) {
+    TYPE i = 0;
+    while (i < count) {
         value_temp = array[i];
-        count_temp = 0;
+        count_temp = 1;
         while (array[++i] == value_temp)
             count_temp++;
-        if (count_temp > max_count) {
+        if (count_temp >= max_count) {
             max_count = count_temp;
             max_value = value_temp;
         }
