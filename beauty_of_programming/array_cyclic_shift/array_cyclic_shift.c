@@ -58,15 +58,20 @@ void array_cyclic_shift(TYPE* array, TYPE count, TYPE right_shift)
     assert(array != NULL && right_shift >= 0 && count >= 1);
     /// let right shift smaller than count
     right_shift %= count;
-    TYPE i, k, temp, test;
-    test = gcd(right_shift, count);
-    for (k = 0; k < test; k++) {
+    TYPE i, k, temp;
+    /// get the gcd value from right_shift and count to set cyclic shift times
+    TYPE cyclic_count = gcd(right_shift, count);
+    for (k = 0; k < cyclic_count; k++) {
+        /// index begin from the top value
         i = count - 1 - k;
+        /// save top value to buffer
         temp =  array[i];
+        /// set value to value right_shift distance before it in a cycle
         while (((i - right_shift + count) % count) != count - 1 - k) {
             array[i] = array[(i - right_shift + count) % count];
             i = (i - right_shift + count) % count;
         }
+        /// set last value from buffer
         array[i] = temp;
     }
     return;
