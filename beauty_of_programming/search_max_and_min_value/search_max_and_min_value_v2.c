@@ -55,13 +55,12 @@ void search_max_and_min_value(TYPE* array, TYPE count, TYPE* max, TYPE* min)
     } else {
         /// if N is an even number.
         /// compare first two element and set max and min value 1 times
-        if (array[0] > array[1]) {
-            *max = array[0];
-            *min = array[1];
-        } else {
-            *max = array[1];
-            *min = array[0];
+        if (array[0] < array[1]) {
+            /// save large value to even position, small value to odd position.
+            swap(array, array + 1);
         }
+        *max = array[0];
+        *min = array[1];
         i = 2;
     }
     /// if N is odd, each compare times=[N/2], else each compare times=[(N-2)/2]

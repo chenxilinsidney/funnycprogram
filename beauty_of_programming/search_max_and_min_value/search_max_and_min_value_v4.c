@@ -24,7 +24,6 @@ TYPE array[MAX_COUNT] = {0};
  * @brief search the maximum and minimum value in the array
  *
  * @param[in]      array  sequence for search
- * @param[in]      count  sequence length
  * @param[in]      index_begin index begin of array(included)
  * @param[in]      index_end   index end of array(included)
  * @param[out]     max    maximum value from the sequence
@@ -34,7 +33,8 @@ void search_max_and_min_value(TYPE* array,
         TYPE index_begin, TYPE index_end,
         TYPE* max, TYPE* min)
 {
-    assert(max != NULL && min != NULL);
+    assert(array != NULL && max != NULL && min != NULL);
+    assert(index_begin <= index_end);
     /// the minimum array comparison
     if (index_end - index_begin <= 1) {
         if (array[index_end] < array[index_begin]) {

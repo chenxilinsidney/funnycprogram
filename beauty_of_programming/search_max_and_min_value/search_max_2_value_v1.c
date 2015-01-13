@@ -31,47 +31,62 @@ TYPE array[MAX_COUNT] = {0};
 void search_max_2_value(TYPE* array, TYPE count,
         TYPE* max_first, TYPE* max_second)
 {
-    assert(max_first != NULL && max_second != NULL && count >= 1);
-    /// initialize max_first and second max_second value
-    *max_first = INT_MIN + 1;
-    *max_second = INT_MIN;
+    assert(array != NULL && max_first != NULL && max_second != NULL &&
+            count >= 1);
     TYPE i;
-    for (i = 0; i < count - 1; i += 2) {
-        /// compare between odd and even position value for N/2 times(N=count).
-        TYPE a, b;
-        if (array[i] == array[i + 1]) {
-            a = array[i];
-            if (*max_first < a) {
-                *max_second = *max_first;
-                *max_first = a;
-            } else if (*max_first > a) {
-                *max_second = *max_second > a ? *max_second : a;
+    /// initialize max_first and max_second value
+    if ((count & 0x1) == 1) {
+        /// if N is an odd number.
+        /// set max_first and max_second value as first element
+        *max_first = array[0];
+        *max_second = INT_MIN;
+        i = 1;
+    } else {
+        /// if N is an even number.
+        /// compare first two element,set max_first and max_second value 1 times
+        if (array[0] > array[1]) {
+            *max_first = array[0];
+            *max_second = array[1];
+        } else {
+            *max_first = array[1];
+            *max_second = array[0];
+        }
+        i = 2;
+    }
+    /// if N is odd, each compare times=[N/2], else each compare times=[(N-2)/2]
+    for ( ; i < count - 1; i += 2) {
+        /// compare odd with even position value.
+        if (array[i] > array[i + 1]) {
+            if (array[i] > *max_first) {
+                /// update max_second value
+                if (array[i + 1] > *max_first)
+                    *max_second = array[i + 1];
+                else
+                    *max_second = *max_first;
+                /// update max_first value
+                *max_first = array[i];
+            } else {
+                /// update max_second value
+                if (array[i] > *max_second)
+                    *max_second = array[i];
             }
         } else {
-            if (array[i] > array[i + 1]) {
-                a = array[i];
-                b = array[i + 1];
-            } else if (array[i] < array[i + 1]) {
-                a = array[i + 1];
-                b = array[i];
-            }
-            if (*max_first < a) {
-                *max_second = *max_first > b ? *max_first : b;
-                *max_first = a;
-            } else if (*max_first > a) {
-                *max_second = *max_second > a ? *max_second : a;
+            if (array[i + 1] > *max_first) {
+                /// update max_second value
+                if (array[i] > *max_first)
+                    *max_second = array[i];
+                else
+                    *max_second = *max_first;
+                /// update max_first value
+                *max_first = array[i + 1];
             } else {
-                *max_second = *max_second > b ? *max_second : b;
+                /// update max_second value
+                if (array[i + 1] > *max_second)
+                    *max_second = array[i + 1];
             }
         }
-        // DEBUG_PRINT_VALUE("%d", *max_first);
-        // DEBUG_PRINT_VALUE("%d", *max_second);
-        // DEBUG_PRINT_VALUE("%d", i);
     }
-    if (*max_second == INT_MIN) {
-        DEBUG_PRINT_STRING("second max value does not exist!\n");
-        DEBUG_PRINT_STATE;
-    }
+    return;
 }
 
 int main(void) {
