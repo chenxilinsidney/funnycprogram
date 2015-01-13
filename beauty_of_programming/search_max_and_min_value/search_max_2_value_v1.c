@@ -38,16 +38,14 @@ void search_max_2_value(TYPE* array, TYPE count,
     TYPE i;
     for (i = 0; i < count - 1; i += 2) {
         /// compare between odd and even position value for N/2 times(N=count).
-        TYPE a, b, temp;
+        TYPE a, b;
         if (array[i] == array[i + 1]) {
             a = array[i];
-            if (a != *max_first) {
-                if (*max_first < a) {
-                    *max_second = *max_first;
-                    *max_first = a;
-                } else {
-                    *max_second = *max_second > a ? *max_second : a;
-                }
+            if (*max_first < a) {
+                *max_second = *max_first;
+                *max_first = a;
+            } else if (*max_first > a) {
+                *max_second = *max_second > a ? *max_second : a;
             }
         } else {
             if (array[i] > array[i + 1]) {
@@ -57,13 +55,11 @@ void search_max_2_value(TYPE* array, TYPE count,
                 a = array[i + 1];
                 b = array[i];
             }
-            if (a != *max_first) {
-                temp = *max_first;
-                *max_first = *max_first > a ? *max_first : a;
-                if (*max_first == a) 
-                    *max_second = temp > b ? temp : b;
-                else
-                    *max_second = *max_second > a ? *max_second : a;
+            if (*max_first < a) {
+                *max_second = *max_first > b ? *max_first : b;
+                *max_first = a;
+            } else if (*max_first > a) {
+                *max_second = *max_second > a ? *max_second : a;
             } else {
                 *max_second = *max_second > b ? *max_second : b;
             }
@@ -71,6 +67,10 @@ void search_max_2_value(TYPE* array, TYPE count,
         // DEBUG_PRINT_VALUE("%d", *max_first);
         // DEBUG_PRINT_VALUE("%d", *max_second);
         // DEBUG_PRINT_VALUE("%d", i);
+    }
+    if (*max_second == INT_MIN) {
+        DEBUG_PRINT_STRING("second max value does not exist!\n");
+        DEBUG_PRINT_STATE;
     }
 }
 

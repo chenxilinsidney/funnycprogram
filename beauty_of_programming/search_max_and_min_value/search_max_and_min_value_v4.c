@@ -48,10 +48,7 @@ void search_max_and_min_value(TYPE* array,
     }
     /// divide array to small problem
     TYPE middle = index_begin + ((unsigned)(index_end - index_begin) >> 1);
-    TYPE max_left = INT_MIN;
-    TYPE max_right = INT_MIN;
-    TYPE min_left = INT_MAX;
-    TYPE min_right = INT_MAX;
+    TYPE max_left, max_right, min_left, min_right;
     search_max_and_min_value(array, index_begin, middle,
             &max_left, &min_left);
     search_max_and_min_value(array, middle + 1, index_end,
@@ -75,8 +72,8 @@ int main(void) {
         ++count;
     }
     /// search maximum and minimum value
-    TYPE max = INT_MIN;
-    TYPE min = INT_MAX;
+    TYPE max;
+    TYPE min;
     search_max_and_min_value(array, 0, count - 1, &max, &min);
     /// output result
     printf("max element is %d\n", max);

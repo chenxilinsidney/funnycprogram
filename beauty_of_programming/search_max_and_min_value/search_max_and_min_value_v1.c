@@ -30,20 +30,19 @@ TYPE array[MAX_COUNT] = {0};
  */
 void search_max_and_min_value(TYPE* array, TYPE count, TYPE* max, TYPE* min)
 {
-    assert(max != NULL && min != NULL && count >= 1);
+    assert(array != NULL && max != NULL && min != NULL && count >= 1);
     /// initialize max and min value
-    *max = INT_MIN;
-    *min = INT_MAX;
+    *max = array[0];
+    *min = array[0];
     TYPE i;
-    for (i = 0; i < count; i++) {
-        /// compare with max value for N times(N = count).
-        if (array[i] >= *max)
+    for (i = 1; i < count; i++) {
+        /// compare with max value for N - 1 times(N = count).
+        if (array[i] > *max)
             *max = array[i];
-        /// compare with min value for N times(N = count).
-        if (array[i] <= *min)
+        /// compare with min value for N - 1 times(N = count).
+        if (array[i] < *min)
             *min = array[i];
     }
-    /// totally compare 2N times(N = count).
     return;
 }
 

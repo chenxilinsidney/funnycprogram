@@ -43,34 +43,42 @@ static void swap(TYPE* p_a, TYPE* p_b)
  */
 void search_max_and_min_value(TYPE* array, TYPE count, TYPE* max, TYPE* min)
 {
-    assert(max != NULL && min != NULL && count >= 1);
-    /// initialize max and min value
-    *max = INT_MIN;
-    *min = INT_MAX;
+    assert(array != NULL && max != NULL && min != NULL && count >= 1);
     TYPE i;
-    for (i = 0; i < count - 1; i += 2) {
-        /// compare between odd and even position value for N/2 times(N=count).
-        if (array[i] <= array[i + 1])
+    /// initialize max and min value
+    if ((count & 0x1) == 1) {
+        /// if N is an odd number.
+        /// set max and min value as first element
+        *max = array[0];
+        *min = array[0];
+        i = 1;
+    } else {
+        /// if N is an even number.
+        /// compare first two element and set max and min value 1 times
+        if (array[0] > array[1]) {
+            *max = array[0];
+            *min = array[1];
+        } else {
+            *max = array[1];
+            *min = array[0];
+        }
+        i = 2;
+    }
+    /// if N is odd, each compare times=[N/2], else each compare times=[(N-2)/2]
+    for ( ; i < count - 1; i += 2) {
+        /// compare odd with even position value.
+        if (array[i] < array[i + 1])
             /// save large value to even position, small value to odd position.
             swap(array + i, array + i + 1);
-        /// compare in even position value to get max value for N/2 times.
-        if (array[i] >= *max)
+        /// compare in even position value to get max value.
+        if (array[i] > *max)
             /// save maximum value
             *max = array[i];
-        /// compare in odd position value to get min value for N/2 times.
-        if (array[i + 1] <= *min)
+        /// compare in odd position value to get min value.
+        if (array[i + 1] < *min)
             /// save minimum value
             *min = array[i + 1];
     }
-    /// should not forget the last value if N is an odd number.
-    if ((count & 0x1) == 1) {
-        /// compare last value with max and min value for 2 times.
-        if (array[count - 1] >= *max)
-            *max = array[count - 1];
-        if (array[count - 1] <= *min)
-            *min = array[count - 1];
-    }
-    /// totally compare 1.5N times(N = count).swap times no more than N/2
     return;
 }
 
