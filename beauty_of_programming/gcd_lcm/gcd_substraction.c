@@ -1,5 +1,5 @@
 /**
- * @file gcd_euclidean_algorithm.c
+ * @file gcd_substraction.c
  * @brief get greatest common divisor(gcd) for two input values.
  * @author chenxilinsidney
  * @version 1.0
@@ -35,9 +35,11 @@ TYPE gcd(TYPE m, TYPE n)
         m = n;
         n = temp;
     }
-    /// euclidean algorithm
-    while (n != 0) {
-        temp = m % n;
+    /// subtraction
+    while (m != n) {
+        while (m > n)
+            m -= n;
+        temp = m;
         m = n;
         n = temp;
     }
