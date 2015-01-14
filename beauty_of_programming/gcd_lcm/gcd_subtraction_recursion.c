@@ -1,5 +1,5 @@
 /**
- * @file gcd_substraction.c
+ * @file gcd_subtraction_recursion.c
  * @brief get greatest common divisor(gcd) for two input values.
  * @author chenxilinsidney
  * @version 1.0
@@ -28,22 +28,12 @@ TYPE gcd(TYPE m, TYPE n)
 {
     /// m and n range limits
     assert(m >= 0 && n >= 0);
-    /// make m large than n
-    TYPE temp;
-    if (m < n) {
-        temp = m;
-        m = n;
-        n = temp;
-    }
-    /// subtraction
-    while (m != n) {
-        while (m > n)
-            m -= n;
-        temp = m;
-        m = n;
-        n = temp;
-    }
-    return m;
+    if (m < n)
+        return gcd(n, m);
+    else if (n == 0)
+        return m;
+    else
+        return gcd(m - n, n);
 }
 
 int main(void) {
