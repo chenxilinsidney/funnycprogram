@@ -28,13 +28,6 @@ TYPE gcd(TYPE m, TYPE n)
 {
     /// m and n range limits
     assert(m >= 0 && n >= 0);
-    /// make m large than n
-    TYPE temp;
-    if (m < n) {
-        temp = m;
-        m = n;
-        n = temp;
-    }
     /// subtraction
     while (m != n) {
         while (m > n)
@@ -43,6 +36,7 @@ TYPE gcd(TYPE m, TYPE n)
         m = n;
         n = temp;
     }
+    TYPE temp;
     return m;
 }
 

@@ -28,14 +28,8 @@ TYPE gcd(TYPE m, TYPE n)
 {
     /// m and n range limits
     assert(m >= 0 && n >= 0);
-    /// make m large than n
-    TYPE temp;
-    if (m < n) {
-        temp = m;
-        m = n;
-        n = temp;
-    }
     /// euclidean algorithm
+    TYPE temp;
     while (n != 0) {
         temp = m % n;
         m = n;
