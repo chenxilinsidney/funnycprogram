@@ -1,5 +1,5 @@
 /**
- * @file gcd_binary.c
+ * @file gcd_binary_recursion.c
  * @brief get greatest common divisor(gcd) for two input values.
  * @author chenxilinsidney
  * @version 1.0
@@ -28,40 +28,21 @@ TYPE gcd(TYPE m, TYPE n)
 {
     /// m and n range limits
     assert(m >= 0 && n >= 0);
-    /// make m large than n
-    TYPE temp;
-    if (m < n) {
-        temp = m;
-        m = n;
-        n = temp;
+    if (m < n)
+        return gcd(n, m);
+    else if (n == 0)
+        return m;
+    if (m & 1) {
+        if (n & 1)
+            return gcd(n, (m - n) >> 1);
+        else
+            return gcd(m, n >> 1);
+    } else {
+        if (n & 1)
+            return gcd(m >> 1, n);
+        else
+            return gcd(m >> 1, n >> 1) << 1;
     }
-    /// binary method
-    TYPE shift_value = 0;
-    while (n != 0) {
-        if (m < n) {
-            temp = m;
-            m = n;
-            n = temp;
-        }
-        if (m & 1) {
-            if (n & 1) {
-                temp = (m - n) >> 1;
-                m = n;
-                n = temp;
-            } else {
-                n >>= 1;
-            }
-        } else {
-            if (n & 1) {
-                m >>= 1;
-            } else {
-                shift_value++;
-                m >>= 1;
-                n >>= 1;
-            }
-        }
-    }
-    return m << shift_value;
 }
 
 int main(void) {
