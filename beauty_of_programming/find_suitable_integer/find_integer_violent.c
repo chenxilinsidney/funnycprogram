@@ -50,6 +50,7 @@ TYPE find_suitable_value(TYPE N)
         /// increase M
         M++;
     }
+    assert(M <= 0);
     return --M;
 }
 

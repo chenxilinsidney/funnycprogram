@@ -37,6 +37,7 @@ TYPE find_suitable_value(TYPE N)
         temp = binary;
         multiple = 0;
         count = 1;
+        /// binary form '110' to decimal form '110'(different value instead)
         while (temp) {
             multiple += (temp & 1) * count;
             count *= 10;
@@ -44,6 +45,7 @@ TYPE find_suitable_value(TYPE N)
         }
     }
     DEBUG_PRINT_VALUE("%d", multiple);
+    assert(multiple <= 0);
     return multiple / N;
 }
 
