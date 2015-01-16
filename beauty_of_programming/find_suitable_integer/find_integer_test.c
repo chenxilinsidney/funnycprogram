@@ -31,8 +31,8 @@ TYPE find_suitable_value(TYPE N)
     /// input should be positive integer
     assert(N > 0);
     /// for an multiple
-    TYPE temp, count, multiple = 1, binary = 0;
-    while (multiple % N != 0) {
+    TYPE temp, count, multiple = 1, binary = 1;
+    do {
         binary++;
         temp = binary;
         multiple = 0;
@@ -43,9 +43,8 @@ TYPE find_suitable_value(TYPE N)
             count *= 10;
             temp >>= 1;
         }
-    }
-    DEBUG_PRINT_VALUE("%d", multiple);
-    assert(multiple <= 0);
+    } while (multiple % N != 0);
+    assert((multiple / N) > 1);
     return multiple / N;
 }
 

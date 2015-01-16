@@ -31,7 +31,7 @@ TYPE find_suitable_value(TYPE N)
     /// input should be positive integer
     assert(N > 0);
     /// get positive integer M
-    TYPE M = 1;
+    TYPE M = 2;
     TYPE multiple;
     TYPE flag_get = 0;
     while (!flag_get) {
@@ -50,7 +50,7 @@ TYPE find_suitable_value(TYPE N)
         /// increase M
         M++;
     }
-    assert(M <= 0);
+    assert(M > 1);
     return --M;
 }
 
