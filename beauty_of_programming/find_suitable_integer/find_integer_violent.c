@@ -16,7 +16,7 @@
 // #define NDBG_PRINT
 #include "debug_print.h"
 
-typedef unsigned int TYPE;
+typedef unsigned long TYPE;
 
 /**
  * @brief input positive integer N, get the least positive integer
@@ -31,10 +31,10 @@ TYPE find_suitable_value(TYPE N)
     /// input should be positive integer
     assert(N > 0);
     /// get positive integer M
-    TYPE M = 2;
-    TYPE multiple;
-    TYPE flag_get = 0;
+    TYPE multiple, M = 1, flag_get = 0;
     while (!flag_get) {
+        /// increase M
+        M++;
         /// set flag
         flag_get = 1;
         /// get multiple of M and N
@@ -47,21 +47,28 @@ TYPE find_suitable_value(TYPE N)
             }
             multiple /= 10;
         }
-        /// increase M
-        M++;
     }
-    assert(M > 1);
-    return --M;
+    /// M exceed the range of data type
+    if (M == 0) {
+        DEBUG_PRINT_STATE;
+        DEBUG_PRINT_STRING("can not find value M because out of range\n");
+        fflush(stdout);
+        assert(0);
+        exit(EXIT_FAILURE);
+    }
+    return M;
 }
 
 int main(void) {
+    /// print max M
+    printf("max ouput value: %lu\n", ULONG_MAX);
     /// get value N
     TYPE value;
     printf("input the positive integer: ");
-    if(scanf("%u", &value) != 1 || value <= 0) {
+    if(scanf("%lu", &value) != 1 || value <= 0) {
         DEBUG_PRINT_STATE;
         DEBUG_PRINT_STRING("can not get the right value.\n");
-        DEBUG_PRINT_VALUE("%u", value);
+        DEBUG_PRINT_VALUE("%lu", value);
         fflush(stdout);
         assert(0);
         exit(EXIT_FAILURE);
@@ -69,6 +76,6 @@ int main(void) {
     /// get value M
     TYPE result = find_suitable_value(value);
     /// output result
-    printf("the least positive integer: %d\n", result);
+    printf("the least positive integer: %lu\n", result);
     return EXIT_SUCCESS;
 }
