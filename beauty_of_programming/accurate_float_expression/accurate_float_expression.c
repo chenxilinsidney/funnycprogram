@@ -10,7 +10,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 // #define NDEBUG
 #include <assert.h>
 
@@ -49,6 +48,21 @@ TYPE gcd(TYPE m, TYPE n)
 }
 
 /**
+ * @brief get pow(10, num) as in math.h
+ *
+ * @param[in] num power value
+ *
+ * @return power result
+ */
+TYPE ten_pow(TYPE num)
+{
+    assert(num >= 0);
+    TYPE pow = 1;
+    while (num--) pow *= 10;
+    return pow;
+}
+
+/**
  * @brief count the decimal number digit
  *
  * @param[in]     decimal_number input number
@@ -58,8 +72,7 @@ TYPE gcd(TYPE m, TYPE n)
 TYPE count_decimal_digit(TYPE decimal_number)
 {
     TYPE digit = 1;
-    while((decimal_number /= 10) != 0)
-        digit++;
+    while((decimal_number /= 10) != 0) digit++;
     return digit;
 }
 
@@ -90,12 +103,12 @@ void accurate_float_expression(TYPE value_integer, TYPE value_decimal,
     }
     /// get denominator and numerator
     if (value_repeating == 0) {
-        *denominator = pow(10, digit_decimal);
+        *denominator = ten_pow(digit_decimal);
         *numerator = value_integer * *denominator + value_decimal;
     } else {
-        *denominator = pow(10, digit_decimal) * (pow(10, digit_repeating) - 1);
+        *denominator = ten_pow(digit_decimal) * (ten_pow(digit_repeating) - 1);
         *numerator = value_integer * *denominator + value_repeating +
-            value_decimal * (pow(10, digit_repeating) - 1);
+            value_decimal * (ten_pow(digit_repeating) - 1);
     }
     /// get gcd of denominator and numerator
     TYPE value_gcd = gcd(*denominator, *numerator);
