@@ -24,6 +24,8 @@ void InitList(SqList* L);
 Status ListEmpty(SqList* L);
 /// clear list
 void ClearList(SqList* L);
+/// get list length
+CommonType ListLength(SqList* L);
 /// get element from the list
 Status GetElem(SqList* L, CommonType index, ElementType* e);
 /// locate element of the index
@@ -32,7 +34,5 @@ CommonType LocateElem(SqList* L, ElementType e);
 Status ListInsert(SqList* L, CommonType index, ElementType e);
 /// delete element from the list
 Status ListDelete(SqList* L, CommonType index, ElementTypElementType* e);
-/// get list length
-CommonType ListLength(SqList* L);
 
 #endif  // __SQLIST_STATIC_H__

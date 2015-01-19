@@ -17,7 +17,7 @@
  */
 void InitList(SqList* L)
 {
-    assert(L != NULL && L->length >= 0);
+    assert(L != NULL);
     /// initialize length only, ignore the list data
     L->length = 0;
     return OK;
@@ -48,9 +48,22 @@ Status ListEmpty(SqList* L)
  */
 void ClearList(SqList* L)
 {
-    assert(L != NULL && L->length >= 0);
+    assert(L != NULL);
     /// set length only, ignore the list data
     L->length = 0;
+}
+
+/**
+ * @brief  get list length.
+ *
+ * @param[in]      L     list struct pointer
+ *
+ * @return list length
+ */
+CommonType ListLength(SqList* L)
+{
+    assert(L != NULL && L->length >= 0);
+    return L->length;
 }
 
 /**
@@ -150,17 +163,4 @@ Status ListDelete(SqList* L, CommonType index, ElementType* e)
     /// decrease list length
     L->length--;
     return OK;
-}
-
-/**
- * @brief  get list length.
- *
- * @param[in]      L     list struct pointer
- *
- * @return list length
- */
-CommonType ListLength(SqList* L)
-{
-    assert(L != NULL && L->length >= 0);
-    return L->length;
 }

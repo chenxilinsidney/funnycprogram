@@ -1,13 +1,13 @@
 /**
- * @file sqlist_dynamic.c
- * @brief dynamic sequence list method implements.
+ * @file linked_list_dynamic.c
+ * @brief dynamic linked list method implements.
  * The methods use <assert.h> to help debug the program.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-19
  */
 
-#include "sqlist_dynamic.h"
+#include "linked_list_dynamic.h"
 
 /**
  * @brief initialize the list.
@@ -50,11 +50,11 @@ void DestroyList(SqList* L)
  *
  * @return return TRUE if empty, else return FALSE
  */
-Status ListEmpty(SqList* L)
+Status ListEmpty(LinkList* L)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
-    /// always have length >= 0
-    if (L->length)
+    assert(L != NULL);
+    /// check the first data node
+    if ((*L)->next)
         return FALSE;
     else
         return TRUE;
@@ -66,11 +66,19 @@ Status ListEmpty(SqList* L)
  * @param[in,out]  L     list struct pointer
  *
  */
-void ClearList(SqList* L)
+void ClearList(LinkList* L)
 {
     assert(L != NULL);
-    /// set length only, ignore the list data
-    L->length = 0;
+    /// pointer to the first data node
+    LinkList q, p = (*L)->next;
+    /// free memory
+    while (p) {
+        q = p->next;
+        free(p);
+        p = q;
+    }
+    /// set first node pointer
+    (*L)->next = NULL;
 }
 
 /**
@@ -97,15 +105,23 @@ CommonType ListLength(SqList* L)
  *
  * @return return OK if success, else return ERROR
  */
-Status GetElem(SqList* L, CommonType index, ElementType* e)
+Status GetElem(LinkList* L, CommonType index, ElementType* e)
 {
-    assert(L != NULL && e != NULL && L->length >= 0 &&
-            L->length <= L->listsize);
-    /// index should be in reasonable range
-    if (index > L->length || index < 1)
+    assert(L != NULL && e != NULL);
+    /// pointer to the first data node
+    CommonType j = 1;
+    LinkList p = (*L)->next;
+    /// pointer to node of index
+    while (p && j < index) {
+        /// pointer to next node
+        p = p->next;
+        j++;
+    }
+    /// can not get the element by index
+    if(!p || j > index)
         return ERROR;
     /// get element from list
-    *e = L->data[index - 1];
+    *e = p->data;
     return OK;
 }
 
@@ -141,31 +157,26 @@ CommonType LocateElem(SqList* L, ElementType e)
  *
  * @return return OK if success, else return ERROR
  */
-Status ListInsert(SqList* L, CommonType index, ElementType e)
+Status ListInsert(LinkList* L, CommonType index, ElementType e)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
-    /// list length and index should be in reasonable range
-    if (index > (L->length + 1) || index < 1)
-        return ERROR;
-    /// malloc memory if not enough
-    if (L->length == L->listsize) {
-        ElementType* newbase = (ElementType*)realloc(
-                L->elem, (L->listsize + LIST_INCREMENT) * sizeof(ElementType));
-        if (newbase == NULL) {
-            assert(0);
-            exit(EXIT_FAILURE);
-        }
-        L->data = newbase;
-        L->listsize += LIST_INCREMENT;
+    assert(L != NULL);
+    CommonType j = 1;
+    /// pointer to the first node
+    LinkList s, p = *L;
+    /// pointer to node of index
+    while (p->next && j < index) {
+        p = p->next;
+        j++;
     }
-    /// move the element after the index position to next position
-    TYPE i;
-    for (i = L->length - 1; i >= index - 1; i--)
-        L->data[i + 1] = L->data[i];
-    /// increase list length
-    L->length++;
+    /// can not get the location by index
+    if(!p->next || j > index)
+        return ERROR;
+    /// malloc memory
+    s = (LinkList)malloc(sizeof(Node));
     /// insert element
-    L->data[index - 1] = e;
+    s->data = e;
+    s->next = p->next;
+    p->next = s;
     return OK;
 }
 
@@ -180,20 +191,24 @@ Status ListInsert(SqList* L, CommonType index, ElementType e)
  *
  * @return return OK and set e if success, else return ERROR
  */
-Status ListDelete(SqList* L, CommonType index, ElementType* e)
+Status ListDelete(LinkList* L, CommonType index, ElementType* e)
 {
-    assert(L != NULL && e != NULL && L->length >= 0 &&
-            L->length <= L->listsize);
-    /// index should be in reasonable range
-    if (index > L->length || index < 1)
+    assert(L != NULL && e != NULL);
+    CommonType j = 1;
+    /// pointer to the first node
+    LinkList q, p = *L;
+    /// pointer to node of index
+    while (p->next && j < index) {
+        p = p->next;
+        j++;
+    }
+    /// can not get the location by index
+    if (!(p->next) || j > index)
         return ERROR;
     /// get deleted element
-    *e = L->data[index];
-    /// move the element after the index position to previous position
-    TYPE i;
-    for (i = index; i < L->length; i++)
-        L->data[i - 1] = L->data[i];
-    /// decrease list length
-    L->length--;
+    q = p->next;
+    p->next = q->next;
+    *e = q->data;
+    free(q);
     return OK;
 }
