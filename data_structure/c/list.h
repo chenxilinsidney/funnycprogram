@@ -37,7 +37,7 @@
 
 /// data type, can be modified
 typedef int Status;         ///< status data type
-typedef int ElemType;       ///< element data type
+typedef int ElementType;    ///< element data type
 typedef int CommonType;     ///< common data type
 
 #endif  // __LIST_H__

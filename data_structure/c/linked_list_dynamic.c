@@ -10,21 +10,35 @@
 #include "linked_list_dynamic.h"
 
 /**
- * @brief initialize the list.
+ * @brief initialize the list.insert node in the head of list.
+ * The method can be alse modified to insert node in the tail
+ * of list.
  *
  * @param[in,out]  L     list struct pointer
+ * @param[in]      size  list data size
  *
  */
-void InitList(SqList* L)
+void InitList(LinkList* L, CommonType size)
 {
-    assert(L != NULL);
-    /// initialize length list size and malloc memory
-    if ((L->data = malloc(LIST_INIT_SIZE * sizeof(ElementType))) == NULL) {
+    assert(size >= 0);
+    /// initialize first node
+    if ((*L = (LinkList)malloc(sizeof(Node))) == NULL) {
         assert(0);
         exit(EXIT_FAILURE);
     }
-    L->length = 0;
-    L->listsize = LIST_INIT_SIZE;
+    (*L)->next = NULL;
+    /// initialize other node
+    LinkList new_node;
+    while (size--) {
+        /// add new node to the head of the list
+        if ((new_node = (LinkList)malloc(sizeof(Node))) == NULL) {
+            assert(0);
+            exit(EXIT_FAILURE);
+        }
+        new_node->data = 0;
+        new_node->next = (*L)->next;
+        (*L)->next = new_node;
+    }
 }
 
 /**
@@ -33,14 +47,19 @@ void InitList(SqList* L)
  * @param[in,out]  L     list struct pointer
  *
  */
-void DestroyList(SqList* L)
+void DestroyList(LinkList* L)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
-    /// clear length list size and free memory
-    free(L->data);
-    L->data = NULL;
-    L->length = 0;
-    L->listsize = 0;
+    assert(L != NULL);
+    /// pointer to the first node
+    LinkList q, p = (*L);
+    /// free memory
+    while (p) {
+        q = p->next;
+        free(p);
+        p = q;
+    }
+    /// set first node to null
+    *L = NULL;
 }
 
 /**
@@ -77,7 +96,7 @@ void ClearList(LinkList* L)
         free(p);
         p = q;
     }
-    /// set first node pointer
+    /// set first data node to NULL
     (*L)->next = NULL;
 }
 
@@ -88,10 +107,18 @@ void ClearList(LinkList* L)
  *
  * @return list length
  */
-CommonType ListLength(SqList* L)
+CommonType ListLength(LinkList* L)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
-    return L->length;
+    assert(L != NULL);
+    /// pointer to the first data node
+    CommonType length = 0;
+    LinkList p = (*L)->next;
+    /// pointer to next node
+    while (p) {
+        p = p->next;
+        length++;
+    }
+    return length;
 }
 
 /**
@@ -135,14 +162,20 @@ Status GetElem(LinkList* L, CommonType index, ElementType* e)
  *
  * @return return the index of the element if success, else return 0
  */
-CommonType LocateElem(SqList* L, ElementType e)
+CommonType LocateElem(LinkList* L, ElementType e)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
-    CommonType i;
-    for (i = 1; i <= L->length; i++)
-        if (L->data[i] == e)
-            /// get index of the first found element from list
-            return i;
+    assert(L != NULL);
+    /// pointer to the first data node
+    CommonType index = 0;
+    LinkList p = (*L)->next;
+    /// pointer to next node
+    while (p) {
+        index++;
+        /// get index of the first found element from list
+        if(p->data == e)
+            return index;
+        p = p->next;
+    }
     return 0;
 }
 
