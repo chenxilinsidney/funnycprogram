@@ -28,11 +28,11 @@
 #define FALSE     0
 #endif
 
-/// list array maz length, can be modified
+/// list array maz length used by static sequence list, can be modified
 #define LIST_MAXSIZE      1000
-/// list initialize size, can be modified
-#define LIST_INIT_SIZE      10
-/// list memory increated size, can be modified
+/// list initialize size used by dynamic sequence list, can be modified
+#define LIST_INIT_SIZE      1000
+/// list memory increated size used by dynamic sequence list, can be modified
 #define LIST_INCREMENT       2
 
 /// data type, can be modified

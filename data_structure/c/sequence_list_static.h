@@ -1,12 +1,12 @@
 /**
- * @file sqlist_static.h
+ * @file sequence_list_static.h
  * @brief static sequence list header.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-19
  */
-#ifndef __SQLIST_STATIC_H__
-#define __SQLIST_STATIC_H__
+#ifndef __SEQUENCE_LIST_STATIC_H__
+#define __SEQUENCE_LIST_STATIC_H__
 
 #include "list.h"
 
@@ -33,6 +33,6 @@ CommonType LocateElem(SqList* L, ElementType e);
 /// insert element to the list
 Status ListInsert(SqList* L, CommonType index, ElementType e);
 /// delete element from the list
-Status ListDelete(SqList* L, CommonType index, ElementTypElementType* e);
+Status ListDelete(SqList* L, CommonType index, ElementType* e);
 
-#endif  // __SQLIST_STATIC_H__
+#endif  // __SEQUENCE_LIST_STATIC_H__

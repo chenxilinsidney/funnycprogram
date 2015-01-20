@@ -205,7 +205,10 @@ Status ListInsert(LinkList* L, CommonType index, ElementType e)
     if(!p->next || j > index)
         return ERROR;
     /// malloc memory
-    s = (LinkList)malloc(sizeof(Node));
+    if ((s = (LinkList)malloc(sizeof(Node))) == NULL) {
+        assert(0);
+        exit(EXIT_FAILURE);
+    }
     /// insert element
     s->data = e;
     s->next = p->next;

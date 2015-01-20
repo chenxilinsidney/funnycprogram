@@ -1,5 +1,5 @@
 /**
- * @file sqlist_dynamic.c
+ * @file sequence_list_dynamic.c
  * @brief dynamic sequence list method implements.
  * The methods use <assert.h> to help debug the program.
  * @author chenxilinsidney
@@ -7,7 +7,7 @@
  * @date 2015-01-19
  */
 
-#include "sqlist_dynamic.h"
+#include "sequence_list_dynamic.h"
 
 /**
  * @brief initialize the list.
@@ -35,7 +35,7 @@ void InitList(SqList* L)
  */
 void DestroyList(SqList* L)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
+    assert(L != NULL && L->length >= 0 && L->length <= L->listsize);
     /// clear length list size and free memory
     free(L->data);
     L->data = NULL;
@@ -52,7 +52,7 @@ void DestroyList(SqList* L)
  */
 Status ListEmpty(SqList* L)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
+    assert(L != NULL && L->length >= 0 && L->length <= L->listsize);
     /// always have length >= 0
     if (L->length)
         return FALSE;
@@ -82,7 +82,7 @@ void ClearList(SqList* L)
  */
 CommonType ListLength(SqList* L)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
+    assert(L != NULL && L->length >= 0 && L->length <= L->listsize);
     return L->length;
 }
 
@@ -121,10 +121,10 @@ Status GetElem(SqList* L, CommonType index, ElementType* e)
  */
 CommonType LocateElem(SqList* L, ElementType e)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
+    assert(L != NULL && L->length >= 0 && L->length <= L->listsize);
     CommonType i;
     for (i = 1; i <= L->length; i++)
-        if (L->data[i] == e)
+        if (L->data[i - 1] == e)
             /// get index of the first found element from list
             return i;
     return 0;
@@ -143,14 +143,14 @@ CommonType LocateElem(SqList* L, ElementType e)
  */
 Status ListInsert(SqList* L, CommonType index, ElementType e)
 {
-    assert(L != NULL && L->length >= 0 && L-length <= L->listsize);
+    assert(L != NULL && L->length >= 0 && L->length <= L->listsize);
     /// list length and index should be in reasonable range
     if (index > (L->length + 1) || index < 1)
         return ERROR;
     /// malloc memory if not enough
     if (L->length == L->listsize) {
         ElementType* newbase = (ElementType*)realloc(
-                L->elem, (L->listsize + LIST_INCREMENT) * sizeof(ElementType));
+                L->data, (L->listsize + LIST_INCREMENT) * sizeof(ElementType));
         if (newbase == NULL) {
             assert(0);
             exit(EXIT_FAILURE);
@@ -159,7 +159,7 @@ Status ListInsert(SqList* L, CommonType index, ElementType e)
         L->listsize += LIST_INCREMENT;
     }
     /// move the element after the index position to next position
-    TYPE i;
+    CommonType i;
     for (i = L->length - 1; i >= index - 1; i--)
         L->data[i + 1] = L->data[i];
     /// increase list length
@@ -188,9 +188,9 @@ Status ListDelete(SqList* L, CommonType index, ElementType* e)
     if (index > L->length || index < 1)
         return ERROR;
     /// get deleted element
-    *e = L->data[index];
+    *e = L->data[index - 1];
     /// move the element after the index position to previous position
-    TYPE i;
+    CommonType i;
     for (i = index; i < L->length; i++)
         L->data[i - 1] = L->data[i];
     /// decrease list length

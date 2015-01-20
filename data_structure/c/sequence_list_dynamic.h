@@ -1,12 +1,12 @@
 /**
- * @file sqlist_dynamic.h
+ * @file sequence_list_dynamic.h
  * @brief dynamic sequence list header.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-19
  */
-#ifndef __SQLIST_DYNAMIC_H__
-#define __SQLIST_DYNAMIC_H__
+#ifndef __SEQUENCE_LIST_DYNAMIC_H__
+#define __SEQUENCE_LIST_DYNAMIC_H__
 
 #include "list.h"
 
@@ -36,6 +36,6 @@ CommonType LocateElem(SqList* L, ElementType e);
 /// insert element to the list
 Status ListInsert(SqList* L, CommonType index, ElementType e);
 /// delete element from the list
-Status ListDelete(SqList* L, CommonType index, ElementTypElementType* e);
+Status ListDelete(SqList* L, CommonType index, ElementType* e);
 
-#endif  // __SQLIST_DYNAMIC_H__
+#endif  // __SEQUENCE_LIST_DYNAMIC_H__
