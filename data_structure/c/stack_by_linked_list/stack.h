@@ -1,7 +1,7 @@
 /**
  * @file stack.h
  * @brief stack data structure header.
- * The stack use sequence list.
+ * The stack use linked list.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-21
@@ -39,9 +39,14 @@ typedef int CommonType;     ///< common data type
 #define STACK_MAXSIZE      1000
 
 /// stack data structure
-typedef struct {
-    ElementType data[STACK_MAXSIZE];   ///< stack elements
-    CommonType top;                    ///< stack top data index
+typedef struct StackNode {
+    ElementType data;                  ///< stack elements
+    struct StackNode* next;            ///< stack node pointer
+}StackNode, *StackPtr;
+
+typedef struct Stack {
+    StackPtr top;                      ///< stack top data pointer
+    CommonType count;                  ///< stack data count
 }Stack;
 
 /// stack methods
