@@ -24,19 +24,6 @@ void InitStack(Stack* S)
 }
 
 /**
- * @brief destroy the stack.
- *
- * @param[in,out]  S     stack struct pointer
- *
- */
-void DestroyStack(Stack* S)
-{
-    assert(S != NULL && S->top >= -1);
-    /// initialize top index only, ignore the stack data
-    S->top = -1;
-}
-
-/**
  * @brief clear the stack.
  *
  * @param[in,out]  S     stack struct pointer

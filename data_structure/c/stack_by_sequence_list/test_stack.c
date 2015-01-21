@@ -32,7 +32,5 @@ int main(void)
     /// clear list
     ClearStack(&stack);
     printf("stack empty after clear is %d\n", StackEmpty(&stack));
-    /// destroy list
-    DestroyStack(&stack);
     return EXIT_SUCCESS;
 }

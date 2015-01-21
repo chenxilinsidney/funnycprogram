@@ -2,7 +2,7 @@
  * @file queue.c
  * @brief queue method implements.
  * The methods use <assert.h> to help debug the program.
- * The queue use sequence list.
+ * The queue use linked list.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-21
@@ -19,9 +19,13 @@
 void InitQueue(Queue* Q)
 {
     assert(Q != NULL);
-    /// initialize index only, ignore the queue data
-    Q->head = 0;
-    Q->tail = 0;
+    if ((Q->head = (QueuePtr)malloc(sizeof(QueueNode))) == NULL) {
+        assert(0);
+        exit(EXIT_FAILURE);
+    }
+    Q->tail = Q->head;
+    Q->head->next = NULL;
+    Q->count = 0;
 }
 
 /**
@@ -32,10 +36,15 @@ void InitQueue(Queue* Q)
  */
 void ClearQueue(Queue* Q)
 {
-    assert(Q != NULL && Q->head >= 0 && Q->tail >= 0);
+    assert(Q != NULL && Q->count >= 0);
     /// set index only, ignore the queue data
-    Q->head = 0;
-    Q->tail = 0;
+    QueuePtr new_node = Q->head;
+    while (new_node != Q->tail) {
+        Q->head = new_node->next;
+        free(new_node);
+        new_node = Q->head;
+    }
+    Q->count = 0;
 }
 
 /**
@@ -47,7 +56,7 @@ void ClearQueue(Queue* Q)
  */
 Status QueueEmpty(Queue* Q)
 {
-    assert(Q != NULL && Q->head >= 0 && Q->tail >= 0);
+    assert(Q != NULL && Q->count >= 0);
     /// detect index value
     if (Q->head == Q->tail)
         return TRUE;
@@ -64,8 +73,8 @@ Status QueueEmpty(Queue* Q)
  */
 CommonType QueueLength(Queue* Q)
 {
-    assert(Q != NULL && Q->head >= 0 && Q->tail >= 0);
-    return (Q->tail - Q->head + QUEUE_MAXSIZE) % QUEUE_MAXSIZE;
+    assert(Q != NULL && Q->count >= 0);
+    return Q->count;
 }
 
 /**
@@ -78,11 +87,11 @@ CommonType QueueLength(Queue* Q)
  */
 Status GetHead(Queue* Q, ElementType* e)
 {
-    assert(Q != NULL && e != NULL && Q->head >= 0 && Q->tail >= 0);
+    assert(Q != NULL && e != NULL && Q->count >= 0);
     if (Q->head == Q->tail)
         return ERROR;
     /// get element from queue
-    *e = Q->data[Q->head];
+    *e = Q->head->next->data;
     return OK;
 }
 
@@ -96,13 +105,17 @@ Status GetHead(Queue* Q, ElementType* e)
  */
 Status EnQueue(Queue* Q, ElementType e)
 {
-    assert(Q != NULL && Q->head >= 0 && Q->tail >= 0);
-    /// queue is full
-    if ((Q->tail + 1) % QUEUE_MAXSIZE == Q->head)
-        return ERROR;
-    /// set data first and then increase tail index
-    Q->data[Q->tail] = e;
-    Q->tail = (Q->tail + 1) % QUEUE_MAXSIZE;
+    assert(Q != NULL && Q->count >= 0);
+    QueuePtr new_node;
+    if ((new_node = (QueuePtr)malloc(sizeof(QueueNode))) == NULL) {
+        assert(0);
+        exit(EXIT_FAILURE);
+    }
+    new_node->data = e;
+    new_node->next = NULL;
+    Q->tail->next = new_node;
+    Q->tail = new_node;
+    Q->count++;
     return OK;
 }
 
@@ -116,12 +129,16 @@ Status EnQueue(Queue* Q, ElementType e)
  */
 Status DeQueue(Queue* Q, ElementType* e)
 {
-    assert(Q != NULL && e != NULL && Q->head >= 0 && Q->tail >= 0);
+    assert(Q != NULL && e != NULL && Q->count >= 0);
     /// queue is empty
     if (Q->tail == Q->head)
         return ERROR;
-    /// get data first and then increase head index
-    *e = Q->data[Q->head];
-    Q->head = (Q->head + 1) % QUEUE_MAXSIZE;
+    QueuePtr old_node = Q->head->next;
+    *e = old_node->data;
+    Q->head->next = old_node->next;
+    if (Q->tail == old_node)
+        Q->tail = Q->head;
+    free(old_node);
+    Q->count--;
     return OK;
 }

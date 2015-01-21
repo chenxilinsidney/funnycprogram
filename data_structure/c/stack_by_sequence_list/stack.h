@@ -48,8 +48,6 @@ typedef struct {
 
 /// initialize stack
 void InitStack(Stack* S);
-/// destroy stack
-void DestroyStack(Stack* S);
 /// clear stack
 void ClearStack(Stack* S);
 /// detect if stack is empty

@@ -24,24 +24,6 @@ void InitStack(Stack* S)
 }
 
 /**
- * @brief destroy the stack.
- *
- * @param[in,out]  S     stack struct pointer
- *
- */
-void DestroyStack(Stack* S)
-{
-    assert(S != NULL && S->count >= 0);
-    StackPtr new_node = S->top;
-    while (new_node) {
-        new_node = new_node->next;
-        free(new_node);
-    }
-    S->top = NULL;
-    S->count = 0;
-}
-
-/**
  * @brief clear the stack.
  *
  * @param[in,out]  S     stack struct pointer
@@ -52,10 +34,10 @@ void ClearStack(Stack* S)
     assert(S != NULL && S->count >= 0);
     StackPtr new_node = S->top;
     while (new_node) {
-        new_node = new_node->next;
+        S->top = new_node->next;
         free(new_node);
+        new_node = S->top;
     }
-    S->top = NULL;
     S->count = 0;
 }
 

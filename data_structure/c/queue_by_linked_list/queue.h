@@ -1,7 +1,7 @@
 /**
  * @file queue.h
  * @brief queue data structure header.
- * The queue use sequence list.
+ * The queue use linked list.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-21
@@ -35,16 +35,17 @@ typedef int Status;         ///< status data type
 typedef int ElementType;    ///< element data type
 typedef int CommonType;     ///< common data type
 
-/// queue array maz length, can be modified
-#define QUEUE_MAXSIZE      1000
-
 /// queue data structure
-typedef struct {
-    ElementType data[QUEUE_MAXSIZE];   ///< queue elements
-    CommonType head;                   ///< queue head data index
-    CommonType tail;                   ///< queue tail data index
-}Queue;
+typedef struct QueueNode {
+    ElementType data;                  ///< queue elements
+    struct QueueNode* next;            ///< queue node pointer
+}QueueNode, *QueuePtr;
 
+typedef struct Queue {
+    QueuePtr head;                     ///< queue head data pointer
+    QueuePtr tail;                     ///< quaue tail data pointer
+    CommonType count;                  ///< quaue data count
+}Queue;
 /// queue methods
 
 /// initialize queue

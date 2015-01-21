@@ -35,9 +35,6 @@ typedef int Status;         ///< status data type
 typedef int ElementType;    ///< element data type
 typedef int CommonType;     ///< common data type
 
-/// stack array maz length, can be modified
-#define STACK_MAXSIZE      1000
-
 /// stack data structure
 typedef struct StackNode {
     ElementType data;                  ///< stack elements
@@ -53,8 +50,6 @@ typedef struct Stack {
 
 /// initialize stack
 void InitStack(Stack* S);
-/// destroy stack
-void DestroyStack(Stack* S);
 /// clear stack
 void ClearStack(Stack* S);
 /// detect if stack is empty
