@@ -46,6 +46,7 @@ typedef struct Queue {
     QueuePtr tail;                     ///< quaue tail data pointer
     CommonType count;                  ///< quaue data count
 }Queue;
+
 /// queue methods
 
 /// initialize queue
