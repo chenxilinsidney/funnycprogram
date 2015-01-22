@@ -2,7 +2,7 @@
  * @file queue_by_stack.c
  * @brief queue method implements.
  * The methods use <assert.h> to help debug the program.
- * The queue use two stack.
+ * The queue use two stacks.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-21
@@ -46,7 +46,7 @@ void ClearQueue(Queue* Q)
 Status QueueEmpty(Queue* Q)
 {
     assert(Q != NULL);
-    if (StackEmpty(&Q->s1) && StackEmpty(&Q->s2))
+    if (StackEmpty(&Q->s1) == TRUE && StackEmpty(&Q->s2) == TRUE)
         return TRUE;
     else
         return FALSE;
@@ -76,10 +76,10 @@ CommonType QueueLength(Queue* Q)
 Status GetHead(Queue* Q, ElementType* e)
 {
     assert(Q != NULL && e != NULL);
-    if (!StackEmpty(&Q->s2)) {
+    if (StackEmpty(&Q->s2) == FALSE) {
         GetTop(&Q->s2, e);
         return OK;
-    } else if (!StackEmpty(&Q->s1)) {
+    } else if (StackEmpty(&Q->s1) == FALSE) {
         while (Pop(&Q->s1, e)) {
             Push(&Q->s2, *e);
         }

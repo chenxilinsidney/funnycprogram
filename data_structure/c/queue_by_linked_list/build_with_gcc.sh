@@ -17,6 +17,6 @@ if [ "$extension" = "c" ]; then
     # -pg for gprof
     # -fprofile-arcs -ftest-coverage for gcov
     # -Wall for warnings
-    gcc -Wall -o $binaryname $1 queue.c -lm;
+    gcc -Wall -o $binaryname $1 stack_by_queue.c queue.c -lm;
     echo "compiling $1 done"
 fi
