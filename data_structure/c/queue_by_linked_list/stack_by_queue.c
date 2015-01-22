@@ -102,7 +102,7 @@ Status GetTop(Stack* S, ElementType* e)
 Status Push(Stack* S, ElementType e)
 {
     assert(S != NULL);
-    if (QueueEmpty(&S->q2) == FALSE) {
+    if (QueueEmpty(&S->q1) == FALSE) {
         return EnQueue(&S->q1, e);
     } else {
         return EnQueue(&S->q2, e);
