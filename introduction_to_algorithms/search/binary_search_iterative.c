@@ -25,20 +25,21 @@ TYPE array[MAX_COUNT] = {0};
  * @brief search the value in the array of the index
  *
  * @param[in]      array  input array
- * @param[in]      index_begin begin index of input array
- * @param[in]      index_end   end index of input array
+ * @param[in]      count  array length
  * @param[in]      value  search value
  *
  * @warning array index begin from 0
  *
  * @return index if success, else return -1
  */
-TYPE binary_search(TYPE* array, TYPE index_begin, TYPE index_end, TYPE value)
+TYPE binary_search(TYPE* array, TYPE count, TYPE value)
 {
-    assert(array != NULL && index_begin <= index_end);
+    assert(array != NULL && count >= 0);
     TYPE middle;
+    TYPE index_begin = 0;
+    TYPE index_end = count - 1;
     while (index_begin <= index_end) {
-        middle = (unsigned)(index_end + index_begin) >> 1;
+        middle = index_begin + ((unsigned)(index_end - index_begin) >> 1);
         if (array[middle] == value)
             return middle;
         else if (array[middle] < value)
@@ -59,7 +60,7 @@ int main(void) {
     TYPE value = 124366;
     /// output result
     TYPE index = -1;
-    if ((index = binary_search(array, 0, count - 1, value)) >= 0) {
+    if ((index = binary_search(array, count, value)) >= 0) {
         printf("search element index is %d\n", index);
     } else {
         printf("can not found element: %d\n", value);
