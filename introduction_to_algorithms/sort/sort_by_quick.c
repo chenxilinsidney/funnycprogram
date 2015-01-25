@@ -57,6 +57,13 @@ TYPE partition(TYPE* array, TYPE index_begin, TYPE index_end)
     return i;
 }
 
+/**
+ * @brief quick sort method for input array from index_begin to index_end.
+ *
+ * @param[in,out]  array          input and output array
+ * @param[in]      index_begin    the begin index of the array(included)
+ * @param[in]      index_end      the end index of the array(included)
+ */
 void quick_sort(TYPE* array, TYPE index_begin, TYPE index_end)
 {
     /// sort only under the index_begin < index_end condition

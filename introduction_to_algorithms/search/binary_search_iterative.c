@@ -22,7 +22,7 @@ typedef int TYPE;
 TYPE array[MAX_COUNT] = {0};
 
 /**
- * @brief search the value in the array of the index
+ * @brief search the value in the array of the index by binary search method.
  *
  * @param[in]      array  input array
  * @param[in]      count  array length
