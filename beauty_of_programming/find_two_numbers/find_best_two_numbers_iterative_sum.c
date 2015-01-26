@@ -99,30 +99,23 @@ TYPE find_best_two_numbers(TYPE* array, TYPE length, TYPE sum,
     /// search by two pointers at the begining and end of the array
     TYPE i = 0, j = length - 1, sum_diff_min = INT_MAX, sum_diff;
     while (i < j) {
-        sum_diff = array[i] + array[j] - sum;
+        sum_diff = abs(array[i] + array[j] - sum);
+        /// record closet value_a and value_b
+        if (sum_diff < sum_diff_min) {
+            sum_diff_min = sum_diff;
+            *value_a = array[i];
+            *value_b = array[j];
+        }
         if (sum_diff < 0) {
-            /// record closet value_a and value_b
-            if (abs(sum_diff) < sum_diff_min) {
-                sum_diff_min = sum_diff;
-                *value_a = array[i];
-                *value_b = array[j];
-            }
             i++;
         } else if (sum_diff > 0) {
-            /// record closet value_a and value_b
-            if (abs(sum_diff) < sum_diff_min) {
-                sum_diff_min = sum_diff;
-                *value_a = array[i];
-                *value_b = array[j];
-            }
             j--;
         } else {
             /// get value_a and value_b with no error
-            *value_a = array[i];
-            *value_b = array[j];
             return 1;
         }
     }
+    /// get value_a and value_b with error
     return 0;
 }
 
