@@ -1,7 +1,7 @@
 /**
- * @file find_two_numbers_sort_search.c
+ * @file find_two_numbers_violent.c
  * @brief find two numbers A and B in a input array(length N) that make
- * A + B = X, which X is given by input too.
+ * A + B closest to X, which X is given by input too.
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-01-18
@@ -9,6 +9,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 // #define NDEBUG
 #include <assert.h>
 
@@ -78,37 +79,8 @@ void quick_sort(TYPE* array, TYPE index_begin, TYPE index_end)
 }
 
 /**
- * @brief search the value in the array of the index by binary search method.
- *
- * @param[in]      array  input array
- * @param[in]      count  array length
- * @param[in]      value  search value
- *
- * @warning array index begin from 0
- *
- * @return index if success, else return -1
- */
-TYPE binary_search(TYPE* array, TYPE count, TYPE value)
-{
-    assert(array != NULL && count >= 0);
-    TYPE middle;
-    TYPE index_begin = 0;
-    TYPE index_end = count - 1;
-    while (index_begin <= index_end) {
-        middle = index_begin + ((unsigned)(index_end - index_begin) >> 1);
-        if (array[middle] == value)
-            return middle;
-        else if (array[middle] < value)
-            index_begin = middle + 1;
-        else
-            index_end = middle - 1;
-    }
-    return -1;
-}
-
-/**
  * @brief find two numbers value_a and value_b in the array
- * (with limit length) with given sum to make: sum = value_a + value_b
+ * (with limit length) with given sum to make: sum closest to value_a + value_b
  *
  * @param[in]      array   input array
  * @param[in]      length  array length
@@ -118,22 +90,38 @@ TYPE binary_search(TYPE* array, TYPE count, TYPE value)
  *
  * @return if get value_a and value_b, return 1, else return 0
  */
-TYPE find_two_numbers(TYPE* array, TYPE length, TYPE sum,
+TYPE find_best_two_numbers(TYPE* array, TYPE length, TYPE sum,
         TYPE* value_a, TYPE* value_b)
 {
     assert(array != NULL && length >= 2 && value_a != NULL && value_b != NULL);
     /// sort array by quick sort method
     quick_sort(array, 0, length - 1);
-    /// iterative for all value in array
-    TYPE i;
-    for (i = 0; i < length - 1; i++) {
-        /// set value a
-        *value_a = array[i];
-        /// find value b
-        *value_b = sum - array[i];
-        /// search value by binary search method
-        if (binary_search(array, length, *value_b) != -1)
+    /// search by two pointers at the begining and end of the array
+    TYPE i = 0, j = length - 1, sum_diff_min = INT_MAX, sum_diff;
+    while (i < j) {
+        sum_diff = array[i] + array[j] - sum;
+        if (sum_diff < 0) {
+            /// record closet value_a and value_b
+            if (abs(sum_diff) < sum_diff_min) {
+                sum_diff_min = sum_diff;
+                *value_a = array[i];
+                *value_b = array[j];
+            }
+            i++;
+        } else if (sum_diff > 0) {
+            /// record closet value_a and value_b
+            if (abs(sum_diff) < sum_diff_min) {
+                sum_diff_min = sum_diff;
+                *value_a = array[i];
+                *value_b = array[j];
+            }
+            j--;
+        } else {
+            /// get value_a and value_b with no error
+            *value_a = array[i];
+            *value_b = array[j];
             return 1;
+        }
     }
     return 0;
 }
@@ -153,11 +141,13 @@ int main(void) {
     TYPE value_a = 0;
     TYPE value_b = 0;
     /// output result
-    if(find_two_numbers(array, count, sum, &value_a, &value_b)) {
+    if(find_best_two_numbers(array, count, sum, &value_a, &value_b)) {
         printf("The first numbers in the array is %d\n", value_a);
         printf("The second numbers in the array is %d\n", value_b);
     } else {
         printf("Can not find the two numbers.\n");
+        printf("The best first numbers in the array is %d\n", value_a);
+        printf("The best second numbers in the array is %d\n", value_b);
     }
     return EXIT_SUCCESS;
 }
