@@ -82,4 +82,3 @@ void safe_free(void** pointer)
     free(*pointer);
     *pointer = NULL;
 }
-
