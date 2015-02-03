@@ -8,6 +8,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
+#include <float.h>
 #include <math.h>
 // #define NDEBUG
 #include <assert.h>
@@ -34,23 +36,21 @@ TYPE find_continue_numbers(TYPE sum, TYPE* array)
 {
     assert(array != NULL && sum >= 1);
     TYPE count = 0;
-    TYPE i, j;
-    TYPE sum_temp;
+    TYPE j;
     TYPE number_count_max = (TYPE)(-1 + sqrt(1 + (sum << 3))) >> 1;
-    TYPE number_first_max = (TYPE)(sum - 1) >> 1;
-    DEBUG_PRINT_VALUE("%lu", number_count_max);
-    DEBUG_PRINT_VALUE("%lu", number_first_max);
-    for (i = 1; i <= number_first_max; i++) {
-        for (j = 2; j <= number_count_max; j++) {
-            sum_temp = (((i << 1) + j - 1) * j) >> 1;
-            DEBUG_PRINT_VALUE("%lu", sum_temp);
-            if (sum_temp == sum) {
-                array[count << 1] = i;
-                array[(count << 1) + 1] = j;
-                count++;
-            } else if (sum_temp > sum) {
-                break;
-            }
+    long double i_float, i_diff;
+    DEBUG_PRINT_VALUE("%ld", number_count_max);
+    for (j = 2; j <= number_count_max; j++) {
+        DEBUG_PRINT_VALUE("%ld", j);
+        i_float = ((long double)sum * 2.0 / j + 1 - j) / 2;
+        i_diff = i_float - (unsigned long)i_float;
+        DEBUG_PRINT_VALUE("%Lf", i_float);
+        DEBUG_PRINT_VALUE("%Lf", i_diff);
+        DEBUG_PRINT_VALUE("%ld", (unsigned long)i_float);
+        if (i_diff < DBL_EPSILON && i_float > DBL_EPSILON) {
+            array[count << 1] = (unsigned long)i_float;
+            array[(count << 1) + 1] = j;
+            count++;
         }
     }
     return count;
@@ -76,7 +76,8 @@ int main(void) {
             for (j = 0; j < array[(i << 1) + 1] - 1; j++) {
                 printf("%lu + ", array[i << 1] + j);
             }
-            printf("%lu = %lu\n", array[i << 1] + array[(i << 1) + 1] - 1, sum);
+            printf("%lu = %lu\n",
+                    array[i << 1] + array[(i << 1) + 1] - 1, sum);
         }
     } else {
         printf("Can not get solutions.\n");
