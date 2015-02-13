@@ -45,6 +45,11 @@ typedef int CommonType;     ///< common data type
 #define HEAP_CMP_SYMBOL <
 #endif
 
+/// macro definition of child node and parent node
+#define LCHILD(i) ((unsigned)(i) << 1)
+#define RCHILD(i) (((unsigned)(i) << 1) + 1)
+#define PARENT(i) ((unsigned)(i) >> 1)
+
 typedef struct {
     ElementType* data;                 ///< heap elements array pointer
     CommonType max_size;               ///< heap max elements count
@@ -74,5 +79,7 @@ Status HeapGet(Heap* H, ElementType* e);
 Status HeapInsert(Heap* H, ElementType e);
 /// remove the root node of a max-heap or min-heap, respectively
 Status HeapDelete(Heap* H, ElementType* e);
+/// heap sort method for input array
+void HeapSort(ElementType* array, CommonType length);
 
 #endif  // __HEAP__

@@ -10,14 +10,16 @@
 
 #include "heap.h"
 
-#define LCHILD(i) ((unsigned)(i) << 1)
-#define RCHILD(i) (((unsigned)(i) << 1) + 1)
-#define PARENT(i) ((unsigned)(i) >> 1)
-
+/**
+ * @brief swap two elements
+ *
+ * @param[in]     a      element pointer a
+ * @param[in]     b      element pointer b
+ */
 static void swap(ElementType* a, ElementType* b)
 {
-    ElementType c;
-    c = *a;
+    /// swap by third element
+    ElementType c = *a;
     *a = *b;
     *b = c;
 }
@@ -42,7 +44,8 @@ void InitHeap(Heap* H, CommonType max_size)
 }
 
 /**
- * @brief heap shift down
+ * @brief heap shift down: move a element down in the tree.
+ * as long as needed(depending on the condition:min-heap or max-heap).
  *
  * @param[in]     array     heap elements array
  * @param[in]     index     array begin index to create heap
@@ -53,11 +56,10 @@ static void Heapify(ElementType* array, CommonType index,
         CommonType length)
 {
     assert(array != NULL && index >= 1 && length >= 0);
-    /// heap shift down: move a element down in the tree.
-    /// as long as needed(depending on the condition:min-heap or max-heap).
     CommonType min_index;
     while (index < length) {
         min_index = index;
+        /// get maximum or minimum child index
         if (LCHILD(index) <= length &&
                 array[LCHILD(index)] HEAP_CMP_SYMBOL array[min_index])
             min_index = LCHILD(index);
@@ -76,9 +78,9 @@ static void Heapify(ElementType* array, CommonType index,
 /**
  * @brief create a heap out of given array of elements.
  *
- * @param[in,out] H     heap struct pointer
- * @param[in]     H     heap max size
- * @param[in]     array heap elements array
+ * @param[in,out] H      heap struct pointer
+ * @param[in]     H      heap max size
+ * @param[in]     array  heap elements array
  * @param[in]     length heap elements array count
  *
  */
@@ -228,10 +230,34 @@ Status HeapDelete(Heap* H, ElementType* e)
     /// detect if heap if empty
     if (HeapEmpty(H) == TRUE)
         return ERROR;
-    /// delete root element
+    /// delete root element and move last element to root
     *e = H->data[1];
     H->data[1] = H->data[(H->size)--];
     /// heapify
     Heapify(H->data, 1, H->size);
     return OK;
+}
+
+/**
+ * @brief heap sort method for input array.
+ *
+ * @param[in,out] array     input and output array
+ * @param[in]     length    array length
+ *
+ * @warning if the heap is max-heap, the elements in the array will increase
+ * by index, otherwise decrease.
+ */
+void HeapSort(ElementType* array, CommonType length)
+{
+    /// make heap elements index begin from 1
+    ElementType* array_new = array - 1;
+    /// build heap by elements
+    Heap heap;
+    BuildHeap(&heap, length, array_new, length);
+    /// move root element to the end and heapify smaller size array
+    CommonType new_size = length;
+    while (new_size > 1) {
+        swap(array_new + new_size, array_new + 1);
+        Heapify(array_new, 1, --new_size);
+    }
 }

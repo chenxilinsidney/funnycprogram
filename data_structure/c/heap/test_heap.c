@@ -48,5 +48,9 @@ int main(void)
         printf("heap data is %d in %d\n", heap.data[index], index);
     /// clear list
     // ClearHeap(&heap);
+    // heap sort
+    HeapSort(array, 12);
+    for (index = 0; index < 12; index++)
+        printf("heap data is %d in %d\n", array[index], index);
     return EXIT_SUCCESS;
 }
