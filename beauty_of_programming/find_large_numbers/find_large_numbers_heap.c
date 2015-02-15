@@ -29,7 +29,7 @@ TYPE array[MAX_COUNT] = {0};
  * @param[in]      array_length   array length
  * @param[in]      count          the count of the largest numbers.
  */
-void find_quick_sort(TYPE* array, TYPE array_length, TYPE count)
+void find_heap_sort(TYPE* array, TYPE array_length, TYPE count)
 {
     assert(array != NULL && array_length > 0 && count > 0);
     /// array need not to adjust if count larger than or equal to array length
@@ -58,7 +58,7 @@ int main(void) {
     /// find largest N numbers
     TYPE N = 15;
     TYPE i;
-    find_quick_sort(array, count, N);
+    find_heap_sort(array, count, N);
     printf("get the largest %d numbers:\n", N);
     for (i = 0; i < N; i++) {
         printf("%d ", array[i]);
