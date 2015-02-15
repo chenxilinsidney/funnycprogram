@@ -1,5 +1,5 @@
 /**
- * @file find_closest_array_sort.c
+ * @file find_closest_array_divide.c
  * @brief find the two values in a given array that make their distance be
  * the minimum value so the the values are the closest pairs.
  * @author chenxilinsidney
@@ -9,6 +9,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 // #define NDEBUG
 #include <assert.h>
 
@@ -85,34 +86,60 @@ void quick_sort(ElementType* array, CommonType index_begin,
  * the array.
  *
  * @param[in]     array           element array
- * @param[in]     array_size      element array size
+ * @param[in]     index_begin     element array index begin(included)
+ * @param[in]     index_end       element array index end(included)
  * @param[out]    value_a         element a
  * @param[out]    value_b         element b
  *
  * @return return the minimum distance between value_a and value_b
  */
-ElementType find_closest_array(ElementType* array, CommonType array_size,
-        ElementType* value_a, ElementType* value_b)
+ElementType find_closest_array(ElementType* array, CommonType index_begin,
+        CommonType index_end, ElementType* value_a, ElementType* value_b)
 {
-    assert(array != NULL && value_a != NULL &&
-            value_b != NULL && array_size >= 2);
-    /// initialize values.
-    ElementType distance_min = array[1] - array[0];
-    *value_a = array[1];
-    *value_b = array[0];
-    /// find closest value_a and value_b by sort
-    quick_sort(array, 0, array_size - 1);
-    CommonType i;
-    ElementType temp;
-    for (i = 1; i < array_size - 1; i++) {
-        if ((temp = array[i + 1] - array[i]) < distance_min) {
-            *value_a = array[i];
-            *value_b = array[i + 1];
-            distance_min = temp;
+    assert(array != NULL && value_a != NULL && value_b != NULL);
+    ElementType distance_left, distance_middle, distance_right;
+    CommonType left_value_a, left_value_b, right_value_a, right_value_b,
+               middle_value_a, middle_value_b;
+    if (index_begin + 1 < index_end) {
+        CommonType middle_index = index_begin +
+            ((unsigned)(index_end - index_begin) >> 1);
+        distance_left = find_closest_array(array, index_begin, middle_index - 1,
+                &left_value_a, &left_value_b);
+        distance_right = find_closest_array(array, middle_index, index_end,
+                &right_value_a, &right_value_b);
+        distance_middle = array[middle_index] - array[middle_index - 1];
+        middle_value_a = array[middle_index];
+        middle_value_b = array[middle_index - 1];
+        if (distance_left < distance_right) {
+            if (distance_middle < distance_left) {
+                *value_a = middle_value_a;
+                *value_b = middle_value_b;
+                return distance_middle;
+            } else {
+                *value_a = left_value_a;
+                *value_b = left_value_b;
+                return distance_left;
+            }
+        } else {
+            if (distance_middle < distance_right) {
+                *value_a = middle_value_a;
+                *value_b = middle_value_b;
+                return distance_middle;
+            } else {
+                *value_a = right_value_a;
+                *value_b = right_value_b;
+                return distance_right;
+            }
         }
+    } else if (index_begin + 1 == index_end) {
+        *value_a = array[index_begin];
+        *value_b = array[index_end];
+        return array[index_end] - array[index_begin];
+    } else {
+        *value_a = INT_MAX;
+        *value_b = INT_MAX;
+        return INT_MAX;
     }
-    /// return minimum distance
-    return distance_min;
 }
 
 int main(void) {
@@ -124,7 +151,9 @@ int main(void) {
     /// find closest values
     ElementType value_a;
     ElementType value_b;
-    ElementType distance = find_closest_array(array, count,
+    /// sort array first
+    quick_sort(array, 0, count - 1);
+    ElementType distance = find_closest_array(array, 0, count - 1,
             &value_a, &value_b);
     /// output result
     printf("closest value_a and value_b is %d, %d.\n", value_a, value_b);
