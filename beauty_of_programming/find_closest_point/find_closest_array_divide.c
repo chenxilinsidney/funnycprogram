@@ -101,15 +101,20 @@ ElementType find_closest_array(ElementType* array, CommonType index_begin,
     CommonType left_value_a, left_value_b, right_value_a, right_value_b,
                middle_value_a, middle_value_b;
     if (index_begin + 1 < index_end) {
+        /// array length is larger than 2
         CommonType middle_index = index_begin +
             ((unsigned)(index_end - index_begin) >> 1);
+        /// left sub-array
         distance_left = find_closest_array(array, index_begin, middle_index - 1,
                 &left_value_a, &left_value_b);
+        /// right sub-array
         distance_right = find_closest_array(array, middle_index, index_end,
                 &right_value_a, &right_value_b);
         distance_middle = array[middle_index] - array[middle_index - 1];
+        /// middle distance
         middle_value_a = array[middle_index];
         middle_value_b = array[middle_index - 1];
+        /// get minimum distance and value_a, value_b
         if (distance_left < distance_right) {
             if (distance_middle < distance_left) {
                 *value_a = middle_value_a;
@@ -132,10 +137,12 @@ ElementType find_closest_array(ElementType* array, CommonType index_begin,
             }
         }
     } else if (index_begin + 1 == index_end) {
+        /// array length is 2, only get one distance
         *value_a = array[index_begin];
         *value_b = array[index_end];
         return array[index_end] - array[index_begin];
     } else {
+        /// array length is 1, can not the distance
         *value_a = INT_MAX;
         *value_b = INT_MAX;
         return INT_MAX;
