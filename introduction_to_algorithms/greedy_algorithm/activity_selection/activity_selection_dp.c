@@ -24,6 +24,7 @@ ElementType s[ACTIVITY_COUNT] = {0, 1, 3, 0, 5, 3, 5, 6, 8, 8, 2, 12, INT_MAX};
 ElementType f[ACTIVITY_COUNT] = {0, 4, 5, 6, 7, 9, 9, 10, 11, 12, 14, 16, INT_MAX};
 ElementType c[ACTIVITY_COUNT][ACTIVITY_COUNT] = {{0}};
 ElementType t[ACTIVITY_COUNT][ACTIVITY_COUNT] = {{0}};
+ElementType result_index[ACTIVITY_COUNT] = {0};
 
 void activity_selector(ElementType* s, ElementType* f, CommonType count,
         CommonType c[ACTIVITY_COUNT][ACTIVITY_COUNT],
@@ -62,8 +63,27 @@ void activity_selector(ElementType* s, ElementType* f, CommonType count,
     }
 }
 
+void trace_route(CommonType t[ACTIVITY_COUNT][ACTIVITY_COUNT],
+        CommonType i,
+        CommonType j,
+        ElementType* result)
+{
+    if (i < j) {
+        if (t[i][j] != 0)
+            *result++ = t[i][j];
+        trace_route(t, i, t[i][j], result);
+    }
+}
+
 int main(void) {
     activity_selector(s, f, ACTIVITY_COUNT, c, t);
     // output result
+    trace_route(t, 0, ACTIVITY_COUNT - 1, result_index);
+    printf("result = ");
+    ElementType* result = result_index;
+    while(*(result) != 0) {
+        printf("%3d ", *result++);
+    }
+    printf("\n");
     return EXIT_SUCCESS;
 }
