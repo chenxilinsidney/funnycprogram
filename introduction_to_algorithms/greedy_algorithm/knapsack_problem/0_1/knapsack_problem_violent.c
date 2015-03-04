@@ -46,11 +46,12 @@ void knapsack_problem_violent(ElementType* v, ElementType* w,
     for (i = 0; i < type_count; i++) {
         /// get current total weight and totoal value and combination
         memset(x_temp, 0, count * sizeof(ElementType));
-        k = 0;
         temp_value = 0;
         temp_weight = 0;
+        k = 0;
         j = i;
         do {
+            /// 1 bit correspond to 1 item
             if (j & 0x1) {
                 temp_value += v[k];
                 temp_weight += w[k];
@@ -58,7 +59,7 @@ void knapsack_problem_violent(ElementType* v, ElementType* w,
             }
             k++;
         } while (j >>= 1);
-        /// save best state
+        /// save best state: best weight, best value and item state
         if (temp_weight < maximum_weight && temp_value > *best_value) {
             *best_weight = temp_weight;
             *best_value = temp_value;
