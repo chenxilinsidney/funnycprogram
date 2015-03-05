@@ -87,19 +87,19 @@ ElementType knapsack_problem(ElementType* v, ElementType* w,
         printf("\n");
     }
     /// get and display the item list by keep matrix
-    printf("k = ");
-    ElementType K = maximum_weight;
+    printf("remain weight = ");
+    ElementType remain_weight = maximum_weight;
     for (i = count; i >= 1; i--) {
-        if (keep[i][K] == 1) {
+        if (keep[i][remain_weight] == 1) {
             printf("%3d ", i);
-            K -= w[i - 1];
+            remain_weight -= w[i - 1];
             x[i - 1] = 1;
         } else {
             x[i - 1] = 0;
         }
     }
     printf("\n");
-    printf("actual weight = %3d\n", maximum_weight - K);
+    printf("actual weight = %3d\n", maximum_weight - remain_weight);
     return V[count][maximum_weight];
 }
 
