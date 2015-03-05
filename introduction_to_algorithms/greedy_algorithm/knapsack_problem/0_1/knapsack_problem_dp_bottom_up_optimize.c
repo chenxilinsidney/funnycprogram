@@ -52,11 +52,12 @@ ElementType knapsack_problem(ElementType* v, ElementType* w,
         for (j = maximum_weight; j >= 1; j--) {
             if(w[i - 1] <= j) {
                 ElementType b = V[j - w[i - 1]] + v[i - 1];
-                if (V[j] < b) V[j] = b;
-                if (V[j] > b)
+                if (V[j] > b) {
                     keep[i][j] = 0;
-                else
+                } else {
+                    V[j] = b;
                     keep[i][j] = 1;
+                }
             } else {
                 keep[i][j] = 0;
             }
