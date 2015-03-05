@@ -1,7 +1,6 @@
 /**
- * @file knapsack_problem_dp_top_down.c
- * @brief solve 0-1 knapsack problem by dynamic programming
- * with top-down with memoization method.
+ * @file knapsack_problem_recursion.c
+ * @brief solve 0-1 knapsack problem by recursion
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-03-04
@@ -25,26 +24,22 @@ typedef int CommonType;     ///< common data type
 #define MAX_COUNT      100
 ElementType v[MAX_COUNT] = {0};
 ElementType w[MAX_COUNT] = {0};
-CommonType x[MAX_COUNT] = {0};
-CommonType V[MAX_COUNT + 1][MAX_COUNT + 1] = {{0}};
 
 ElementType knapsack_problem(ElementType* v, ElementType* w,
         CommonType count,
-        ElementType maximum_weight,
-        ElementType V[MAX_COUNT + 1][MAX_COUNT + 1])
+        ElementType maximum_weight)
 {
-    assert(v != NULL && w != NULL && count >= -1 && maximum_weight >= 0 &&
-            V != NULL);
+    assert(v != NULL && w != NULL && count >= -1 && maximum_weight >= 0);
     /// no items or no weight
     if (count == -1 || maximum_weight == 0)
         return 0;
     /// the i-th item's weight exceed the range
     if (w[count - 1] > maximum_weight)
-        return knapsack_problem(v, w, count - 1, maximum_weight, V);
+        return knapsack_problem(v, w, count - 1, maximum_weight);
     /// get best solution
-    ElementType a = knapsack_problem(v, w, count - 1, maximum_weight, V);
+    ElementType a = knapsack_problem(v, w, count - 1, maximum_weight);
     ElementType b = knapsack_problem(v, w, count - 1,
-            maximum_weight - w[count - 1], V) + v[count - 1];
+            maximum_weight - w[count - 1]) + v[count - 1];
     return a > b ? a : b;
 }
 
@@ -62,7 +57,7 @@ int main(void) {
     }
     /// get result
     ElementType best_value = knapsack_problem(v, w, count,
-            maximum_weight, V);
+            maximum_weight);
     /// output result
     printf("best value = %d\n", best_value);
     return EXIT_SUCCESS;
