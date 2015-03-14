@@ -20,3 +20,9 @@
   (cond ((= n 0) a)
         ((even? n) (fast-expt-v2-iter a (square b) (/ n 2)))
         (else (fast-expt-v2-iter (* a b) b (- n 1)))))
+
+(define (even? n)
+  (= 0 (remainder n 2)))
+
+(define (square n)
+  (* n n))
