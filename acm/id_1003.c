@@ -17,9 +17,9 @@ int get_max_subarray(int* array_data, int array_length,
         int* output_index_begin,
         int* output_index_end)
 {
-    assert(array_length > 1 && array_data != NULL &&
+    assert(array_length >= 1 && array_data != NULL &&
             output_index_begin != NULL && output_index_end != NULL);
-    int sum_right = 0;
+    int sum_right = 0, sum_right_index_begin = 1;
     *output_index_begin = 1;
     *output_index_end = 1;
     int sum_best = array_data[0];
@@ -28,11 +28,12 @@ int get_max_subarray(int* array_data, int array_length,
         sum_right += array_data[array_index];
         if (sum_right > sum_best) {
             sum_best = sum_right;
+            *output_index_begin = sum_right_index_begin;
             *output_index_end = array_index + 1;
         }
         if (sum_right < 0) {
             sum_right = 0;
-            *output_index_begin = array_index + 2;
+            sum_right_index_begin = array_index + 2;
         }
     }
     return sum_best;
