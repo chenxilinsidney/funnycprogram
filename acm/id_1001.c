@@ -12,7 +12,7 @@ int main()
 {
     int a;
     while (scanf("%d", &a) != EOF) {
-        printf("%d\n\n", ((a + 1) * a) / 2);
+        printf("%d\n\n", ((a + 1) * (unsigned)a) >> 1);
     }
     return 0;
 }
