@@ -31,7 +31,7 @@ int main()
                 count++;
             }
         }
-        printf("Case: %d: A = %ld, limit = %d, number of terms = %d\n",
+        printf("Case %d: A = %ld, limit = %d, number of terms = %d\n",
                 num_case, A_source, L, count);
         num_case++;
     }
