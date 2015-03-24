@@ -10,7 +10,6 @@
 
 #define MAX_LINE_LENGTH 1001
 int secret_code[MAX_LINE_LENGTH];
-int secret_mask[MAX_LINE_LENGTH];
 int guess_code[MAX_LINE_LENGTH];
 
 int main()
@@ -26,35 +25,25 @@ int main()
             index++;
         }
         while (scanf("%d", guess_code) && guess_code[0] != 0) {
-            int strong = 0, weak = 0, pair_index = 0, i_index;
+            int strong = 0, weak = 0;
             index = 1;
             while (index < length_code) {
                 scanf("%d", guess_code + index);
                 index++;
             }
-            for (pair_index = 0; pair_index < length_code; pair_index++) {
-                if (secret_code[pair_index] == guess_code[pair_index]) {
+            int guess_count[10] = {0};
+            int secret_count[10] = {0};
+            for (index = 0; index < length_code; index++) {
+                if (secret_code[index] == guess_code[index]) {
                     strong++;
-                    secret_mask[pair_index] = 0;
-                    guess_code[pair_index] = 0;
                 } else {
-                    secret_mask[pair_index] = 1;
+                    guess_count[guess_code[index]]++;
+                    secret_count[secret_code[index]]++;
                 }
             }
-            if (strong != length_code) {
-                for (pair_index = 0; pair_index < length_code; pair_index++) {
-                    if (guess_code[pair_index]) {
-                        for (i_index = 0; i_index < length_code; i_index++) {
-                            if (secret_mask[i_index] &&
-                                    guess_code[pair_index] ==
-                                    secret_code[i_index]) {
-                                weak++;
-                                secret_mask[i_index] = 0;
-                                break;
-                            }
-                        }
-                    }
-                }
+            for (index = 1; index < 10; index++) {
+                weak += guess_count[index] >= secret_count[index] ?
+                    secret_count[index] : guess_count[index];
             }
             printf("    (%d,%d)\n", strong, weak);
         }
