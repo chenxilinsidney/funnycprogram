@@ -1,22 +1,45 @@
-5 3
-dog
-ate
-homework
-canary
-died
-My dow ate my homework.
-Can you believe my dog died after eating my canary... AND MY HOMEWORK?
-This excuse is so good that it contain 0 keywords.
-6 5
-superhighway
-crazy
-thermonuclear
-bedroom
-war
-building
-I am having a superhighway built in my bedroom.
-I am actually crazy.
-1234567890.....,,,,,0987654321?????!!!!!!
-There was a thermonuclear war!
-I ate my dog, my canary, and my homework ... note outdated keywords?
-
+___________
+| o   .  o|
+|  o  .   |
+| ooo .  o|
+| ooo .o o|
+| oo o.  o|
+| oo  . oo|
+| oo o. oo|
+|  o  .   |
+| oo  . o |
+| ooo . o |
+| oo o.ooo|
+| ooo .ooo|
+| oo o.oo |
+|  o  .   |
+| oo  .oo |
+| oo o.ooo|
+| oooo.   |
+|  o  .   |
+| oo o. o |
+| ooo .o o|
+| oo o.o o|
+| ooo .   |
+| ooo . oo|
+|  o  .   |
+| oo o.ooo|
+| ooo .oo |
+| oo  .o o|
+| ooo . o |
+|  o  .   |
+| ooo .o  |
+| oo o.   |
+| oo  .o o|
+|  o  .   |
+| oo o.o  |
+| oo  .  o|
+| oooo. o |
+| oooo.  o|
+|  o  .   |
+| oo  .o  |
+| oo o.ooo|
+| oo  .ooo|
+|  o o.oo |
+|    o. o |
+___________
