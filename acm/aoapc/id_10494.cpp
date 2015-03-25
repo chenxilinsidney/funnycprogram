@@ -1,6 +1,6 @@
 /**
- * @file big number class
- * @brief big number class
+ * @file id_10494.c
+ * @brief AOAPC I 10494
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-03-25
@@ -224,9 +224,18 @@ ostream& operator << (ostream& out, const bign& x) {
 
 int main()
 {
-    bign a = "2355566";
-    bign c = "233";
-    cout << a / c << endl;
-    cout << a % c << endl;
+    string line;
+    char left[1025];
+    char character[2];
+    char right[1025];
+    while (getline(cin, line)) {
+        sscanf(line.c_str(), "%s %s %s", left, character, right);
+        bign a = left;
+        bign b = right;
+        if (character[0] == '/')
+            cout << a / b << endl;
+        else
+            cout << a % b << endl;
+    }
     return 0;
 }
