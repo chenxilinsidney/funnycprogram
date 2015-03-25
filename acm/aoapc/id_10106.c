@@ -1,6 +1,6 @@
 /**
- * @file big number class
- * @brief big number class
+ * @file id_10106.c
+ * @brief AOAPC I 10106
  * @author chenxilinsidney
  * @version 1.0
  * @date 2015-03-25
@@ -13,7 +13,7 @@
 #include <cstring>
 using namespace std;
 
-const int maxn = 1000;
+const int maxn = 502;
 
 struct bign {
     // data member
@@ -177,6 +177,14 @@ ostream& operator << (ostream& out, const bign& x) {
 
 int main()
 {
-    bign a = "2355566";
+    string line_a;
+    string line_b;
+    while (getline(cin, line_a)) {
+        getline(cin, line_b);
+        bign multiple = line_a;
+        bign b = line_b;
+        multiple *= b;
+        cout << multiple << endl;
+    }
     return 0;
 }
