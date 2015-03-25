@@ -58,7 +58,7 @@ int main()
         } else if (max_pancake_index > min_pancake_index &&
                 max_pancake_index < num_pancake) {
             printf("%d 1 %d 0\n", num_pancake - max_pancake_index + 1,
-                    num_pancake - max_pancake_index + min_pancake_index);
+                    max_pancake_index - min_pancake_index + 1);
         } else if (max_pancake_index > min_pancake_index &&
                 max_pancake_index == num_pancake) {
             printf("%d 0\n", num_pancake - min_pancake_index + 1);
@@ -72,7 +72,7 @@ int main()
             printf("%d 1 0\n", num_pancake - max_pancake_index + 1);
         } else if (max_pancake_index < min_pancake_index &&
                 max_pancake_index == 1) {
-            printf("1 %d 0\n", min_pancake_index);
+            printf("1 %d 0\n", num_pancake - min_pancake_index + 1);
         }
     }
     return 0;
