@@ -8,6 +8,7 @@
 
 #include <iostream>
 
+#include <cassert>
 #include <string>
 #include <cstdio>
 #include <cstring>
@@ -83,7 +84,9 @@ struct bign {
         return *this;
     }
     // operator -
+    // warning: non negative.
     bign operator - (const bign& b) const {
+        assert(*this >= b);
         bign c;
         c.len = 0;
         for (int i = 0, g = 0; i < len; i++) {
@@ -100,6 +103,7 @@ struct bign {
         c.clean();
         return c;
     }
+    // warning: non negative.
     // operator -=
     bign operator -= (const bign& b) {
         *this = *this - b;
@@ -124,6 +128,50 @@ struct bign {
         *this = *this * b;
         return *this;
     }
+    // operator /
+    // warning: for a / b, b should not be zero.
+    bign operator / (const bign& b) const {
+        assert(b != bign(0));
+        bign copy = *this;
+        cout << copy.str() << endl;
+        bign c;
+        if (len < b.len || (len == b.len && *this < b))
+            return c;
+        c.len = len - b.len + 1;
+        for (int i = c.len - 1; i >= 0; i--) {
+            bign temp = b;
+            int pow = i;
+            while (pow-- > 0) temp *= 10;
+            for (int j = 9; j >= 1; j--) {
+                if (copy >= temp * j) {
+                    copy -= temp;
+                    c.s[i] = j;
+                    break;
+                }
+            }
+        }
+        c.clean();
+        return c;
+    }
+    // operator /=
+    // warning: for a /= b, b should not be zero.
+    bign operator /= (const bign& b) {
+        *this = *this / b;
+        return *this;
+    }
+    // operator %
+    // warning: for a % b, b should not be zero.
+    bign operator % (const bign& b) const {
+        return *this - *this / b * b;
+    }
+    // operator %=
+    // warning: for a % b, b should not be zero.
+    bign operator %= (const bign& b) {
+         *this = *this - *this / b * b;
+         return *this;
+
+    }
+
     // operator <
     bool operator < (const bign& b) const {
         if (len != b.len)
@@ -178,5 +226,8 @@ ostream& operator << (ostream& out, const bign& x) {
 int main()
 {
     bign a = "2355566";
+    bign c = "233";
+    cout << a / c << endl;
+    cout << a % c << endl;
     return 0;
 }
