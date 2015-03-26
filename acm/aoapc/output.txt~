@@ -1,0 +1,58 @@
+w = 7
+t = 5
+title = descent of man
+
+kwic = DESCENT
+kwic = 0
+kwic = MAN
+kwic = 1
+title = the ascent of man
+
+kwic = ASCENT
+kwic = 2
+kwic = MAN
+kwic = 3
+title = the old man and the sea
+
+kwic = OLD
+kwic = 4
+kwic = MAN
+kwic = 5
+kwic = SEA
+kwic = 6
+title = a portrait of the artist as a young man
+
+kwic = PORTRAIT
+kwic = 7
+kwic = ARTIST
+kwic = 8
+kwic = YOUNG
+kwic = 9
+kwic = MAN
+kwic = 10
+title = a man is a man but bubblesort is a dog
+
+kwic = MAN
+kwic = 11
+kwic = MAN
+kwic = 12
+kwic = BUBBLESORT
+kwic = 13
+kwic = DOG
+kwic = 14
+kwic = 15
+a portrait of the ARTIST as a young man
+the ASCENT of man
+a man is a man but BUBBLESORT is a dog
+DESCENT of man
+a man is a man but bubblesort is a DOG
+descent of MAN
+the ascent of MAN
+the old MAN and the sea
+a portrait of the artist as a young MAN
+a MAN is a man but bubblesort is a dog
+a man is a MAN but bubblesort is a dog
+the OLD man and the sea
+a PORTRAIT of the artist as a young man
+the old man and the SEA
+a portrait of the artist as a YOUNG man
