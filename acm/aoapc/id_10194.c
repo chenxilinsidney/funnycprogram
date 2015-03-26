@@ -9,9 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-#define MAX_TEAM_NAME 31
-#define MAX_LINE_WIDTH 101
+#define MAX_TEAM_NAME 35
+#define MAX_LINE_WIDTH 105
 char line[MAX_LINE_WIDTH];
 
 typedef struct {
@@ -26,12 +27,20 @@ typedef struct {
     int goals_against;
 } team_struct;
 
-team_struct team[30];
+team_struct team[35];
 
 int compare_team_by_name(void const* a, void const* b)
 {
     return strcmp(((team_struct*)a)->team_name,
             ((team_struct*)b)->team_name);
+}
+
+void string_to_lower(char* str)
+{
+    while (*str != '\0') {
+        *str = tolower(*str);
+        str++;
+    }
 }
 
 int compare_team_by_rank(void const* a, void const* b)
@@ -56,8 +65,16 @@ int compare_team_by_rank(void const* a, void const* b)
         ((team_struct*)b)->games_played;
     if (value != 0)
         return -1 * value;
-    return strcmp(((team_struct*)a)->team_name,
-            ((team_struct*)b)->team_name);
+    /* case insensive */
+    char team_a[MAX_TEAM_NAME];
+    memcpy(team_a, ((team_struct*)a)->team_name,
+            1 + strlen(((team_struct*)a)->team_name));
+    string_to_lower(team_a);
+    char team_b[MAX_TEAM_NAME];
+    memcpy(team_b, ((team_struct*)b)->team_name,
+            1 + strlen(((team_struct*)b)->team_name));
+    string_to_lower(team_b);
+    return -1 * strcmp(team_a, team_b);
 }
 
 int main()
