@@ -1,15 +1,21 @@
-a portrait of the ARTIST as a young man
-the ASCENT of man
-a man is a man but BUBBLESORT is a dog
-DESCENT of man
-a man is a man but bubblesort is a DOG
-descent of MAN
-the ascent of MAN
-the old MAN and the sea
-a portrait of the artist as a young MAN
-a MAN is a man but bubblesort is a dog
-a man is a MAN but bubblesort is a dog
-the OLD man and the sea
-a PORTRAIT of the artist as a young man
-the old man and the SEA
-a portrait of the artist as a YOUNG man
+Case 1: length = 1
+line = A
+A
+Case 2: length = 5
+line = A
+AJAJA
+Case 3: length = 5
+line = A
+AJAJA
+Case 4: length = 34
+line = A
+AJAJAJAJAJASASASASASABABABABABAKAK
+Case 5: length = 54
+line = A
+AJAJAJAJAJASASASASASABABABABABAKAKAKAKAKATUTUTUTUTUCUC
+Case 6: length = 210
+line = A
+AJAJAJAJAJASASASASASABABABABABAKAKAKAKAKATUTUTUTUTUCUCUCUCUCULULULULULUDUDUDUDUDUMUMEMEMEMEVEVEVEVEVENENENENENEWEWEWEWEWEFEFEFOFOFOXOXOXOXOXOGOGOGOGOGOPOPOPOPOPOYOYOYOYIYIHIHIHIHIHIQIQIQIQIQIZIZIZIZIZIRIRIRIRIR
+Case 7: length = 123
+line = A
+AJAJAJAJAJASASASASASABABABABABAKAKAKAKAKATUTUTUTUTUCUCUCUCUCULULULULULUDUDUDUDUDUMUMEMEMEMEVEVEVEVEVENENENENENEWEWEWEWEWEFE
