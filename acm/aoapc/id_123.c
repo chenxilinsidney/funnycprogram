@@ -16,11 +16,11 @@
 // #define ONLINE_JUDGE
 #endif
 
-#define MAX_WORD_IGNORE_WIDTH 11
-char word_ignore_list[51][MAX_WORD_IGNORE_WIDTH];
+#define MAX_WORD_IGNORE_WIDTH 15
+char word_ignore_list[55][MAX_WORD_IGNORE_WIDTH];
 
 #define MAX_TITLE_WIDTH 1025
-char title_list[201][MAX_TITLE_WIDTH];
+char title_list[205][MAX_TITLE_WIDTH];
 
 typedef struct {
     char word[MAX_WORD_IGNORE_WIDTH];
@@ -120,6 +120,13 @@ int main()
         char word_temp[MAX_WORD_IGNORE_WIDTH];
         int flag_alpha;
         char* title_ptr = title_list[title_list_index];
+        if (title_ptr[char_length - 1] == '\n') {
+            title_ptr[char_length - 1] = '\0';
+            char_length--;
+#ifndef ONLINE_JUDGE
+                    printf("char_length = %d\n", char_length);
+#endif
+        }
 #ifndef ONLINE_JUDGE
                     printf("title = %s\n", title_ptr);
 #endif
@@ -174,6 +181,7 @@ int main()
                 char_index < char_length; char_index++) {
             putchar(title_ptr[char_index]);
         }
+        putchar('\n');
     }
     return 0;
 }
