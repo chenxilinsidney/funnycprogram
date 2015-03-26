@@ -1,20 +1,15 @@
-1 2 3 4 5
-0
-5 4 3 2 1
-1 0
-5 1 2 3 4
-1 4 0
-23 34 62 20 5 45 656
-3 0
-2 3 4 5 1
-2 1 0
-1 2 3 5 4
-2 1 4 0
-2 1 5 3 4
-3 1 2 0
-2 1 3 4 5
-4 0
-5 3 4 1 2
-1 2 0
-3 5 1 2 4
-4 1 3 0
+------------------------------------------------------------
+12345678.123         size-1               
+2short4me            size2                
+mid_size_name        size3                
+much_longer_name     tiny                 
+shorter              very_long_file_name  
+------------------------------------------------------------
+Alfalfa        Cotton         Joe            Porky          
+Buckwheat      Darla          Mrs_Crabapple  Stimey         
+Butch          Froggy         P.D.           Weaser         
+------------------------------------------------------------
+Alice       Chris       Jan         Marsha      Ruben       
+Bobby       Cindy       Jody        Mike        Shirley     
+Buffy       Danny       Keith       Mr._French  Sissy       
+Carol       Greg        Lori        Peter
