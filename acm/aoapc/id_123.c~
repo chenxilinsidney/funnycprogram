@@ -13,7 +13,7 @@
 #include <ctype.h>
 
 #ifndef ONLINE_JUDGE
-// #define ONLINE_JUDGE
+#define ONLINE_JUDGE
 #endif
 
 #define MAX_WORD_IGNORE_WIDTH 11
@@ -55,17 +55,35 @@ int compare_string(void const* a, void const* b)
 int compare_struct(void const* a, void const* b)
 {
     /* check if different word first */
-    int str = strcmp(((KWIC_struct*)a)->word, ((KWIC_struct*)b)->word);
-    if (str != 0)
-        return str;
-    /* check if different id */
-    int id = ((KWIC_struct*)a)->title_id - ((KWIC_struct*)b)->title_id;
-    if (id != 0)
-        return id;
-    /* check if previous postion */
-    int ps = ((KWIC_struct*)a)->word_index_begin -
-        ((KWIC_struct*)b)->word_index_begin;
-    return ps;
+    char* ptr_a = ((KWIC_struct*)a)->word;
+    char* ptr_b = ((KWIC_struct*)b)->word;
+    while (*ptr_a != '\0' && *ptr_b != '\0') {
+        if (*ptr_a < *ptr_b) {
+            return -1;
+        } else if (*ptr_a > *ptr_b) {
+            return 1;
+        }
+        ptr_a++;
+        ptr_b++;
+    }
+    if (*ptr_a == '\0' && *ptr_b == '\0') {
+        /* check if different id */
+        int id = ((KWIC_struct*)a)->title_id - ((KWIC_struct*)b)->title_id;
+        if (id != 0)
+            return id;
+        /* check if previous postion */
+        int ps = ((KWIC_struct*)a)->word_index_begin -
+            ((KWIC_struct*)b)->word_index_begin;
+        return ps;
+    }
+    else if (*ptr_a == '\0')
+        return -1;
+    else
+        return 1;
+}
+
+int compare_id(void const* a, void const* b)
+{
 }
 
 void string_to_upper(char* str)
@@ -158,21 +176,32 @@ int main()
     /* sort KWIC list */
     qsort(KWIC_list, KWIC_list_length, sizeof(KWIC_list[0]), compare_struct);
     /* output title by KWIC list */
-    int KWIC_list_index = 0;
-    for (KWIC_list_index = 0; KWIC_list_index < KWIC_list_length;
-            KWIC_list_index++) {
-        char* title_ptr = title_list[KWIC_list[KWIC_list_index].title_id];
-        int char_index = 0;
-        int char_length = strlen(title_ptr);
-        int word_index_begin = KWIC_list[KWIC_list_index].word_index_begin;
-        int word_index_end = KWIC_list[KWIC_list_index].word_index_end;
-        for (char_index = 0; char_index < word_index_begin; char_index++) {
-            putchar(title_ptr[char_index]);
+    int distinct_index = 0, KWIC_list_index = 0;
+    while (KWIC_list_index < KWIC_list_length) {
+        while (!strcmp(KWIC_list[distinct_index].word,
+                    KWIC_list[KWIC_list_index].word))
+            KWIC_list_index++;
+        if (KWIC_list_index > distinct_index + 1) {
+            /* samy KWIC sorted by title id */
+            qsort(KWIC_list + distinct_index,
+                    KWIC_list_index - distinct_index,
+                    sizeof(KWIC_list[0]), compare_id);
         }
-        printf("%s", KWIC_list[KWIC_list_index].word);
-        for (char_index = word_index_end + 1;
-                char_index < char_length; char_index++) {
-            putchar(title_ptr[char_index]);
+        while (distinct_index < KWIC_list_index) {
+            char* title_ptr = title_list[KWIC_list[distinct_index].title_id];
+            int char_index = 0;
+            int char_length = strlen(title_ptr);
+            int word_index_begin = KWIC_list[distinct_index].word_index_begin;
+            int word_index_end = KWIC_list[distinct_index].word_index_end;
+            for (char_index = 0; char_index < word_index_begin; char_index++) {
+                putchar(title_ptr[char_index]);
+            }
+            printf("%s", KWIC_list[distinct_index].word);
+            for (char_index = word_index_end + 1;
+                    char_index < char_length; char_index++) {
+                putchar(title_ptr[char_index]);
+            }
+            distinct_index++;
         }
     }
     return 0;
