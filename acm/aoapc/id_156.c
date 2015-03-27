@@ -24,6 +24,14 @@ typedef struct {
 
 word_struct word_list[1000];
 
+void string_to_lower(char* str)
+{
+    while (*str != '\0') {
+        *str = tolower(*str);
+        str++;
+    }
+}
+
 int compare_char(void const* a, void const* b)
 {
     return (int)(*((char*)a)) - ((int)*((char*)b));
@@ -31,23 +39,8 @@ int compare_char(void const* a, void const* b)
 
 int compare_word(void const* a, void const* b)
 {
-    char* ptr_a = ((word_struct*)a)->word_low;
-    char* ptr_b = ((word_struct*)b)->word_low;
-    while (*ptr_a != '\0' && *ptr_b != '\0') {
-        if (*ptr_a < *ptr_b) {
-            return -1;
-        } else if (*ptr_a > *ptr_b) {
-            return 1;
-        }
-        ptr_a++;
-        ptr_b++;
-    }
-    if (*ptr_a == '\0' && *ptr_b == '\0')
-        return 0;
-    else if (*ptr_a == '\0')
-        return -1;
-    else
-        return 1;
+    return strcmp(((word_struct*)a)->word_low,
+            ((word_struct*)b)->word_low);
 }
 
 int compare_word_ananagrams(void const* a, void const* b)
@@ -83,7 +76,6 @@ int main()
         int line_length = strlen(line);
         int flag_character = 0;
         int word_begin = 0;
-        int word_index;
         for (line_index = 0; line_index <= line_length; line_index++) {
             int flag_alpha = isalpha(line[line_index]);
             if (!flag_character && flag_alpha) {
@@ -96,12 +88,12 @@ int main()
                         line + word_begin,
                         line_index - word_begin + 1);
                 /* lowcase word */
+                memcpy(word_list[word_list_index].word_low,
+                        line + word_begin,
+                        line_index - word_begin + 1);
                 word_begin = line_index - word_begin;
-                for (word_index = 0; word_index < word_begin; word_index++)
-                    word_list[word_list_index].word_low[word_index] =
-                        tolower(word_list[word_list_index].
-                                word_src[word_index]);
-                word_list[word_list_index].word_low[word_index] = '\0';
+                word_list[word_list_index].word_low[word_begin] = '\0';
+                string_to_lower(word_list[word_list_index].word_low);
                 /* sort single word */
                 qsort((void*)word_list[word_list_index].word_low, word_begin,
                         sizeof(char),
