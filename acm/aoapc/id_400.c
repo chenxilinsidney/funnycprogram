@@ -18,23 +18,7 @@ char list[1000][MAX_WORD_WIDTH];
 
 int compare_string(void const* a, void const* b)
 {
-    char* ptr_a = (char*)a;
-    char* ptr_b = (char*)b;
-    while (*ptr_a != '\0' && *ptr_b != '\0') {
-        if (*ptr_a < *ptr_b) {
-            return -1;
-        } else if (*ptr_a > *ptr_b) {
-            return 1;
-        }
-        ptr_a++;
-        ptr_b++;
-    }
-    if (*ptr_a == '\0' && *ptr_b == '\0')
-        return 0;
-    else if (*ptr_a == '\0')
-        return -1;
-    else
-        return 1;
+    return strcmp((char*)a, (char*)b);
 }
 
 int main()
