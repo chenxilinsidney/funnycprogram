@@ -33,23 +33,7 @@ KWIC_struct KWIC_list[10001];
 
 int compare_string(void const* a, void const* b)
 {
-    char* ptr_a = (char*)a;
-    char* ptr_b = (char*)b;
-    while (*ptr_a != '\0' && *ptr_b != '\0') {
-        if (*ptr_a < *ptr_b) {
-            return -1;
-        } else if (*ptr_a > *ptr_b) {
-            return 1;
-        }
-        ptr_a++;
-        ptr_b++;
-    }
-    if (*ptr_a == '\0' && *ptr_b == '\0')
-        return 0;
-    else if (*ptr_a == '\0')
-        return -1;
-    else
-        return 1;
+    return strcmp((char*)a, (char*)b);
 }
 
 int compare_struct(void const* a, void const* b)
@@ -63,9 +47,8 @@ int compare_struct(void const* a, void const* b)
     if (id != 0)
         return id;
     /* check if previous postion */
-    int ps = ((KWIC_struct*)a)->word_index_begin -
+    return ((KWIC_struct*)a)->word_index_begin -
         ((KWIC_struct*)b)->word_index_begin;
-    return ps;
 }
 
 void string_to_upper(char* str)
@@ -145,7 +128,7 @@ int main()
                     /* refresh KWIC list */
                     string_to_upper(word_temp);
 #ifndef ONLINE_JUDGE
-                    printf("kwic = %s\n", word_temp);
+                    printf("ssskwic = %s\n", word_temp);
                     printf("kwic = %d\n", KWIC_list_length);
 #endif
                     memcpy(KWIC_list[KWIC_list_length].word,
