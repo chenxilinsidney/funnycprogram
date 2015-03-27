@@ -89,18 +89,8 @@ int main()
         int team_numbers, team_index = 0;
         scanf("%d\n", &team_numbers);
         memset(team, 0, sizeof(team[0]) * team_numbers);
-        while (team_index < team_numbers) {
-            fgets(line, MAX_LINE_WIDTH, stdin);
-            int line_length = strlen(line);
-            if (line[line_length - 1] == '\n') {
-#ifndef ONLINE_JUDGE
-                printf("fgets a \\n\n");
-#endif
-                line[line_length - 1] = '\0';
-            }
-            memcpy(team[team_index].team_name, line, line_length);
-            team_index++;
-        }
+        while (team_index < team_numbers)
+            gets(team[team_index++].team_name);
         /* sort by name */
         qsort(team, team_numbers, sizeof(team[0]), compare_team_by_name);
         /* get games */
@@ -108,15 +98,13 @@ int main()
         scanf("%d\n", &games_numbers);
         while (games_index < games_numbers) {
             /* get games information */
-            fgets(line, MAX_LINE_WIDTH, stdin);
             char team_a[MAX_TEAM_NAME];
             char team_b[MAX_TEAM_NAME];
             int team_a_goals = 0;
             int team_b_goals = 0;
-            sscanf(line, "%[^#]#%d@%d#%[^\n]", team_a, &team_a_goals,
+            scanf("%[^#]#%d@%d#%[^\n]\n", team_a, &team_a_goals,
                     &team_b_goals, team_b);
 #ifndef ONLINE_JUDGE
-            printf("game:%s\n", line);
             printf("%s, %d, %d, %s\n", team_a, team_a_goals,
                     team_b_goals, team_b);
 #endif
@@ -125,10 +113,6 @@ int main()
                     team, team_numbers, sizeof(team[0]), compare_team_by_name);
             team_struct* team_b_ptr = bsearch(team_b,
                     team, team_numbers, sizeof(team[0]), compare_team_by_name);
-#ifndef ONLINE_JUDGE
-            printf("search:%s\n", (*team_a_ptr).team_name);
-            printf("search:%s\n", (*team_b_ptr).team_name);
-#endif
             (*team_a_ptr).goals_scored += team_a_goals;
             (*team_a_ptr).goals_against += team_b_goals;
             (*team_a_ptr).goal_difference += team_a_goals -team_b_goals;
