@@ -7,30 +7,24 @@
  */
 
 #include <iostream>
-#include <cstdio>
 #include <cstdlib>
-#include <cstring>
 #include <string>
 #include <stack>
 
 using namespace std;
 
-#define MAX_LINE_WIDTH 1025
-char line[MAX_LINE_WIDTH];
-
 int main()
 {
-    string str_sequence;
-    while (fgets(line, MAX_LINE_WIDTH, stdin)) {
+    string line;
+    while (getline(cin, line)) {
         // stack to process
         stack<int> sequence;
         bool sequence_result = true;
         // string to int
-        int line_length = strlen(line);
         bool flag = true;
-        for (int i = 0; i <= line_length; i++) {
+        for (size_t i = 0; i <= line.size(); i++) {
             if (flag && line[i] != ' ') {
-                int value = atoi(line + i);
+                int value = atoi(line.data() + i);
                 // process with value;
                 if (value < 0) {
                     sequence.push(value);
