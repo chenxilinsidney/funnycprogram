@@ -23,69 +23,52 @@ int main()
         vector<int> circle;
         for (int i = 1; i <= N; i++)
             circle.push_back(i);
+        // initialize index (index begin from 1 to N)
         int k_index = k;
         int m_index = N + 1 - m;
-        while (k_index < 0) k_index += N;
-        while (k_index > N) k_index -= N;
-        while (m_index < 0) m_index += N;
-        while (m_index > N) m_index -= N;
-        if (k_index == 0) k_index = N;
-        if (m_index == 0) m_index = N;
-        while (circle.size() != 0) {
+        while (N) {
+            while (k_index < 0) k_index += N;
+            while (k_index > N) k_index -= N;
+            while (m_index < 0) m_index += N;
+            while (m_index > N) m_index -= N;
+            if (k_index == 0) k_index = N; 
+            if (m_index == 0) m_index = N;
 #ifndef ONLINE_JUDGE
             cout << "next " << k_index << " : " << m_index << endl;
 #endif
             int first_remove = circle[k_index - 1];
             int second_remove = circle[m_index - 1];
-            if (k_index < m_index) {
-                // erase in sequence
-                circle.erase(circle.begin() + m_index - 1);
-                circle.erase(circle.begin() + k_index - 1);
-                // refresh index
-                k_index += k - 1;
-                m_index -= m + 1;
-                // refresh circle size
-                N -= 2;
+            if (k_index != m_index) {
+                if (k_index < m_index) {
+                    // erase in sequence
+                    circle.erase(circle.begin() + m_index - 1);
+                    circle.erase(circle.begin() + k_index - 1);
+                    // refresh index
+                    k_index += k - 1;
+                    m_index -= m + 1;
+                } else {
+                    // erase in sequence
+                    circle.erase(circle.begin() + k_index - 1);
+                    circle.erase(circle.begin() + m_index - 1);
+                    // refresh index
+                    k_index += k - 2;
+                    m_index -= m;
+                }
                 // output
                 cout << setw(3) << first_remove
                     << setw(3) << second_remove;
-                if (N == 0) break;
-                else cout << ",";
-            } else if (k_index > m_index) {
-                // erase in sequence
-                circle.erase(circle.begin() + k_index - 1);
-                circle.erase(circle.begin() + m_index - 1);
-                // refresh index
-                k_index += k - 2;
-                m_index -= m;
-                // refresh circle size
-                N -= 2;
-                // output
-                cout << setw(3) << first_remove
-                    << setw(3) << second_remove;
-                if (N == 0) break;
-                else cout << ",";
             } else {
                 // erase
                 circle.erase(circle.begin() + k_index - 1);
                 // refresh index
                 k_index += k - 1;
                 m_index -= m;
-                // refresh circle size
-                N--;
                 // output
                 cout << setw(3) << first_remove;
-                if (N == 0) break;
-                else cout << ",";
             }
-            while (k_index < 0) k_index += N;
-            while (k_index > N) k_index -= N;
-            while (m_index < 0) m_index += N;
-            while (m_index > N) m_index -= N;
-            k_index = k_index % N;
-            m_index = (m_index + N) % N;
-            if (k_index == 0) k_index = N; 
-            if (m_index == 0) m_index = N;
+            // refresh circle size
+            N = circle.size();
+            if (N) cout << ",";
 #ifndef ONLINE_JUDGE
             cout << "after dec: " << k_index << ","
                 << m_index << "," << N << endl;
