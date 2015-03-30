@@ -19,6 +19,8 @@ string line;
 bool flag_team_in_queue[1005];
 // team member static
 int member_to_team[1000005];
+queue<int> queue_member[1005];
+queue<int> queue_team;
 
 int main()
 {
@@ -41,8 +43,11 @@ int main()
         }
         cin.get();
         // init for queue
-        queue<int> queue_member[num_teams];
-        queue<int> queue_team;
+        for (int i = 0; i < num_teams; i++)
+            while(!queue_member[i].empty())
+                queue_member[i].pop();
+        while(!queue_team.empty())
+            queue_team.pop();
         int enqueue_value;
         while (getline(cin, line) && line[0] != 'S') {
             if (line[0] == 'E') {
