@@ -24,7 +24,8 @@ struct Node {
 
 Node node[10005];
 
-char expression[10005];
+string expression;
+
 char result[10005];
 int result_index;
 
@@ -35,8 +36,8 @@ int main()
     cin.get();
     while (num_expression--) {
         // get expression
-        gets(expression);
-        int expression_length = strlen(expression);
+        getline(cin, expression);
+        int expression_length = expression.size();
         stack<int> stack_expression;
         // explain by stack and create binary tree
         for (size_t i = 0; i < expression_length; i++) {
@@ -49,9 +50,9 @@ int main()
                 node[i].right_index = -1;
             } else {
                 // pop to node index from stack
-                int left_index = stack_expression.top();
-                stack_expression.pop();
                 int right_index = stack_expression.top();
+                stack_expression.pop();
+                int left_index = stack_expression.top();
                 stack_expression.pop();
                 // node with child
                 node[i].data = expression[i];
