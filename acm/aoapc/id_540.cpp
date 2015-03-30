@@ -15,15 +15,15 @@ using namespace std;
 string line;
 
 // queque team
-int queue_team_to_rank[1000];
-int queue_rank_to_team[1000];
+int queue_team_to_rank[1005];
+int queue_rank_to_team[1005];
 // queque member
-int queue_member[1000][1000];
-int queue_member_index[1000];
-int queue_member_length[1000];
+int queue_member[1005][1005];
+int queue_member_index[1005];
+int queue_member_length[1005];
 
 // team member static
-int member_to_team[1000000];
+int member_to_team[1000005];
 
 int main()
 {
@@ -49,7 +49,6 @@ int main()
         // init for queue
         int queue_team_length = 0;
         int queue_team_first_index = 1;
-        int team_in_queque = 0;
         int enqueue_value;
         while (getline(cin, line) && line[0] != 'S') {
             if (line[0] == 'E') {
@@ -98,4 +97,5 @@ int main()
         }
         cout << endl;
     }
+    return 0;
 }
