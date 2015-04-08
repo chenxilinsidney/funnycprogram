@@ -114,7 +114,7 @@ int main(void)
         cout << "string: " << input << endl;
 #endif
         if (MATCH == traversal(input, 0, 0, target) ||
-                EMPTY_TREE == traversal(input, 0, 0, target))
+                (EMPTY_TREE == traversal(input, 0, 0, target) && target == 0))
             cout << "yes" << endl;
         else
             cout << "no" << endl;
