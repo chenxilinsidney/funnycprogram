@@ -23,31 +23,18 @@ typedef struct Node {
 Node* build_treeinpost(const int* inorder,
         int inorder_start_index,
         int inorder_end_index,
+        int num_node,
         const int* postorder,
         int postorder_start_index,
         int postorder_end_index)
 {
     assert(postorder_end_index - postorder_start_index ==
             inorder_end_index - inorder_start_index);
-#ifndef ONLINE_JUDGE
-    cout << "build_treeinpost:" << inorder_start_index <<
-        "," << inorder_end_index << endl;
-    cout << "build_treeinpost:" << postorder_start_index <<
-        "," << postorder_end_index << endl;
-#endif
+    if (num_node == 0)
+        return NULL;
     Node* temp = new Node;
     temp->lchild = NULL;
     temp->rchild = NULL;
-    // leaf node no left child and right child
-    if (inorder_end_index == inorder_start_index &&
-            postorder_end_index == postorder_start_index) {
-#ifndef ONLINE_JUDGE
-        cout << "leaf node" << endl;
-        cout << "leaf key:" << inorder[inorder_end_index] << endl;
-#endif
-        temp->key = inorder[inorder_end_index];
-        return temp;
-    }
     int inorder_index = inorder_start_index;
     while (inorder_index <= inorder_end_index &&
             inorder[inorder_index] != postorder[postorder_end_index]) {
@@ -58,107 +45,20 @@ Node* build_treeinpost(const int* inorder,
     cout << "key:" << temp->key << endl;
     cout << "index:" << inorder_index << endl;
 #endif
-    if (inorder_index == inorder_start_index) {
-        // no left child
-        // has right child
-        temp->rchild = build_treeinpost(inorder,
-                inorder_start_index + 1, inorder_end_index,
-                postorder,
-                postorder_start_index,
-                postorder_end_index - 1);
-    } else if (inorder_index == inorder_end_index) {
-        // no right child
-        // has left child
-        temp->lchild = build_treeinpost(inorder,
-                inorder_start_index, inorder_end_index - 1,
-                postorder,
-                postorder_start_index,
-                postorder_end_index - 1);
-    } else {
-        // has left child
-        temp->lchild = build_treeinpost(inorder,
-                inorder_start_index, inorder_index - 1,
-                postorder,
-                postorder_start_index,
-                inorder_index - 1 - inorder_start_index + postorder_start_index);
-        // has right child
-        temp->rchild = build_treeinpost(inorder,
-                inorder_index + 1, inorder_end_index,
-                postorder,
-                inorder_index - inorder_start_index + postorder_start_index,
-                postorder_end_index - 1);
-    }
-    return temp;
-}
-
-Node* build_treeinpre(const int* inorder,
-        int inorder_start_index,
-        int inorder_end_index,
-        const int* preorder,
-        int preorder_start_index,
-        int preorder_end_index)
-{
-    assert(preorder_end_index - preorder_start_index ==
-            inorder_end_index - inorder_start_index);
-#ifndef ONLINE_JUDGE
-    cout << "build_treeinpre:" << inorder_start_index <<
-        "," << inorder_end_index << endl;
-    cout << "build_treeinpre:" << preorder_start_index <<
-        "," << preorder_end_index << endl;
-#endif
-    Node* temp = new Node;
-    temp->lchild = NULL;
-    temp->rchild = NULL;
-    // leaf node no left child and right child
-    if (inorder_end_index == inorder_start_index &&
-            preorder_end_index == preorder_start_index) {
-#ifndef ONLINE_JUDGE
-        cout << "leaf node" << endl;
-        cout << "leaf key:" << inorder[inorder_end_index] << endl;
-#endif
-        temp->key = inorder[inorder_end_index];
-        return temp;
-    }
-    int inorder_index = inorder_start_index;
-    while (inorder_index <= inorder_end_index &&
-            inorder[inorder_index] != preorder[preorder_start_index]) {
-        inorder_index++;
-    }
-    temp->key = preorder[preorder_start_index];
-#ifndef ONLINE_JUDGE
-    cout << "key:" << temp->key << endl;
-    cout << "index:" << inorder_index << endl;
-#endif
-    if (inorder_index == inorder_start_index) {
-        // no left child
-        // has right child
-        temp->rchild = build_treeinpre(inorder,
-                inorder_start_index + 1, inorder_end_index,
-                preorder,
-                preorder_start_index + 1,
-                preorder_end_index);
-    } else if (inorder_index == inorder_end_index) {
-        // no right child
-        // has left child
-        temp->lchild = build_treeinpre(inorder,
-                inorder_start_index, inorder_end_index - 1,
-                preorder,
-                preorder_start_index + 1,
-                preorder_end_index);
-    } else {
-        // has left child
-        temp->lchild = build_treeinpre(inorder,
-                inorder_start_index, inorder_index - 1,
-                preorder,
-                preorder_start_index + 1,
-                inorder_index - inorder_start_index + preorder_end_index);
-        // has right child
-        temp->rchild = build_treeinpre(inorder,
-                inorder_index + 1, inorder_end_index,
-                preorder,
-                inorder_index - inorder_start_index + preorder_start_index + 1,
-                preorder_end_index);
-    }
+    //left child
+    temp->lchild = build_treeinpost(inorder,
+            inorder_start_index, inorder_index - 1,
+            inorder_index - inorder_start_index,
+            postorder,
+            postorder_start_index,
+            inorder_index - 1 - inorder_start_index + postorder_start_index);
+    //right child
+    temp->rchild = build_treeinpost(inorder,
+            inorder_index + 1, inorder_end_index,
+            inorder_end_index - inorder_index,
+            postorder,
+            inorder_index - inorder_start_index + postorder_start_index,
+            postorder_end_index - 1);
     return temp;
 }
 
@@ -231,7 +131,7 @@ int main(void)
         cout << "number:" << number << endl;
 #endif
         Node* root;
-        root = build_treeinpost(inorder, 0, number - 1,
+        root = build_treeinpost(inorder, 0, number - 1, number,
                 postorder, 0, number - 1);
 #ifndef ONLINE_JUDGE
         cout << "root:" << root->key << endl;
