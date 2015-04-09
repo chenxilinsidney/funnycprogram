@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <string>
+#include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -40,7 +42,7 @@ Node* build_tree_inorder()
     return temp;
 }
 
-void display_tree_inorder(Node* root)
+void display_tree_preorder_by_recursive(Node* root)
 {
     if (root != NULL) {
         cout << root->lweight << " ";
@@ -48,19 +50,128 @@ void display_tree_inorder(Node* root)
         cout << root->rweight << " ";
         cout << root->rdistance << " ";
         cout << "@ ";
-        display_tree_inorder(root->lchild);
-        display_tree_inorder(root->rchild);
+        display_tree_preorder_by_recursive(root->lchild);
+        display_tree_preorder_by_recursive(root->rchild);
+    }
+}
+
+void display_tree_preorder(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp;
+    stack<Node*> s;
+    s.push(root);
+    while (!s.empty()) {
+        temp = s.top();
+        s.pop();
+        cout << temp->lweight << " ";
+        cout << temp->ldistance << " ";
+        cout << temp->rweight << " ";
+        cout << temp->rdistance << " ";
+        cout << "@ ";
+        if (temp->rchild != NULL)
+            s.push(temp->rchild);
+        if (temp->lchild != NULL)
+            s.push(temp->lchild);
+    }
+}
+
+void display_tree_inorder_by_recursive(Node* root)
+{
+    if (root != NULL) {
+        display_tree_inorder_by_recursive(root->lchild);
+        cout << root->lweight << " ";
+        cout << root->ldistance << " ";
+        cout << root->rweight << " ";
+        cout << root->rdistance << " ";
+        cout << "@ ";
+        display_tree_inorder_by_recursive(root->rchild);
+    }
+}
+
+void display_tree_inorder(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp = root;
+    stack<Node*> s;
+    while (temp || !s.empty()) {
+        if (temp) {
+            s.push(temp);
+            temp = temp->lchild;
+        } else {
+            temp = s.top();
+            s.pop();
+            cout << temp->lweight << " ";
+            cout << temp->ldistance << " ";
+            cout << temp->rweight << " ";
+            cout << temp->rdistance << " ";
+            cout << "@ ";
+            temp = temp->rchild;
+        }
+    }
+}
+
+void display_tree_postorder_by_recursive(Node* root)
+{
+    if (root != NULL) {
+        display_tree_postorder_by_recursive(root->lchild);
+        display_tree_postorder_by_recursive(root->rchild);
+        cout << root->lweight << " ";
+        cout << root->ldistance << " ";
+        cout << root->rweight << " ";
+        cout << root->rdistance << " ";
+        cout << "@ ";
     } else {
         cout << "# ";
     }
 }
 
-void destroy_tree(Node* root)
+void display_tree_postorder(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp;
+    stack<Node*> s;
+    s.push(root);
+    while (!s.empty()) {
+        if (temp->rchild != NULL) {
+            s.push(temp->rchild);
+        if (temp->lchild != NULL)
+            s.push(temp->lchild);
+        temp = s.top();
+        if (temp->lchild == NULL && temp->rchild == NULL) {
+            s.pop();
+            cout << temp->lweight << " ";
+            cout << temp->ldistance << " ";
+            cout << temp->rweight << " ";
+            cout << temp->rdistance << " ";
+            cout << "@ ";
+        }
+    }
+}
+
+void destroy_tree_by_recursive(Node* root)
 {
     if (root != NULL) {
-        destroy_tree(root->lchild);
-        destroy_tree(root->rchild);
+        destroy_tree_by_recursive(root->lchild);
+        destroy_tree_by_recursive(root->rchild);
         delete root;
+    }
+}
+
+void destroy_tree_by_queue(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp;
+    queue<Node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        temp = q.front();
+        q.pop();
+        if (temp->lchild != NULL)
+            q.push(temp->lchild);
+        if (temp->rchild != NULL)
+            q.push(temp->rchild);
+        delete temp;
     }
 }
 
@@ -101,11 +212,21 @@ int main(void)
         if (num_case)
             cout << endl;
 #ifndef ONLINE_JUDGE
+        display_tree_inorder_by_recursive(root);
+        cout << endl;
         display_tree_inorder(root);
+        cout << endl;
+        display_tree_preorder_by_recursive(root);
+        cout << endl;
+        display_tree_preorder(root);
+        cout << endl;
+        display_tree_postorder_by_recursive(root);
+        cout << endl;
+        display_tree_postorder(root);
         cout << endl;
 #endif
         // destroy tree
-        destroy_tree(root);
+        destroy_tree_by_queue(root);
     }
     return 0;
 }
