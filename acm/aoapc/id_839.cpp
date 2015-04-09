@@ -67,15 +67,18 @@ void destroy_tree(Node* root)
 bool traversal_tree_path(Node* root)
 {
     if (root == NULL) return false;
-    if (root->lchild != NULL && root->rchild != NULL) {
-        if (root->lweight * root->ldistance != root->rweight * root->rdistance)
-            return true;
-        else {
-            return traversal_tree_path(root->lchild) ||
-                traversal_tree_path(root->rchild);
-        }
-    }
-    return false;
+    if (root->lweight * root->ldistance != root->rweight * root->rdistance)
+        return true;
+    bool left, right;
+    if (root->lchild != NULL)
+        left = traversal_tree_path(root->lchild);
+    else
+        left = false;
+    if (root->lchild != NULL)
+        right = traversal_tree_path(root->rchild);
+    else
+        right = false;
+    return left || right;
 }
 
 int main(void)
