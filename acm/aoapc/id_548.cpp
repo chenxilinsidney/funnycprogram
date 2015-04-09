@@ -65,10 +65,9 @@ Node* build_treeinpost(const int* inorder,
 void destroy_tree(Node* root)
 {
     if (root != NULL) {
-        Node* p_temp = root;
         destroy_tree(root->lchild);
         destroy_tree(root->rchild);
-        delete p_temp;
+        delete root;
     }
 }
 
