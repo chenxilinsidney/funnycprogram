@@ -8,6 +8,13 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
+#include <stack>
+#include <queue>
+
+#define LEAVES_HALF_WIDTH 85
+int left_array[LEAVES_HALF_WIDTH] = {0};
+int right_array[LEAVES_HALF_WIDTH] = {0};
 
 using namespace std;
 
@@ -32,21 +39,39 @@ Node* build_tree_inorder()
 
 void display_tree_inorder(Node* root)
 {
-    if (root != NULL) {
-        cout << root->key << " ";
-        display_tree_inorder(root->lchild);
-        display_tree_inorder(root->rchild);
-    } else {
-        cout << "# ";
+    if (root == NULL) return;
+    Node* temp = root;
+    stack<Node*> s;
+    while (temp || !s.empty()) {
+        if (temp) {
+            // push left child for node temp
+            s.push(temp);
+            temp = temp->lchild;
+        } else {
+            // get top node
+            temp = s.top();
+            s.pop();
+            cout << temp->key << " ";
+            // check right child next time
+            temp = temp->rchild;
+        }
     }
 }
 
 void destroy_tree(Node* root)
 {
-    if (root != NULL) {
-        destroy_tree(root->lchild);
-        destroy_tree(root->rchild);
-        delete root;
+    if (root == NULL) return;
+    Node* temp;
+    queue<Node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        temp = q.front();
+        q.pop();
+        if (temp->lchild != NULL)
+            q.push(temp->lchild);
+        if (temp->rchild != NULL)
+            q.push(temp->rchild);
+        delete temp;
     }
 }
 
@@ -77,21 +102,18 @@ void traversal_tree_path(Node* root, int leaves_index,
 
 int main(void)
 {
-    int first;
     int num_case = 0;
-    while (cin >> first && first != -1) {
-        // unget the first value
-        cin.unget();
+    while (1) {
         // build tree
         Node* root = build_tree_inorder();
         // get leaves value
-#define LEAVES_HALF_WIDTH 80
-        int left_array[LEAVES_HALF_WIDTH] = {0};
-        int right_array[LEAVES_HALF_WIDTH] = {0};
+        memset(left_array, 0, sizeof(int) * LEAVES_HALF_WIDTH);
+        memset(right_array, 0, sizeof(int) * LEAVES_HALF_WIDTH);
         int left_max_index = 0;
         int right_max_index = 0;
         traversal_tree_path(root, 0, left_array, right_array,
                 &left_max_index, &right_max_index);
+        if (root == NULL) break;
         // print result
         num_case++;
         cout << "Case " << num_case << ":" << endl;
@@ -105,6 +127,7 @@ int main(void)
         cout << "left_max_index:" << left_max_index << endl;
         cout << "right_max_index:" << right_max_index << endl;
         display_tree_inorder(root);
+        cout << endl;
 #endif
         // destroy tree
         destroy_tree(root);
