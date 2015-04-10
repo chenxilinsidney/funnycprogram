@@ -262,6 +262,7 @@ void destroy_tree_by_queue(Node* root)
     }
 }
 
+#if 0
 bool traversal_tree_path(Node* root)
 {
     if (root == NULL) return false;
@@ -278,6 +279,23 @@ bool traversal_tree_path(Node* root)
         right = false;
     return left || right;
 }
+#endif
+bool traversal_tree_path(Node* root)
+{
+    if (root == NULL) return true;
+    Node* temp = NULL;
+    queue<Node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        temp = q.front();
+        if (temp->lweight * temp->ldistance != temp->rweight * temp->rdistance)
+            return false;
+        q.pop();
+        if (temp->lchild) q.push(temp->lchild);
+        if (temp->rchild) q.push(temp->rchild);
+    }
+    return true;
+}
 
 int main(void)
 {
@@ -292,7 +310,7 @@ int main(void)
         // result
         bool result = traversal_tree_path(root);
         // print result
-        if (!result)
+        if (result)
             cout << "YES" << endl;
         else
             cout << "NO" << endl;
