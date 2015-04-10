@@ -62,6 +62,7 @@ void display_tree_preorder(Node* root)
     stack<Node*> s;
     s.push(root);
     while (!s.empty()) {
+        // get node first
         temp = s.top();
         s.pop();
         cout << temp->lweight << " ";
@@ -69,10 +70,38 @@ void display_tree_preorder(Node* root)
         cout << temp->rweight << " ";
         cout << temp->rdistance << " ";
         cout << "@ ";
+        // push right child first
         if (temp->rchild != NULL)
             s.push(temp->rchild);
+        // push left child second
         if (temp->lchild != NULL)
             s.push(temp->lchild);
+    }
+}
+
+void display_tree_preorder2(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp = root;
+    stack<Node*> s;
+    while (temp || !s.empty()) {
+        // trace left tree
+        while (temp) {
+            // get the node
+            cout << temp->lweight << " ";
+            cout << temp->ldistance << " ";
+            cout << temp->rweight << " ";
+            cout << temp->rdistance << " ";
+            cout << "@ ";
+            s.push(temp);
+            temp = temp->lchild;
+        }
+        // trace right tree next time
+        if (!s.empty()) {
+            temp = s.top();
+            s.pop();
+            temp = temp->rchild;
+        }
     }
 }
 
@@ -96,9 +125,11 @@ void display_tree_inorder(Node* root)
     stack<Node*> s;
     while (temp || !s.empty()) {
         if (temp) {
+            // push left child for node temp
             s.push(temp);
             temp = temp->lchild;
         } else {
+            // get top node
             temp = s.top();
             s.pop();
             cout << temp->lweight << " ";
@@ -106,6 +137,7 @@ void display_tree_inorder(Node* root)
             cout << temp->rweight << " ";
             cout << temp->rdistance << " ";
             cout << "@ ";
+            // check right child next time
             temp = temp->rchild;
         }
     }
@@ -121,31 +153,86 @@ void display_tree_postorder_by_recursive(Node* root)
         cout << root->rweight << " ";
         cout << root->rdistance << " ";
         cout << "@ ";
-    } else {
-        cout << "# ";
     }
 }
 
 void display_tree_postorder(Node* root)
 {
     if (root == NULL) return;
-    Node* temp;
+    Node* temp = root;
+    Node* q = NULL;
     stack<Node*> s;
-    s.push(root);
-    while (!s.empty()) {
-        if (temp->rchild != NULL) {
-            s.push(temp->rchild);
-        if (temp->lchild != NULL)
-            s.push(temp->lchild);
-        temp = s.top();
-        if (temp->lchild == NULL && temp->rchild == NULL) {
-            s.pop();
-            cout << temp->lweight << " ";
-            cout << temp->ldistance << " ";
-            cout << temp->rweight << " ";
-            cout << temp->rdistance << " ";
-            cout << "@ ";
+    while (temp || !s.empty()) {
+        // trace left tree
+        while (temp) {
+            s.push(temp);
+            temp = temp->lchild;
         }
+        if (!s.empty()) {
+            temp = s.top();
+            if (temp->rchild == NULL || temp->rchild == q) {
+                // get top node
+                cout << temp->lweight << " ";
+                cout << temp->ldistance << " ";
+                cout << temp->rweight << " ";
+                cout << temp->rdistance << " ";
+                cout << "@ ";
+                // remember the node for next time
+                q = temp;
+                s.pop();
+                // set temp node null
+                temp = NULL;
+            } else {
+                // trace right tree next time
+                temp = temp->rchild;
+            }
+        }
+    }
+}
+
+void display_tree_postorder2(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp = NULL;
+    stack<Node*> traverse;
+    traverse.push(root);
+    stack<Node*> visit;
+    // trace all node
+    while (!traverse.empty()) {
+        temp = traverse.top();
+        visit.push(temp);
+        traverse.pop();
+        if (temp->lchild) traverse.push(temp->lchild);
+        if (temp->rchild) traverse.push(temp->rchild);
+    }
+    // get the node
+    while(!visit.empty()) {
+        temp = visit.top();
+        visit.pop();
+        cout << temp->lweight << " ";
+        cout << temp->ldistance << " ";
+        cout << temp->rweight << " ";
+        cout << temp->rdistance << " ";
+        cout << "@ ";
+    }
+}
+
+void display_tree_levelorder(Node* root)
+{
+    if (root == NULL) return;
+    Node* temp = NULL;
+    queue<Node*> q;
+    q.push(root);
+    while (!q.empty()) {
+        temp = q.front();
+        cout << temp->lweight << " ";
+        cout << temp->ldistance << " ";
+        cout << temp->rweight << " ";
+        cout << temp->rdistance << " ";
+        cout << "@ ";
+        q.pop();
+        if (temp->lchild) q.push(temp->lchild);
+        if (temp->rchild) q.push(temp->rchild);
     }
 }
 
@@ -220,9 +307,15 @@ int main(void)
         cout << endl;
         display_tree_preorder(root);
         cout << endl;
+        display_tree_preorder2(root);
+        cout << endl;
         display_tree_postorder_by_recursive(root);
         cout << endl;
         display_tree_postorder(root);
+        cout << endl;
+        display_tree_postorder2(root);
+        cout << endl;
+        display_tree_levelorder(root);
         cout << endl;
 #endif
         // destroy tree
