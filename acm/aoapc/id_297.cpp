@@ -40,13 +40,16 @@ Node* build_tree_inorder(const char* inorder,
     int four_index[5] = {0};
     for (int i = 0; i < 4; i++) {
         int flag = 0;
+        int count_p = 0;
         do {
-            if (inorder[inorder_index] == 'p')
+            if (inorder[inorder_index] == 'p') {
                 flag -= 4;
-            else
+                count_p++;
+            } else {
                 flag += 1;
+            }
             inorder_index++;
-        } while (inorder_index < inorder_length && flag < 0);
+        } while (inorder_index < inorder_length && flag < -1 * count_p + 1);
         four_index[i + 1] = inorder_index - 1;
     }
 #ifndef ONLINE_JUDGE
