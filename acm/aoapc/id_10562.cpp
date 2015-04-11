@@ -13,7 +13,7 @@
 
 using namespace std;
 
-char professor_tree[205][205];
+char professor_tree[220][220];
 
 typedef struct Node {
     char key;
@@ -27,17 +27,6 @@ void destroy_tree(Node* root)
         destroy_tree(root->lchild);
         destroy_tree(root->rchild);
         delete root;
-    }
-}
-
-void display_tree_inorder(Node* root)
-{
-    if (root != NULL) {
-        cout << root->key; 
-        display_tree_inorder(root->lchild);
-        display_tree_inorder(root->rchild);
-    } else {
-        cout << "#";
     }
 }
 
@@ -58,7 +47,7 @@ void display_tree(Node* root)
 
 Node* build_tree(int level, int index_begin, int index_end)
 {
-#ifdef ONLINE_JUDGE
+#ifndef ONLINE_JUDGE
     cout << "level: " << level << endl;
     cout << "level: " << index_begin << endl;
     cout << "level: " << index_end << endl;
@@ -68,21 +57,13 @@ Node* build_tree(int level, int index_begin, int index_end)
     int char_index_left = -1;
     int char_index_right = -1;
     int index_right = 0;
-    int index_child = 0;
     int count = 0;
     for (index_right = index_begin; index_right <= index_end; index_right++) {
-#ifdef ONLINE_JUDGE
-        cout << "get:" << professor_tree[level][index_right] << endl;
-#endif
         if (flag_getchar && professor_tree[level][index_right] != ' ') {
             flag_getchar = false;
             if (count == 0) {
-                sscanf(professor_tree[level] + index_right, "%s", &(temp->key));
+                temp->key = professor_tree[level][index_right];
                 if (professor_tree[level + 1][index_right] == '|') {
-#ifdef ONLINE_JUDGE
-                    cout << "key:" << temp->key << endl;
-                    cout << "get |" << endl;
-#endif
                     int index_begin = index_right;
                     int index_end = index_right;
                     while (professor_tree[level + 2][index_begin] == '-')
@@ -100,7 +81,7 @@ Node* build_tree(int level, int index_begin, int index_end)
         if (professor_tree[level][index_right] == ' ')
             flag_getchar = true;
     }
-#ifdef ONLINE_JUDGE
+#ifndef ONLINE_JUDGE
     cout << "get left: " << char_index_left << endl;
     cout << "get right: " << char_index_right << endl;
     cout << "temp: " << temp->key << endl;
@@ -125,17 +106,26 @@ int main(void)
     cin.get();
     while (num_case--) {
         int line_count = 0;
+        memset(professor_tree, 0, sizeof(professor_tree));
         while (gets(professor_tree[line_count]) &&
-                professor_tree[line_count][0] != '#')
+                professor_tree[line_count][0] != '#') {
             line_count++;
+            memset(professor_tree[line_count], 0,
+                    sizeof(professor_tree[line_count]));
+        }
+        // empty tree
+        if (line_count == 0) {
+            cout << "()" << endl;
+            continue;
+        }
         memset(professor_tree[line_count], 0,
-                strlen(professor_tree[line_count - 1]));
-#ifdef ONLINE_JUDGE
+                sizeof(professor_tree[line_count]));
+#ifndef ONLINE_JUDGE
         cout << "line number: " << line_count << endl;
         for (int i = 0; i < line_count; i++)
             cout << professor_tree[i] << endl;
 #endif
-        Node* root = build_tree(0, 0, strlen(professor_tree[0]));
+        Node* root = build_tree(0, 0, strlen(professor_tree[0]) - 1);
         cout << "(";
         display_tree(root);
         cout << ")";
