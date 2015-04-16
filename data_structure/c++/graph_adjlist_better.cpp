@@ -18,15 +18,18 @@ enum {
     BLACK
 };
 
-#define MAXVEX 10              // maximum vertex numbers in the graph
+#define MAXVEX 30              // maximum vertex numbers in the graph
 #define INFINITY   numeric_limits<int>::max()  // NO VALUE
 typedef struct {
-    int key;
+    char key;
     int color;
     int distance;
     int time_d;
     int time_f;
     int parent_index;
+    int prim_min_weight;
+    bool prim_processed;
+    int prim_parent_index;
 } VertexType;                  // vertex data type
 typedef int EdgeType;          // edge weight type
 
@@ -58,9 +61,7 @@ void CreateGraph(Graph& G)
     cin >> G.numVertexes >> G.numEdges >> G.have_direction;
     cout << "input vertex data one by one:" << endl;
     for (int index = 0; index < G.numVertexes; index++) {
-        int temp;
-        cin >> temp;
-        G.adj[index].data.key = temp;
+        cin >> G.adj[index].data.key;
         G.adj[index].firstedge = NULL;
     }
     cout << "input edge each by two vertex index(0) and their weight:" << endl;
@@ -190,6 +191,65 @@ void display_dfs_time(Graph& G)
     }
 }
 
+// Prim method
+void display_prim_info(Graph& G)
+{
+    for (int i = 0; i < G.numVertexes; i++) {
+        cout << "vertex key: " << G.adj[i].data.key << endl;
+        cout << "weight: " << G.adj[i].data.prim_min_weight << endl;
+        cout << "flag: " << G.adj[i].data.prim_processed << endl;
+        cout << "parent: " << G.adj[i].data.prim_parent_index << endl;
+    }
+
+}
+void Prim(Graph& G, int s_index)
+{
+    // initialization
+    for (int i = 0; i < G.numVertexes; i++) {
+        G.adj[i].data.prim_min_weight = INFINITY;
+        G.adj[i].data.prim_processed = false;
+        G.adj[i].data.prim_parent_index = -1;
+    }
+    G.adj[s_index].data.prim_min_weight = 0;
+    int num_edge = 0;
+    int min_key;
+    int min_index;
+    EdgeNode* temp;
+    while (num_edge++ < G.numVertexes) {
+        // get minimum key vertex in un-processed vertex
+        min_key = INFINITY;
+        for (int i = 0; i < G.numVertexes; i++) {
+            if (G.adj[i].data.prim_min_weight < min_key &&
+                    !G.adj[i].data.prim_processed) {
+                min_key = G.adj[i].data.prim_min_weight;
+                min_index = i;
+            }
+        }
+        // set process flag
+        G.adj[min_index].data.prim_processed = true;
+        // new vertex and weight for A
+        cout << "get prim key: " <<
+            G.adj[min_index].data.key << endl;
+        if (G.adj[min_index].data.prim_parent_index != -1)
+            cout << " parent key: " <<
+                G.adj[G.adj[min_index].data.prim_parent_index].data.key << endl;
+        else
+            cout << " parent key: -1" << endl;
+        cout << " weight: " << G.adj[min_index].data.prim_min_weight << endl;
+        // trace edge
+        temp = G.adj[min_index].firstedge;
+        while (temp) {
+            if (!G.adj[temp->adjvex_index].data.prim_processed &&
+                    temp->weight <
+                    G.adj[temp->adjvex_index].data.prim_min_weight) {
+                G.adj[temp->adjvex_index].data.prim_min_weight = temp->weight;
+                G.adj[temp->adjvex_index].data.prim_parent_index = min_index;
+            }
+            temp = temp->next;
+        }
+    }
+}
+
 int main(void)
 {
     // build structure
@@ -205,6 +265,8 @@ int main(void)
     DFS(G);
     display_dfs_time(G);
     cout << endl;
+    cout << "Prim" << endl;
+    Prim(G, 0);
     return 0;
 }
 
