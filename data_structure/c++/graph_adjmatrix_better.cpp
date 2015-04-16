@@ -9,6 +9,7 @@
 #include <iostream>
 #include <queue>
 #include <limits>
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,10 +19,10 @@ enum {
     BLACK
 };
 
-#define MAXVEX 10              // maximum vertex numbers in the graph
+#define MAXVEX 30              // maximum vertex numbers in the graph
 #define INFINITY   numeric_limits<int>::max()  // NO VALUE
 typedef struct {
-    int key;
+    char key;
     int color;
     int distance;
     int time_d;
@@ -46,9 +47,7 @@ void CreateGraph(Graph& G)
     cin >> G.numVertexes >> G.numEdges >> G.have_direction;
     cout << "input vertex data one by one:" << endl;
     for (int index = 0; index < G.numVertexes; index++) {
-        int temp;
-        cin >> temp;
-        G.vertex[index].key = temp;
+        cin >> G.vertex[index].key;
     }
     for (int index_i = 0; index_i < G.numVertexes; index_i++)
         for (int index_j = 0; index_j < G.numVertexes; index_j++)
@@ -167,6 +166,85 @@ void display_dfs_time(Graph& G)
     }
 }
 
+// Kruskal method
+typedef struct {
+    int edge_start_index;
+    int edge_end_index;
+    EdgeType weight;
+} Road;             // edge information
+
+// road set
+int road_set[MAXVEX];
+
+// road comparision for qsort
+int road_cmp(const void* a, const void* b) {
+    return ((Road*)a)->weight - ((Road*)b)->weight;
+}
+
+// find set number for vertex
+void union_set(int a, int b, int set_length) {
+    int new_set_num = a < b ? a : b;
+    for (int i = 0; i < set_length; i++)
+        if (road_set[i] == b || road_set[i] == a) road_set[i] = new_set_num;
+}
+
+// display set
+void display_set(int set_length) {
+    for (int i = 0; i < set_length; i++)
+        cout << road_set[i] << " ";
+    cout << endl;
+}
+
+void Kruskal(Graph& G)
+{
+    // make set
+    for (int i = 0; i < G.numVertexes; i++)
+        road_set[i] = i;
+    // get road information
+    Road road[MAXVEX * MAXVEX];
+    int index = 0;
+    for (int index_i = 0; index_i < G.numVertexes; index_i++)
+        for (int index_j = index_i; index_j < G.numVertexes; index_j++)
+            if (G.arc[index_i][index_j] != INFINITY) {
+                road[index].edge_start_index = index_i;
+                road[index].edge_end_index = index_j;
+                road[index].weight = G.arc[index_i][index_j];
+                index++;
+            }
+    cout << "edge num: " << index << endl;
+    // sort road information
+    qsort(road, index, sizeof(road[0]), road_cmp);
+    // edge numbers
+    int num_edge = 0;
+    EdgeType sum_weight = 0;
+    for (int i = 0; i < index; i++) {
+        // already get required edges
+        if (num_edge == G.numVertexes - 1) break;
+        // find if same set
+        if (road_set[road[i].edge_start_index] !=
+                road_set[road[i].edge_end_index]) {
+            // get edge
+            cout << "find edge: " << num_edge++ << endl;
+            cout << "weight: " << road[i].weight << endl;
+            cout << "start key: " <<
+                G.vertex[road[i].edge_start_index].key << endl;
+            cout << "end key: " <<
+                G.vertex[road[i].edge_end_index].key << endl;
+            cout << "start index road_set: " <<
+                road_set[road[i].edge_start_index] << endl;
+            cout << "end index road_set: " <<
+                road_set[road[i].edge_end_index] << endl;
+            sum_weight += road[i].weight;
+            // union set
+            union_set(road_set[road[i].edge_start_index],
+                    road_set[road[i].edge_end_index],
+                    G.numVertexes);
+            display_set(G.numVertexes);
+        }
+    }
+    cout << "sum weight: " << sum_weight << endl;
+}
+
 int main(void)
 {
     // build structure
@@ -182,6 +260,8 @@ int main(void)
     DFS(G);
     display_dfs_time(G);
     cout << endl;
+    cout << "Kruskal" << endl;
+    Kruskal(G);
     return 0;
 }
 
