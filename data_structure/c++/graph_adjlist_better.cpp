@@ -20,6 +20,9 @@ enum {
 
 #define MAXVEX 30              // maximum vertex numbers in the graph
 #define INFINITY   numeric_limits<int>::max()  // NO VALUE
+// topologically sort information by dfs
+int topologically_sort_index;
+int topologically_sort[MAXVEX];
 typedef struct {
     char key;
     int color;
@@ -30,6 +33,8 @@ typedef struct {
     int prim_min_weight;
     bool prim_processed;
     int prim_parent_index;
+    int min_path_distance;
+    int min_path_parent_index;
 } VertexType;                  // vertex data type
 typedef int EdgeType;          // edge weight type
 
@@ -163,6 +168,8 @@ void DFS_VISIT(Graph& G, int index)
     }
     G.adj[index].data.color = BLACK;
     G.adj[index].data.time_f = ++time_note;
+    // for topologically sort
+    topologically_sort[topologically_sort_index++] = index;
 }
 
 void DFS(Graph& G) {
@@ -170,6 +177,8 @@ void DFS(Graph& G) {
         G.adj[index].data.color = WHITE;
         G.adj[index].data.parent_index = -1;
     }
+    // for topologically sort
+    topologically_sort_index = 0;
     time_note = 0;
     for (int index = 0; index < G.numVertexes; index++) {
         if (G.adj[index].data.color == WHITE)
@@ -250,23 +259,155 @@ void Prim(Graph& G, int s_index)
     }
 }
 
+// Bellman-Ford method
+// minimum path initialization
+void min_path_init(Graph &G, int s_index)
+{
+    for (int index = 0; index < G.numVertexes; index++) {
+        G.adj[index].data.min_path_distance = INFINITY;
+        G.adj[index].data.min_path_parent_index = -1;
+    }
+    G.adj[s_index].data.min_path_distance = 0;
+}
+
+// minimum path relaxation
+void min_path_relax(Graph &G, int u_index, int v_index, int uv_weight)
+{
+    if (G.adj[u_index].data.min_path_distance == INFINITY) {
+        return;
+    } else if (G.adj[v_index].data.min_path_distance >
+            G.adj[u_index].data.min_path_distance + uv_weight) {
+        G.adj[v_index].data.min_path_distance =
+            G.adj[u_index].data.min_path_distance + uv_weight;
+        G.adj[v_index].data.min_path_parent_index = u_index;
+    }
+}
+
+// minimum path check
+bool min_path_check(Graph &G, int u_index, int v_index, int uv_weight)
+{
+    if (G.adj[u_index].data.min_path_distance == INFINITY) {
+        return true;
+    } else if (G.adj[v_index].data.min_path_distance >
+            G.adj[u_index].data.min_path_distance + uv_weight) {
+        return false;
+    }
+    return true;
+}
+
+bool bellman_ford(Graph& G, int s_index)
+{
+    // init
+    min_path_init(G, s_index);
+    // relax
+    EdgeNode* temp;
+    for (int i_time = 0; i_time < G.numVertexes - 1; i_time++) {
+        // trace edge
+        for (int i = 0; i < G.numVertexes; i++) {
+            temp = G.adj[i].firstedge;
+            while (temp) {
+                // relax for each edge
+                min_path_relax(G, i, temp->adjvex_index, temp->weight);
+                temp = temp->next;
+            }
+        }
+    }
+    // check if negative weight path exist
+    for (int i = 0; i < G.numVertexes; i++) {
+        temp = G.adj[i].firstedge;
+        while (temp) {
+            // check for each edge
+            if (!min_path_check(G, i, temp->adjvex_index, temp->weight))
+                return false;
+            temp = temp->next;
+        }
+    }
+    return true;
+}
+
+void display_min_path(Graph& G, int s_index, int v_index)
+{
+    if (s_index == v_index) {
+        cout << G.adj[s_index].data.key << " ";
+    } else if (G.adj[v_index].data.min_path_parent_index == -1) {
+        cout << "no path from " << G.adj[s_index].data.key <<
+            " to " << G.adj[v_index].data.key << endl;
+    } else {
+        display_min_path(G, s_index, G.adj[v_index].data.min_path_parent_index);
+        cout << G.adj[v_index].data.key << " ";
+    }
+}
+
+void display_min_distance(Graph& G)
+{
+    for (int index = 0; index < G.numVertexes; index++) {
+        if (G.adj[index].data.min_path_distance == INFINITY &&
+                G.adj[index].data.min_path_parent_index == -1)
+            continue;
+        cout << "path key: " << G.adj[index].data.key << endl;
+        cout << " distance: " << G.adj[index].data.min_path_distance << endl;
+        if (G.adj[index].data.min_path_parent_index == -1)
+            cout << " parent key: -1" << endl;
+        else
+            cout << " parent key: " <<
+                G.adj[G.adj[index].data.min_path_parent_index].data.key << endl;
+    }
+}
+
+// DAG-SHORTEST-PATHS
+void dag_min_path(Graph& G, int s_index)
+{
+    // topologically sort
+    DFS(G);
+    // init
+    min_path_init(G, s_index);
+    // relax by topologically sort result
+    EdgeNode* temp;
+    cout << "topologically size: " << topologically_sort_index << endl;
+    for (int i = topologically_sort_index - 1; i >= 0; i--) {
+        cout << "topologically: " << G.adj[topologically_sort[i]].data.key
+            << endl;
+        temp = G.adj[topologically_sort[i]].firstedge;
+        while (temp) {
+            // relax for each edge
+            min_path_relax(G, topologically_sort[i],
+                    temp->adjvex_index, temp->weight);
+            temp = temp->next;
+        }
+    }
+}
+
 int main(void)
 {
     // build structure
     Graph G;
     CreateGraph(G);
     cout << "BFS" << endl;
-    BFS(G, 2);
-    display_bfs_path(G, 2, 3);
-    cout << endl;
-    display_bfs_distance(G);
-    cout << endl;
+    // BFS(G, 2);
+    // display_bfs_path(G, 2, 3);
+    // cout << endl;
+    // display_bfs_distance(G);
+    // cout << endl;
     cout << "DFS" << endl;
-    DFS(G);
-    display_dfs_time(G);
-    cout << endl;
+    // DFS(G);
+    // display_dfs_time(G);
+    // cout << endl;
     cout << "Prim" << endl;
-    Prim(G, 0);
+    // Prim(G, 0);
+    // cout << endl;
+    cout << "Bellman-Ford" << endl;
+    bool flag_exist = bellman_ford(G, 1);
+    cout << flag_exist << endl;
+    display_min_path(G, 1, 5);
+    cout << endl;
+    display_min_distance(G);
+    cout << endl;
+    cout << "dag_min_path" << endl;
+    dag_min_path(G, 1);
+    display_min_path(G, 1, 5);
+    cout << endl;
+    display_min_distance(G);
+    cout << endl;
     return 0;
 }
 
