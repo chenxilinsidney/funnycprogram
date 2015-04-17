@@ -35,6 +35,7 @@ typedef struct {
     int prim_parent_index;
     int min_path_distance;
     int min_path_parent_index;
+    bool min_path_processed;
 } VertexType;                  // vertex data type
 typedef int EdgeType;          // edge weight type
 
@@ -301,7 +302,8 @@ bool bellman_ford(Graph& G, int s_index)
     min_path_init(G, s_index);
     // relax
     EdgeNode* temp;
-    for (int i_time = 0; i_time < G.numVertexes - 1; i_time++) {
+    int i_time = 0;
+    while (i_time++ < G.numVertexes - 1) {
         // trace edge
         for (int i = 0; i < G.numVertexes; i++) {
             temp = G.adj[i].firstedge;
@@ -377,6 +379,40 @@ void dag_min_path(Graph& G, int s_index)
     }
 }
 
+// Dijkstra method
+void dijkstra(Graph& G, int s_index)
+{
+    // init
+    min_path_init(G, s_index);
+    // set flag
+    for (int index = 0; index < G.numVertexes; index++)
+        G.adj[index].data.min_path_processed = false;
+    EdgeNode* temp;
+    int i_time = 0;
+    int min_key;
+    int min_index;
+    while (i_time++ < G.numVertexes) {
+        // get minimum key vertex in un-processed vertex
+        min_key = INFINITY;
+        for (int i = 0; i < G.numVertexes; i++) {
+            if (G.adj[i].data.min_path_distance < min_key &&
+                    !G.adj[i].data.min_path_processed) {
+                min_key = G.adj[i].data.min_path_distance;
+                min_index = i;
+            }
+        }
+        // set process flag
+        G.adj[min_index].data.min_path_processed = true;
+        // trace edge
+        temp = G.adj[min_index].firstedge;
+        while (temp) {
+            // relax for each edge
+            min_path_relax(G, min_index, temp->adjvex_index, temp->weight);
+            temp = temp->next;
+        }
+    }
+}
+
 int main(void)
 {
     // build structure
@@ -396,15 +432,21 @@ int main(void)
     // Prim(G, 0);
     // cout << endl;
     cout << "Bellman-Ford" << endl;
-    bool flag_exist = bellman_ford(G, 1);
+    bool flag_exist = bellman_ford(G, 0);
     cout << flag_exist << endl;
-    display_min_path(G, 1, 5);
+    display_min_path(G, 0, 4);
     cout << endl;
     display_min_distance(G);
     cout << endl;
     cout << "dag_min_path" << endl;
-    dag_min_path(G, 1);
-    display_min_path(G, 1, 5);
+    dag_min_path(G, 0);
+    display_min_path(G, 0, 4);
+    cout << endl;
+    display_min_distance(G);
+    cout << endl;
+    cout << "dijkstra" << endl;
+    dijkstra(G, 0);
+    display_min_path(G, 0, 4);
     cout << endl;
     display_min_distance(G);
     cout << endl;
