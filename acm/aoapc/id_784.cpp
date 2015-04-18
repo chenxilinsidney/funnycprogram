@@ -42,7 +42,7 @@ bool CreateGraph(Graph& G)
         G.visit[0][i] = true;
     for (int i = 0; i < G.columns[G.num_rows] + 2; i++)
         G.visit[G.num_rows + 1][i] = true;
-    for (int i = 0; i < G.num_rows + 2; i++) {
+    for (int i = 1; i <= G.num_rows; i++) {
         G.visit[i][0] = true;
         G.visit[i][G.columns[i] + 1] = true;
     }
@@ -72,8 +72,42 @@ typedef struct {
     int x;
     int y;
 } Point;
-// DFS by stack
-void DFS(Graph& G) {
+// DFS by own stack array
+Point stack_own[2500];
+int stack_top = 0;
+void DFS_by_ownstack(Graph& G) {
+    Point temp, top;
+    for (int i = 1; i <= G.num_rows; i++) {
+        for (int j = 1; j <= G.columns[i]; j++) {
+            if (G.key[i][j] == '*') {
+                temp.x = i; temp.y = j;
+                stack_own[0] = temp;
+                stack_top = 0;
+                while (stack_top != -1) {
+                    top = stack_own[stack_top];
+                    stack_top--;
+                    if (G.visit[top.x][top.y] ||
+                            (G.key[top.x][top.y] != ' ' &&
+                            G.key[top.x][top.y] != '*'))
+                        continue;
+                    G.visit[top.x][top.y] = true;
+                    G.key[top.x][top.y] = '#';
+                    temp.x = top.x + 1; temp.y = top.y; stack_top++;
+                    stack_own[stack_top] = temp;
+                    temp.x = top.x - 1; temp.y = top.y; stack_top++;
+                    stack_own[stack_top] = temp;
+                    temp.x = top.x; temp.y = top.y + 1; stack_top++;
+                    stack_own[stack_top] = temp;
+                    temp.x = top.x; temp.y = top.y - 1; stack_top++;
+                    stack_own[stack_top] = temp;
+                }
+                return;
+            }
+        }
+    }
+}
+// DFS by stl stack
+void DFS_by_stlstack(Graph& G) {
     stack<Point> s;
     Point temp, top;
     for (int i = 1; i <= G.num_rows; i++) {
@@ -109,14 +143,7 @@ int main(void)
     cin.get();
     while (num_case--) {
         CreateGraph(G);
-#ifndef ONLINE_JUDGE
-        DisplayGraph(G);
-        DisplayGraphVisit(G);
-#endif
-        DFS(G);
-#ifndef ONLINE_JUDGE
-        DisplayGraphVisit(G);
-#endif
+        DFS_by_stlstack(G);
         DisplayGraph(G);
     }
     return 0;
