@@ -1,5 +1,5 @@
 /**
- * @file id_10129.cpp
+ * @file id_10596.cpp
  * @brief UVAOJ
  * @author chenxilinsidney
  * @version 1.0
@@ -135,7 +135,7 @@ int main(void)
 {
     Graph G;
     while (CreateGraph(G)) {
-        if(!IsGraphEulerCircult(G))
+        if(!G.numEdges || !IsGraphEulerCircult(G))
             cout << "Not Possible" << endl;
         else
             cout << "Possible" << endl;
