@@ -160,7 +160,7 @@ int main(void)
         // create graph
         CreateGraph(G);
         if(!IsGraphEulerCircult(G))
-            cout << "some beads may be lost." << endl;
+            cout << "some beads may be lost" << endl;
         else
             DisplayEulerCircuit(G);
         if (num_case) cout << endl;
