@@ -11,12 +11,11 @@
 
 using namespace std;
 
-#define MAXGRIDROW 225              // maximum grid rows in the graph
-#define MAXGRIDCOL 225              // maximum grid columns in the graph
+#define MAXGRIDROW 275              // maximum grid rows in the graph
+#define MAXGRIDCOL 275              // maximum grid columns in the graph
 
 // graph data structure
 typedef struct {
-    char key[MAXGRIDROW + 2][MAXGRIDCOL + 2];   // matrix with extra bound
     int visit[MAXGRIDROW + 2][MAXGRIDCOL + 2]; // matrix with extra bound
     int num_rows;                             // matrix row numbers
     int num_columns;                          // matrix column numbers
@@ -28,25 +27,16 @@ bool CreateGraph(Graph& G)
 {
     // input graph row and column numbers
     cin >> G.num_columns >> G.num_rows;
-    G.num_columns *= 3;
-    G.num_rows *= 3;
     // unavaliable graph
     if (G.num_rows <= 0 || G.num_columns <= 0) return false;
+    G.num_columns *= 3;
+    G.num_rows *= 3;
     // get grid data from input
     for (int i = 1; i <=  G.num_rows; i += 3) {
         for (int j = 1; j <= G.num_columns; j += 3) {
             char temp;
             cin >> temp;
             if (temp == '\\') {
-                G.key[i][j] = 'X';
-                G.key[i + 1][j + 1] = 'X';
-                G.key[i + 2][j + 2] = 'X';
-                G.key[i][j + 1] = ' ';
-                G.key[i][j + 2] = ' ';
-                G.key[i + 1][j] = ' ';
-                G.key[i + 1][j + 2] = ' ';
-                G.key[i + 2][j] = ' ';
-                G.key[i + 2][j + 1] = ' ';
                 G.visit[i][j] = 1;
                 G.visit[i + 1][j + 1] = 1;
                 G.visit[i + 2][j + 2] = 1;
@@ -56,25 +46,16 @@ bool CreateGraph(Graph& G)
                 G.visit[i + 1][j + 2] = 0;
                 G.visit[i + 2][j] = 0;
                 G.visit[i + 2][j + 1] = 0;
-            } else {
-                G.key[i][j + 2] = 'X';
-                G.key[i + 1][j + 1] = 'X';
-                G.key[i + 2][j] = 'X';
-                G.key[i][j] = ' ';
-                G.key[i + 2][j + 2] = ' ';
-                G.key[i][j + 1] = ' ';
-                G.key[i + 1][j] = ' ';
-                G.key[i + 1][j + 2] = ' ';
-                G.key[i + 2][j + 1] = ' ';
+            } else if (temp == '/') {
                 G.visit[i][j + 2] = 1;
                 G.visit[i + 1][j + 1] = 1;
                 G.visit[i + 2][j] = 1;
                 G.visit[i][j] = 0;
-                G.visit[i + 2][j + 2] = 0;
                 G.visit[i][j + 1] = 0;
                 G.visit[i + 1][j] = 0;
                 G.visit[i + 1][j + 2] = 0;
                 G.visit[i + 2][j + 1] = 0;
+                G.visit[i + 2][j + 2] = 0;
             }
         }
     }
@@ -88,21 +69,9 @@ bool CreateGraph(Graph& G)
         G.visit[i][G.num_columns + 1] = 2;
     }
 #ifndef ONLINE_JUDGE
-    DisplayGraph(G);
     DisplayGraphVisit(G);
 #endif
     return true;
-}
-// display graph
-void DisplayGraph(Graph& G)
-{
-    cout << "display graph key: " << endl;
-    for (int i = 1; i <= G.num_rows; i++) {
-        for (int j = 1; j <= G.num_columns; j++) {
-            cout << G.key[i][j];
-        }
-        cout << endl;
-    }
 }
 // display graph visit
 void DisplayGraphVisit(Graph& G)
@@ -123,7 +92,7 @@ typedef struct {
     int y;
 } Point;
 // DFS by own stack array
-Point stack_own[57375];
+Point stack_own[75625];
 int stack_top = 0;
 int DFS_by_ownstack(Graph& G) {
     Point temp, top;
@@ -131,7 +100,7 @@ int DFS_by_ownstack(Graph& G) {
     max_area = 0;
     for (int i = 1; i <= G.num_rows; i++) {
         for (int j = 1; j <= G.num_columns; j++) {
-            if (!G.visit[i][j] && G.key[i][j] == ' ') {
+            if (!G.visit[i][j]) {
                 temp.x = i; temp.y = j;
                 stack_own[0] = temp;
                 stack_top = 0;
@@ -142,11 +111,9 @@ int DFS_by_ownstack(Graph& G) {
                     stack_top--;
                     if (!flag_bound_area && G.visit[top.x][top.y] == 2)
                         flag_bound_area = true;
-                    if (G.visit[top.x][top.y] != 0 ||
-                            G.key[top.x][top.y] != ' ')
+                    if (G.visit[top.x][top.y])
                         continue;
                     G.visit[top.x][top.y] = 1;
-                    G.key[top.x][top.y] = '#';
                     area++;
                     temp.x = top.x + 1; temp.y = top.y; stack_top++;
                     stack_own[stack_top] = temp;
@@ -171,9 +138,9 @@ int DFS_by_ownstack(Graph& G) {
     return num;
 }
 
+Graph G;
 int main(void)
 {
-    Graph G;
     int num_case = 1;
     while (CreateGraph(G)) {
         int num_cycles = DFS_by_ownstack(G);
