@@ -13,12 +13,6 @@
 
 using namespace std;
 
-enum {
-    WHITE,
-    GRAY,
-    BLACK
-};
-
 #define MAXVEX 100              // maximum vertex numbers in the graph
 typedef struct {
     double x;
@@ -46,7 +40,6 @@ bool CreateGraph(Graph& G)
     for (int i = 0; i < G.numVertexes; i++)
         cin >> G.vertex[i].x >> G.vertex[i].y;
     // set edges
-    G.numEdges = (unsigned)(G.numVertexes * (G.numVertexes - 1)) >> 1;
     int index_edge = 0;
     for (int i = 0; i < G.numVertexes - 1; i++) {
         for (int j = i + 1; j < G.numVertexes; j++) {
@@ -60,6 +53,7 @@ bool CreateGraph(Graph& G)
             index_edge++;
         }
     }
+    G.numEdges = index_edge;
     return true;
 }
 // Union-Find Set
@@ -85,7 +79,7 @@ int compare_edge(const void* a, const void* b) {
 double Kruskal(Graph &G)
 {
     // init set
-    init_set(MAXVEX);
+    init_set(G.numVertexes);
     // sort weight
     qsort(G.arc, G.numEdges, sizeof(G.arc[0]), compare_edge);
     // sum weight
