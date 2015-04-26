@@ -103,12 +103,12 @@ int BellmanFord(Graph& G, int s_index)
         for (int i = 0; i < G.numVertexes; i++) {
             int index_edge = G.vertex[i].first;
             while (index_edge != -1) {
-                if (G.vertex[G.u[index_edge]].distance != INF &&
-                        G.vertex[G.u[index_edge]].distance +
+                if (G.vertex[i].distance != INF &&
+                        G.vertex[i].distance +
                         G.weight[index_edge] <
                         G.vertex[G.v[index_edge]].distance) {
                     G.vertex[G.v[index_edge]].distance =
-                        G.vertex[G.u[index_edge]].distance +
+                        G.vertex[i].distance +
                         G.weight[index_edge];
                 }
                 index_edge = G.next[index_edge];
