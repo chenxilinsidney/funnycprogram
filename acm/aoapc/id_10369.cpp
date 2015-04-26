@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define MAXVEX 100              // maximum vertex numbers in the graph
+#define MAXVEX 501              // maximum vertex numbers in the graph
 typedef struct {
     double x;
     double y;
@@ -83,18 +83,16 @@ double Kruskal(Graph &G)
     init_set(G.numVertexes);
     // sort weight
     qsort(G.arc, G.numEdges, sizeof(G.arc[0]), compare_edge);
-    int num_vertex = 1;
-    // sum weight
-    double weight = 0.0;
+    int num_edges = 0;
     for (int i = 0; i < G.numEdges; i++) {
-        if (num_vertex == G.numVertexes - G.numRemove + 1) return weight;
         if (find_set(G.arc[i].u) != find_set(G.arc[i].v)) {
-            weight = G.arc[i].weight;
             union_set(G.arc[i].u, G.arc[i].v);
-            num_vertex++;
+            num_edges++;
+            if (num_edges == G.numVertexes - G.numRemove)
+                return G.arc[i].weight;
         }
     }
-    return weight;
+    return 0;
 }
 
 Graph G;
