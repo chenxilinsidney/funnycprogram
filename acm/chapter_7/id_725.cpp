@@ -14,6 +14,13 @@ using namespace std;
 bool isdifferent(int a, int b)
 {
     int flag[10] = {0};
+    if (a < 10000) flag[0] = 1;
+    if (b < 10000) {
+        if (!flag[0])
+            flag[0] = 1;
+        else
+            return false;
+    }
     while (a) {
         if (!flag[a % 10])
             flag[a % 10] = 1;
@@ -28,8 +35,6 @@ bool isdifferent(int a, int b)
             return false;
         b = b / 10;
     }
-    for (int i = 1; i < 10; i++)
-        if (!flag[i]) return false;
     return true;
 }
 int main(void)
