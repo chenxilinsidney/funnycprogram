@@ -4,21 +4,12 @@ using namespace std;
 
 int main()
 {
-    Duck* duck;
-    MallardDuck mallardDuck;
-    duck = &mallardDuck;
-    duck->quack();
+    FlyBehavior *flyBehavior = new FlyNoWay();
+    QuackBehavior *quackBehavior = new Quack();
+    MallardDuck* mallardDuck = new MallardDuck(*flyBehavior, *quackBehavior);
+    Duck* duck = mallardDuck;
+    duck->performfly();
     duck->display();
-    duck->fly();
-    RedheadDuck redheadDuck;
-    duck = &redheadDuck;
-    duck->quack();
-    duck->display();
-    duck->fly();
-    RubberDuck rubberDuck;
-    duck = &rubberDuck;
-    duck->quack();
-    duck->display();
-    duck->fly();
+    duck->performQuack();
     return 0;
 }
