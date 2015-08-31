@@ -48,18 +48,57 @@ class PepperoniPizza : public Pizza
         }
 };
 
-class SimplePizzaFactory
+class NYCheessePizza : public CheessePizza
 {
     public:
-        static Pizza* createPizza(string type) {
-            Pizza* pizza = NULL;
-            if (type == "CheessePizza")
-                pizza = new CheessePizza;
-            else if (type == "PepperoniPizza")
-                pizza = new PepperoniPizza;
-            else
-                pizza = new GreekPizza;
-            return pizza;
+        void display() {
+            cout << "This is a NYCheessePizza" << endl;
+            CheessePizza::display();
+        }
+};
+
+class NYGreekPizza : public GreekPizza
+{
+    public:
+        void display() {
+            cout << "This is a NYGreekPizza" << endl;
+            GreekPizza::display();
+        }
+};
+
+class NYPepperoniPizza : public PepperoniPizza
+{
+    public:
+        void display() {
+            cout << "This is a NYPepperoniPizza" << endl;
+            PepperoniPizza::display();
+        }
+};
+
+class ChicagoCheessePizza : public CheessePizza
+{
+    public:
+        void display() {
+            cout << "This is a ChicagoCheessePizza" << endl;
+            CheessePizza::display();
+        }
+};
+
+class ChicagoGreekPizza : public GreekPizza
+{
+    public:
+        void display() {
+            cout << "This is a ChicagoGreekPizza" << endl;
+            GreekPizza::display();
+        }
+};
+
+class ChicagoPepperoniPizza : public PepperoniPizza
+{
+    public:
+        void display() {
+            cout << "This is a ChicagoPepperoniPizza" << endl;
+            PepperoniPizza::display();
         }
 };
 #endif  // _PIZZA_HPP_

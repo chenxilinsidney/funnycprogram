@@ -5,8 +5,13 @@ using namespace std;
 
 int main()
 {
-    PizzaStore pizzastore;
-    Pizza* pizza = pizzastore.orderPizza("PepperoniPizza");
+    PizzaStore* pizzastore = new ChicagoPizzaStore;
+    Pizza* pizza = pizzastore->orderPizza("PepperoniPizza");
     delete pizza;
+    delete pizzastore;
+    pizzastore = new NYPizzaStore;
+    pizza = pizzastore->orderPizza("PepperoniPizza");
+    delete pizza;
+    delete pizzastore;
     return 0;
 }
