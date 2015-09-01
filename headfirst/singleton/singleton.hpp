@@ -18,6 +18,6 @@ class Singleton
         static Singleton* uniqueInstance;
 };
 
-Singleton* Singleton::uniqueInstance = NULL;
+Singleton* Singleton::uniqueInstance = new Singleton;
 
 #endif  // _SINGLETON_HPP_
