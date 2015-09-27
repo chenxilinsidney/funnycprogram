@@ -1,0 +1,155 @@
+begin with: 0
+begin with: A
+dfs: 1,0
+A 
+dfs: 2,1
+A B 
+dfs: 3,1
+A B C 
+dfs: 4,1
+A B C D 
+dfs: 5,1
+A B C D E 
+dfs: 6,5
+A B C D E F 
+dfs: 7,5
+A B C D E F G 
+dfs: 8,5
+A B C D E F G H 
+dfs: 2,1
+A F 
+begin with: 1
+begin with: B
+dfs: 1,0
+B 
+dfs: 2,1
+B G 
+dfs: 3,2
+B G A 
+dfs: 4,3
+B G A C 
+dfs: 5,3
+B G A C D 
+dfs: 6,3
+B G A C D E 
+dfs: 7,3
+B G A C D E H 
+dfs: 6,4
+B G A C D F 
+dfs: 7,4
+B G A C D F E 
+dfs: 8,4
+B G A C D F E H 
+dfs: 7,4
+B G A C D F H 
+dfs: 8,4
+B G A C D F H E 
+dfs: 5,3
+B G A C F 
+dfs: 6,3
+B G A C F E 
+dfs: 7,3
+B G A C F E H 
+dfs: 6,3
+B G A C F H 
+dfs: 7,3
+B G A C F H E 
+dfs: 4,2
+B G A F 
+dfs: 5,2
+B G A F H 
+dfs: 6,2
+B G A F H E 
+dfs: 3,1
+B G F 
+dfs: 4,1
+B G F H 
+dfs: 5,3
+B G F H D 
+dfs: 6,3
+B G F H D E 
+dfs: 5,1
+B G F H E 
+begin with: 2
+begin with: C
+dfs: 1,0
+C 
+dfs: 2,0
+C A 
+dfs: 3,1
+C A F 
+dfs: 2,1
+C B 
+dfs: 3,1
+C B G 
+dfs: 4,2
+C B G A 
+dfs: 5,2
+C B G A E 
+dfs: 6,3
+C B G A E F 
+dfs: 7,3
+C B G A E F H 
+dfs: 6,2
+C B G A E H 
+dfs: 5,2
+C B G A F 
+dfs: 6,2
+C B G A F E 
+dfs: 7,2
+C B G A F E H 
+dfs: 6,2
+C B G A F H 
+dfs: 7,2
+C B G A F H E 
+dfs: 5,2
+C B G A H 
+dfs: 6,2
+C B G A H E 
+dfs: 6,3
+C B G A H F 
+dfs: 7,3
+C B G A H F E 
+dfs: 4,3
+C B G D 
+dfs: 5,3
+C B G D A 
+dfs: 6,3
+C B G D A E 
+dfs: 7,3
+C B G D A E H 
+dfs: 6,3
+C B G D A F 
+dfs: 7,3
+C B G D A F E 
+dfs: 8,3
+C B G D A F E H 
+dfs: 7,3
+C B G D A F H 
+dfs: 5,3
+C B G D F 
+dfs: 6,3
+C B G D F H 
+dfs: 2,1
+C D 
+begin with: 3
+begin with: D
+dfs: 1,0
+D 
+begin with: 4
+begin with: E
+dfs: 1,0
+E 
+begin with: 5
+begin with: F
+dfs: 1,0
+F 
+begin with: 6
+begin with: G
+dfs: 1,0
+G 
+begin with: 7
+begin with: H
+dfs: 1,0
+H 
+C B G D A F E H -> 3
