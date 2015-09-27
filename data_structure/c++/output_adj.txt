@@ -1,0 +1,60 @@
+input vertex num and edge num and direction flag:
+input vertex data one by one:
+input edge each by two vertex index(0) and their weight:
+011
+031
+311
+141
+431
+241
+251
+551
+BFS
+pop: 3
+pop: 6
+pop: 5
+pop: 4
+pop: 2
+3 5 4 
+key: 2
+ distance: 3
+ parent key: 4
+key: 3
+ distance: 0
+ parent key: -1
+key: 4
+ distance: 2
+ parent key: 5
+key: 5
+ distance: 1
+ parent key: 3
+key: 6
+ distance: 1
+ parent key: 3
+
+DFS
+visit: 1
+visit: 4
+visit: 2
+visit: 5
+visit: 3
+visit: 6
+key: 1
+ time: 1 / 8
+ parent key: -1
+key: 2
+ time: 3 / 6
+ parent key: 4
+key: 3
+ time: 9 / 12
+ parent key: -1
+key: 4
+ time: 2 / 7
+ parent key: 1
+key: 5
+ time: 4 / 5
+ parent key: 2
+key: 6
+ time: 10 / 11
+ parent key: 3
+

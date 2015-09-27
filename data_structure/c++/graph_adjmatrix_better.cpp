@@ -30,15 +30,14 @@ typedef struct {
     int parent_index;
 } VertexType;                  // vertex data type
 typedef int EdgeType;          // edge weight type
-
 // graph data structure
 typedef struct {
-    VertexType vertex[MAXVEX];    // vertex list
-    EdgeType arc[MAXVEX][MAXVEX]; // adjacent matrix
+    VertexType vertex[MAXVEX + 2];    // vertex list
+    EdgeType arc[MAXVEX + 2][MAXVEX + 2]; // adjacent matrix
     int numVertexes;
     int numEdges;
     int have_direction;
-}Graph;
+} Graph;
 
 // create graph method
 void CreateGraph(Graph& G)

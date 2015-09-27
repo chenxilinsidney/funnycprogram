@@ -20,9 +20,9 @@ using std::endl;
  * @param[in]    length    array length
  * @param[in]    key       key value
  *
- * @warning the index of the array begin for 1
+ * @warning the index of the array begin from 1
  *
- * @return the index of the key, return 0 if no fountd
+ * @return the index of the key, return 0 if no found
  */
 int sequence_search(int* array, int length, int key)
 {
@@ -41,9 +41,9 @@ int sequence_search(int* array, int length, int key)
  * @param[in]    length    array length
  * @param[in]    key       key value
  *
- * @warning the index of the array begin for 1
+ * @warning the index of the array begin from 1
  *
- * @return the index of the key, return 0 if no fountd
+ * @return the index of the key, return 0 if no found
  */
 int sequence_search_opt(int* array, int length, int key)
 {

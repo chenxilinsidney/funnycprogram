@@ -38,33 +38,34 @@ typedef struct {
     bool min_path_processed;
 } VertexType;                  // vertex data type
 typedef int EdgeType;          // edge weight type
-
 // edge node to record the adjacent vertex node for a vertex node
 typedef struct EdgeNode {
     int adjvex_index;          // the adjacent vertex node position in array
     EdgeType weight;           // edge weight
     struct EdgeNode* next;     // next edge node
-}EdgeNode;
-
+} EdgeNode;
 // vertex node to record the data for a vertex node
 typedef struct VertexNode {
     VertexType data;           // vertex data
     EdgeNode *firstedge;       // first edge node pointer
-}VertexNode; 
-
+} VertexNode; 
 // graph data structure
 typedef struct {
     VertexNode adj[MAXVEX];
     int numVertexes;
     int numEdges;
     int have_direction;
-}Graph;
+} Graph;
 
 // create graph method
-void CreateGraph(Graph& G)
+bool CreateGraph(Graph& G)
 {
     cout << "input vertex num and edge num and direction flag:" << endl;
+    // input graph row and column numbers
     cin >> G.numVertexes >> G.numEdges >> G.have_direction;
+    // unavaliable graph
+    if (G.numVertexes <= 0 || G.numEdges <= 0) return false;
+    // get graph data from input
     cout << "input vertex data one by one:" << endl;
     for (int index = 0; index < G.numVertexes; index++) {
         cin >> G.adj[index].data.key;
@@ -88,6 +89,7 @@ void CreateGraph(Graph& G)
             G.adj[j].firstedge = e;
         }
     }
+    return true;
 }
 
 // BFS method
