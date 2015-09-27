@@ -35,7 +35,7 @@ TYPE array[MAX_COUNT] = {0};
  */
 TYPE binary_search(TYPE* array, TYPE index_begin, TYPE index_end, TYPE value)
 {
-    assert(array != NULL && index_begin >= 0 && index_begin <= index_end);
+    assert(array != NULL && index_begin >= -1 && index_begin <= index_end + 1);
     if (index_begin > index_end)
         return -1;
     TYPE middle = index_begin + ((unsigned)(index_end - index_begin) >> 1);

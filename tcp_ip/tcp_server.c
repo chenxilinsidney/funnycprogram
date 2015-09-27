@@ -69,26 +69,40 @@ int main()
         // print client information
         printf("client address = %s, port = %d\n", inet_ntoa(client_addr.sin_addr),
                 ntohs(client_addr.sin_port));
-        // transmission
-        while (1) {
-            // get data
-            bzero(buf, sizeof(buf));
-            int len = recv(connfd, buf, BUFLEN, 0);
-            // check if getting data success
-            if (len == -1) {
-                perror("can not receive from client.");
-                close(socketfd);
-                exit(errno);
-            } else if (len == 0) {
-                printf("finish trans!\n");
-                break;
+        pid_t pid;
+        pid = fork();
+        if (pid < 0) {
+            perror("can not fork.");
+            close(connfd);
+            close(socketfd);
+            exit(errno);
+        } else if (pid == 0) {
+            // close socket fd
+            close(socketfd);
+            // transmission
+            while (1) {
+                // get data
+                bzero(buf, sizeof(buf));
+                int len = recv(connfd, buf, BUFLEN, 0);
+                // check if getting data success
+                if (len == -1) {
+                    perror("can not receive from client.");
+                    close(socketfd);
+                    exit(errno);
+                } else if (len == 0) {
+                    printf("finish trans!\n");
+                    break;
+                }
+                // data to stdout
+                printf("client message: %s\n", buf);
             }
-            // data to stdout
-            fputs(buf, stdout);
+            // close connect fd
+            close(connfd);
+            exit(EXIT_SUCCESS);
+        } else {
+            // close connect fd
+            close(connfd);
         }
-        close(connfd);
     }
-    // close socket
-    close(socketfd);
     return 0;
 }
