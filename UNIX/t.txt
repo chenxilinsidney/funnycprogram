@@ -1,0 +1,20 @@
+in main function
+var: g_num = 30, num = 20
+ppid = 3756, pid = 4601
+var: g_num = 30, num = 20
+ppid = 3756, pid = 4601
+in main function
+var: g_num = 30, num = 20
+ppid = 3756, pid = 4601
+var: g_num = 31, num = 21
+ppid = 1712, pid = 4603
+in main function
+var: g_num = 31, num = 21
+ppid = 1712, pid = 4602
+var: g_num = 31, num = 21
+ppid = 1712, pid = 4602
+in main function
+var: g_num = 31, num = 21
+ppid = 1712, pid = 4602
+var: g_num = 32, num = 22
+ppid = 4602, pid = 4604
